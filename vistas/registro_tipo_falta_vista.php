@@ -2,6 +2,7 @@
 ob_start();
 session_start();
 
+
 require_once('../vistas/pagina_inicio_vista.php');
 require_once('../clases/funcion_bitacora.php');
 require_once('../clases/funcion_visualizar.php');
@@ -23,7 +24,7 @@ if ($visualizacion == 0) {
                                    showConfirmButton: false,
                                    timer: 3000
                                 });
-                           window.location = "../vistas/mantenimiento_tipos_faltas_vista.php";
+                           window.location = "../vistas/menu_docentes_vista.php";
 
                             </script>';
 } else {
@@ -31,11 +32,11 @@ if ($visualizacion == 0) {
   bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INGRESO', 'A REGISTRAR TIPO DE FALTA CVE.');
 
 
-  if (permisos::permiso_insertar($Id_objeto) == '1') {
-    $_SESSION['btn_guardar_tipos_faltas'] = "";
-   } else {
-    $_SESSION['btn_guardar_tipos_faltas'] = "disabled";
-   }
+  // if (permisos::permiso_insertar($Id_objeto) == '1') {
+  //   $_SESSION['btn_guardar_registro_docentes'] = "";
+  // } else {
+  //   $_SESSION['btn_guardar_registro_docentes'] = "disabled";
+  // }
 }
 
 
@@ -49,7 +50,7 @@ ob_end_flush();
 <!DOCTYPE html>
 <html>
 <head>
-<title></title>
+  <title></title>
 
 
 
@@ -83,8 +84,8 @@ ob_end_flush();
     <!-- Main content -->
     <section class="content">
     <div class="container-fluid">
-
-        <!-- pantalla 1 -->
+  
+        <!-- pantalla 1 --> 
         <form action="../Controlador/guardar_tipo_falta_controlador.php" method="post"  data-form="save" class="FormularioAjax" autocomplete="off">
 
             <div class="card card-default">
@@ -111,8 +112,8 @@ ob_end_flush();
                             </div>
 
                             <p class="text-center" style="margin-top: 20px;">
-                                <button type="submit" class="btn btn-primary" id="btn_guardar_tipos_faltas" name="btn_guardar_tipos_faltas"
-                                <?php echo $_SESSION['btn_guardar_tipos_faltas']; ?>  >
+                                <button type="submit" class="btn btn-primary" id="btn_guardar_tipos_faltas" name="btn_guardar_tipos_faltas" 
+                                <?php echo $_SESSION['btn_guardar_roles']; ?>  >
                                 <i class="zmdi zmdi-floppy"></i> Guardar</button>
                             </p>
 
@@ -124,12 +125,12 @@ ob_end_flush();
                 <div class="card-footer">
                 </div>
             </div>
-
-
+            
+        
             <div class="RespuestaAjax">
             </div>
         </form>
-
+           
     </div>
 </section>
 
@@ -138,6 +139,6 @@ ob_end_flush();
 
 
 
-
+  
 </body>
 </html>

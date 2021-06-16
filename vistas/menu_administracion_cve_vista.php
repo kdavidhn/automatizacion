@@ -1,34 +1,35 @@
 <?php
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
+require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
 
 
 if (permiso_ver('138')=='1') {
-  $_SESSION['mantenimiento_ambitos_actividad_vista']="...";
+  $_SESSION['mantenimiento_ambitos_vista']="...";
 } else {
-  $_SESSION['mantenimiento_ambitos_actividad_vista']="No
+  $_SESSION['mantenimiento_ambitos_vista']="No 
             tiene permisos para visualizar";
 }
 
 if (permiso_ver('139')=='1') {
-  $_SESSION['mantenimiento_estados_actividad_vista']="...";
+  $_SESSION['mantenimiento_estado_vista']="...";
 } else {
-  $_SESSION['mantenimiento_estados_actividad_vista']="No
+  $_SESSION['mantenimiento_estado_vista']="No 
             tiene permisos para visualizar";
 }
 
 if (permiso_ver('140')=='1') {
   $_SESSION['mantenimiento_tipos_repositorios_vista']="...";
 } else {
-  $_SESSION['mantenimiento_tipos_repositorios_vista']="No
+  $_SESSION['mantenimiento_tipos_repositorios_vista']="No 
             tiene permisos para visualizar";
 }
 
 if (permiso_ver('141')=='1') {
   $_SESSION['mantenimiento_tipos_faltas_vista']="...";
 } else {
-  $_SESSION['mantenimiento_tipos_faltas_vista']="No
+  $_SESSION['mantenimiento_tipos_faltas_vista']="No 
             tiene permisos para visualizar";
 }
 
@@ -79,28 +80,28 @@ if (permiso_ver('141')=='1') {
             <div class="small-box bg-primary">
               <div class="inner">
                 <h5>Mantenimiento <br> Ámbitos de Actividad </h5>
-                <p><?php echo $_SESSION['mantenimiento_ambitos_actividad_vista']; ?></p>
+                <p><?php echo $_SESSION['mantenimiento_ambitos_vista']; ?></p> 
               </div>
               <div class="icon">
                 <i class="fas fa-user-edit"></i>
               </div>
-              <a href="../vistas/gestion_dias_feriados_vista.php" class="small-box-footer">
+              <a href="../vistas/mantenimiento_ambito_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
           </div>
 
-          <!-- Box 2 -->
+          <!-- Box 2 -->    
           <div class="col-6 col-sm-6 col-md-4">
             <div class="small-box bg-light">
               <div class="inner">
-                <h5>Mantenimiento <br> Estados de Actividad </h5>
-                <p><?php echo $_SESSION['mantenimiento_estados_actividad_vista']; ?></p>
+                <h5>Mantenimiento <br> Estados de Activadad </h5>
+                <p><?php echo $_SESSION['mantenimiento_estado_vista']; ?></p> 
               </div>
               <div class="icon">
                 <i class="fas fa-user-edit"></i>
               </div>
-              <a href="../vistas/gestion_asistencia_charla_vista.php" class="small-box-footer">
+              <a href="../vistas/mantenimiento_estado_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>
@@ -127,7 +128,7 @@ if (permiso_ver('141')=='1') {
             <div class="small-box bg-light">
               <div class="inner">
                 <h5>Mantenimiento <br> Tipos de Faltas</h5>
-                <p><?php echo $_SESSION['mantenimiento_tipos_faltas_vista']; ?></p>
+                <p><?php echo $_SESSION['mantenimiento_tipos_faltas_vista']; ?></p> 
               </div>
               <div class="icon">
                 <i class="fas fa-user-edit"></i>
@@ -144,7 +145,7 @@ if (permiso_ver('141')=='1') {
     </section>
   <!-- /.content -->
   </div>
-
+ 
 </div>
 
 </body>

@@ -1,15 +1,15 @@
 <?php
 //Ip de la pc servidor de base de datos
-define("DB_HOST","167.114.169.207");
+define("DB_HOST","127.0.0.1");
 
 //Nombre de la base de datos
-define("DB_NAME", "informat_automatizacion");
+define("DB_NAME", "automatizacion");
 
 //Usuario de la base de datos
-define("DB_USERNAME", "informat_admin");
+define("DB_USERNAME", "root");
 
 //Contraseña del usuario de la base de datos
-define("DB_PASSWORD", "HLo{Q3e{)II^");
+define("DB_PASSWORD", "");
 
 //definimos la codificación de los caracteres
 define("DB_ENCODE","utf8");
