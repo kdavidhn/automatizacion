@@ -35,6 +35,8 @@ if (session_status() === PHP_SESSION_NONE) {
   <!-- Select2 -->
   <link rel="stylesheet" href="../plugins/select2/css/select2.min.css">
   <link rel="stylesheet" href="../plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+  <!-- Bootstrap4 -->
+  <link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
   <!-- Bootstrap4 Duallistbox -->
   <link rel="stylesheet" href="../plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
   <!-- iCheck for checkboxes and radio inputs -->
@@ -44,15 +46,20 @@ if (session_status() === PHP_SESSION_NONE) {
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- DataTables -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap4.min.css">
+  <link href="../plugins/datatables/Buttons-1.5.6/buttons.dataTables.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-  <link rel="stylesheet" href="../plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="../plugins/datatables-responsive/css/dataTables.bootstrap4.min.css">
+  <link href="../public/datatables/buttons.dataTables.min.css" rel="stylesheet"/>
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../dist/css/adminlte.min.css">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-
+  
   <link rel="stylesheet" type="text/css" href="../plugins/sweetalert2/sweetalert2.min.css">
   <link rel="stylesheet" href="../dist/css/sweetalert2.css">
   <script src="../js/funciones.js"></script>
@@ -292,8 +299,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
-
-            <!-- AGREGANDO COMITE DE VIDA ESTUDIANTIL -->
+<!-- AGREGANDO COMITE DE VIDA ESTUDIANTIL -->
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_comite_vida_estudiantil'] ?>">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-apple-alt"></i>
@@ -304,10 +310,10 @@ if (session_status() === PHP_SESSION_NONE) {
                 </p>
               </a>
               <ul class="nav nav-treeview">
-                <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_practica'] ?>">
-                  <a href="../vistas/menu_estudiantes_practica_vista.php" class="nav-link">
+                <li class="nav-item" style="display:<?php echo $_SESSION['actividades_cve'] ?>">
+                  <a href="../vistas/menu_actividades_cve_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p> Solicitud de Actividades </p>
+                    <p> Actividades </p>
                   </a>
                 </li>
                 <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_final_practica'] ?>">
@@ -334,7 +340,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p>Registro de Faltas </p>
                   </a>
                 </li>
-                <li class="nav-item" style="display:<?php echo $_SESSION['adminitracion_cve'] ?>">
+                <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
                   <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Administrar el Módulo</p>
@@ -342,6 +348,10 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
+
+
+
+
 
 
 
@@ -522,9 +532,10 @@ if (session_status() === PHP_SESSION_NONE) {
   <!-- DataTables -->
   <script src="../plugins/datatables/jquery.dataTables.min.js"></script>
   <script src="../plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-  <script src="../plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-  <script src="../plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
+  
+  
+  
+  
   <!-- InputMask -->
   <script src="../plugins/moment/moment.min.js"></script>
   <script src="../plugins/inputmask/min/jquery.inputmask.bundle.min.js"></script>
@@ -555,22 +566,17 @@ if (session_status() === PHP_SESSION_NONE) {
   <script src="../js/sweetalert2.min.js"></script>
 
   <script src="../js/main.js"></script>
+    
 
-<!-- jQuery -->
-    <script src="../public/js/jquery-3.1.1.min.js"></script>
-    <!-- Bootstrap 3.3.5 -->
-    <script src="../public/js/bootstrap.min.js"></script>
-    <!-- DATATABLES -->
-    <script src="../public/datatables/jquery.dataTables.min.js"></script>    
+  <script src="../js/bootbox.min.js"></script> 
+
+     
     <script src="../public/datatables/dataTables.buttons.min.js"></script>
     <script src="../public/datatables/buttons.html5.min.js"></script>
     <script src="../public/datatables/buttons.colVis.min.js"></script>
     <script src="../public/datatables/jszip.min.js"></script>
     <script src="../public/datatables/pdfmake.min.js"></script>
-    <script src="../public/datatables/vfs_fonts.js"></script> 
-
-    <script src="../public/js/bootbox.min.js"></script> 
-
+    <script src="../public/datatables/vfs_fonts.js"></script>
 
   <script type="text/javascript">
     //Colorpicker

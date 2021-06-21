@@ -1,38 +1,18 @@
 <?php
-
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
-require_once ('../clases/Conexionvoae.php');
 
-if (permiso_ver('138')=='1') {
-  $_SESSION['mantenimiento_ambitos_vista']="...";
+
+if (permiso_ver('146')=='1') {
+  $_SESSION['solicitud_actividades_vista']="...";
 } else {
-  $_SESSION['mantenimiento_ambitos_vista']="No 
+  $_SESSION['solicitud_actividades_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('139')=='1') {
-  $_SESSION['mantenimiento_estado_vista']="...";
-} else {
-  $_SESSION['mantenimiento_estado_vista']="No 
-            tiene permisos para visualizar";
-}
 
-if (permiso_ver('140')=='1') {
-  $_SESSION['mantenimiento_tipos_repositorios_vista']="...";
-} else {
-  $_SESSION['mantenimiento_tipos_repositorios_vista']="No 
-            tiene permisos para visualizar";
-}
-
-if (permiso_ver('141')=='1') {
-  $_SESSION['mantenimiento_tipos_faltas_vista']="...";
-} else {
-  $_SESSION['mantenimiento_tipos_faltas_vista']="No 
-            tiene permisos para visualizar";
-}
 
 
 ?>
@@ -55,12 +35,12 @@ if (permiso_ver('141')=='1') {
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Administración del Módulo del CVE</h1>
+            <h1 class="m-0 text-dark">Actividades Horas Voae del CVE</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
-              <li class="breadcrumb-item active">Administración del Módulo CVE</li>
+              <li class="breadcrumb-item active">Actividades Módulo CVE</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -80,13 +60,13 @@ if (permiso_ver('141')=='1') {
           <div class="col-6 col-sm-6 col-md-4">
             <div class="small-box bg-primary">
               <div class="inner">
-                <h5>Mantenimiento <br> Ámbitos de Actividad </h5>
-                <p><?php echo $_SESSION['mantenimiento_ambitos_vista']; ?></p> 
+                <h5>Actividades<br> Solicitud de Actividad </h5>
+                <p><?php echo $_SESSION['solicitud_actividades_vista']; ?></p> 
               </div>
               <div class="icon">
                 <i class="fas fa-edit"></i>
               </div>
-              <a href="../vistas/mantenimiento_ambito_vista.php" class="small-box-footer">
+              <a href="../vistas/Actividad_cve_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

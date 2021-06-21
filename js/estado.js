@@ -116,7 +116,7 @@ function mostrar(id_estado)
 //Función para desactivar registros
 function desactivar(id_estado)
 {
-	bootbox.confirm("¿Está Seguro de desactivar El estado?", function(result){
+	bootbox.confirm("¿Está seguro de desactivar el estado?", function(result){
 		if(result)
         {
         	$.post("../Controlador/estado_controlador.php?op=desactivar", {id_estado : id_estado}, function(e){
@@ -130,7 +130,7 @@ function desactivar(id_estado)
 //Función para activar registros
 function activar(id_estado)
 {
-	bootbox.confirm("¿Está Seguro de activar El estado?", function(result){
+	bootbox.confirm("¿Está seguro de activar el estado?", function(result){
 		if(result)
         {
         	$.post("../Controlador/estado_controlador.php?op=activar", {id_estado : id_estado}, function(e){

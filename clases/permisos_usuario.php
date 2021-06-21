@@ -56,7 +56,8 @@ $resultado_permisos = $mysqli->query($sql_permisos);
    $_SESSION['mantemiento_carga_academica1'] = 'none';
    $_SESSION['plan_estudio_vista'] = 'none';
    $_SESSION['mantenimiento_plan'] = 'none';
-   $_SESSION['adminitracion_cve']='none';
+   $_SESSION['administracion_cve']='none';
+   $_SESSION['actividades_cve']='none';
    
 
 
@@ -384,6 +385,7 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
       }
    }   
 
+
 //AGREGANDO MODULO CVE
 if ($_SESSION['pantalla'] = '122') {
    if ($_SESSION['confirmacion'] == 'block') {
@@ -393,10 +395,20 @@ if ($_SESSION['pantalla'] = '122') {
 
 if ($_SESSION['pantalla'] = '122') {
    if ($_SESSION['confirmacion'] == 'block') {
-      $_SESSION['adminitracion_cve'] = "block";
+      $_SESSION['administracion_cve'] = "block";
    }
 }   
 
+if ($_SESSION['pantalla'] = '146') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['actividades_cve'] = "block";
+   }
+}   
+if ($_SESSION['pantalla'] = '146') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['btn_comite_vida_estudiantil'] = "block";
+   }
+}   
 
 
  

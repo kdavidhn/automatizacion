@@ -9,7 +9,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=141; 
+$Id_objeto=138; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -27,7 +27,7 @@ if($visualizacion==0){
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de faltas');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de repositorios');
 }
 
 ob_end_flush();
@@ -39,7 +39,7 @@ ob_end_flush();
         <div class="row mb-2">
           <div class="col-sm-6">
 
-         <h1>Mantenimiento Tipo Falta</h1>
+         <h1>Mantenimiento Tipo De Repositorio</h1>
           </div>
 
                 <div class="col-sm-6">
@@ -63,8 +63,8 @@ ob_end_flush();
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Tipos de Faltas </h1>
-                          <h1><button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Tipo Falta</button></h1>
+                          <h1 class="box-title">Tipos de Repositorios </h1>
+                          <h1><button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -80,18 +80,19 @@ ob_end_flush();
                           </thead>
                           <tbody>                            
                           </tbody>
+                          
                         </table>
                     </div>
-                    <div class="panel-body table-responsive" style="height: 400px;" id="formularioregistros">
+                    <div class="panel-body" style="height: 400px;" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Nombre:</label>
-                            <input type="hidden" name="id_falta" id="id_falta">
-                            <input type="text" class="form-control" name="nombre_falta" id="nombre_falta" maxlength="50" placeholder="nombre" required>
+                            <input type="hidden" name="id_repositorio" id="id_repositorio">
+                            <input type="text" class="form-control" name="nombre_repositorio" id="nombre_repositorio" maxlength="50" placeholder="nombre" required>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Descripción:</label>
-                            <input type="text" class="form-control" name="descripcion_falta" id="descripcion_falta" maxlength="256" placeholder="Descripción">
+                            <input type="text" class="form-control" name="descripcion_repositorio" id="descripcion_repositorio" maxlength="256" placeholder="Descripción">
                           </div>
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
@@ -108,5 +109,7 @@ ob_end_flush();
 
     </div><!-- /.content-wrapper -->
 </div>
-<script type="text/javascript" src="../js/tipos_faltas.js"></script>
+
+<script type="text/javascript" src="../js/repositorio.js"></script>
+
 

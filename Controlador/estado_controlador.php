@@ -11,23 +11,23 @@ switch ($_GET["op"]){
 	case 'guardaryeditar':
 		if (empty($id_estado)){
 			$rspta=$estado->insertar($nombre_estado,$descripcion_estado);
-			echo $rspta ? "estado registrado" : "estado no se pudo registrar";
+			echo $rspta ? "Estado Registrado" : "Estado no se pudo registrar";
 		}
 		else {
 			$rspta=$estado->editar($id_estado,$nombre_estado,$descripcion_estado);
-			echo $rspta ? "estado actualizado" : "estado no se pudo actualizar";
+			echo $rspta ? "Estado actualizado" : "Estado no se pudo actualizar";
 		}
 	break;
 
 	case 'desactivar':
 		$rspta=$estado->desactivar($id_estado);
- 		echo $rspta ? "estado Desactivado" : "estado no se puede desactivar";
+ 		echo $rspta ? "Estado Desactivado" : "Estado no se puede desactivar";
  		break;
 	break;
 
 	case 'activar':
 		$rspta=$estado->activar($id_estado);
- 		echo $rspta ? "estado activado" : "estado no se puede activar";
+ 		echo $rspta ? "Estado Activado" : "Estado no se puede activar";
  		break;
 	break;
 
@@ -45,14 +45,14 @@ switch ($_GET["op"]){
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="fa fa-pencil"></i></button>'.
- 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_estado.')"><i class="fa fa-close"></i></button>':
- 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="fa fa-pencil"></i></button>'.
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_estado.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="far fa-edit"></i></button>'.
  					' <button class="btn btn-primary" onclick="activar('.$reg->id_estado.')"><i class="fa fa-check"></i></button>',
  				"1"=>$reg->nombre_estado,
  				"2"=>$reg->descripcion_estado,
- 				"3"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
- 				'<span class="label bg-red">Desactivado</span>'
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
  				);
  		}
  		$results = array(

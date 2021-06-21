@@ -14,9 +14,9 @@ function init(){
 //Función limpiar
 function limpiar()
 {
-	$("#nombre_ambito").val("");
-	$("#descripcion_ambito").val("");
-	$("#id_ambito").val("");
+	$("#nombre_repositorio").val("");
+	$("#descripcion_repositorio").val("");
+	$("#id_repositorio").val("");
 }
 
 //Función mostrar formulario
@@ -61,7 +61,7 @@ function listar()
 		        ],
 		"ajax":
 				{
-					url: '../Controlador/ambito_controlador.php?op=listar',
+					url: '../Controlador/repositorio_controlador.php?op=listar',
 					type : "get",
 					dataType : "json",						
 					error: function(e){
@@ -82,7 +82,7 @@ function guardaryeditar(e)
 	var formData = new FormData($("#formulario")[0]);
 
 	$.ajax({
-		url: "../Controlador/ambito_controlador.php?op=guardaryeditar",
+		url: "../Controlador/repositorio_controlador.php?op=guardaryeditar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,
@@ -99,27 +99,27 @@ function guardaryeditar(e)
 	limpiar();
 }
 
-function mostrar(id_ambito)
+function mostrar(id_repositorio)
 {
-	$.post("../Controlador/ambito_controlador.php?op=mostrar",{id_ambito : id_ambito}, function(data, status)
+	$.post("../Controlador/repositorio_controlador.php?op=mostrar",{id_repositorio : id_repositorio}, function(data, status)
 	{
 		data = JSON.parse(data);		
 		mostrarform(true);
 
-		$("#nombre_ambito").val(data.nombre_ambito);
-		$("#descripcion_ambito").val(data.descripcion_ambito);
- 		$("#id_ambito").val(data.id_ambito);
+		$("#nombre_repositorio").val(data.nombre_repositorio);
+		$("#descripcion_repositorio").val(data.descripcion_repositorio);
+ 		$("#id_repositorio").val(data.id_repositorio);
 
  	})
 }
 
 //Función para desactivar registros
-function desactivar(id_ambito)
+function desactivar(id_repositorio)
 {
-	bootbox.confirm("¿Está seguro de desactivar el ámbito?", function(result){
+	bootbox.confirm("¿Está seguro de desactivar el repositorio?", function(result){
 		if(result)
         {
-        	$.post("../Controlador/ambito_controlador.php?op=desactivar", {id_ambito : id_ambito}, function(e){
+        	$.post("../Controlador/repositorio_controlador.php?op=desactivar", {id_repositorio : id_repositorio}, function(e){
         		bootbox.alert(e);
 	            tabla.ajax.reload();
         	});	
@@ -128,12 +128,12 @@ function desactivar(id_ambito)
 }
 
 //Función para activar registros
-function activar(id_ambito)
+function activar(id_repositorio)
 {
-	bootbox.confirm("¿Está seguro de activar el ámbito?", function(result){
+	bootbox.confirm("¿Está seguro de activar el repositorio?", function(result){
 		if(result)
         {
-        	$.post("../Controlador/ambito_controlador.php?op=activar", {id_ambito : id_ambito}, function(e){
+        	$.post("../Controlador/repositorio_controlador.php?op=activar", {id_repositorio : id_repositorio}, function(e){
         		bootbox.alert(e);
 	            tabla.ajax.reload();
         	});	

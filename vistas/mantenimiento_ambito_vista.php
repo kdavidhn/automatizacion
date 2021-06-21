@@ -30,18 +30,41 @@ if($visualizacion==0){
   bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de ambitos');
 }
 
-require 'header.php';
+ob_end_flush();
 ?>
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+
+         <h1>Mantenimiento Ámbitos</h1>
+          </div>
+
+                <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
+              <li class="breadcrumb-item active"><a href="../vistas/menu_administracion_cve_vista.php">Administrar Módulo CVE</a></li>
+            </ol>
+          </div>
+
+            <div class="RespuestaAjax"></div>
+   
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
 <!--Contenido-->
       <!-- Content Wrapper. Contains page content -->
-      <div class="content-wrapper">        
+      <div class="card card-default">        
         <!-- Main content -->
         <section class="content">
-            <div class="row">
+            <div class="card-header">
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Ambitos <button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                          <h1 class="box-title">Ámbitos </h1>
+                          <h1><button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Ámbito</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -53,19 +76,13 @@ require 'header.php';
                             <th>Opciones</th>
                             <th>Nombre</th>
                             <th>Descripción</th>
-                            <th>ambito</th>
+                            <th>Estado</th>
                           </thead>
                           <tbody>                            
                           </tbody>
-                          <tfoot>
-                            <th>Opciones</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>ambito</th>
-                          </tfoot>
                         </table>
                     </div>
-                    <div class="panel-body" style="height: 400px;" id="formularioregistros">
+                    <div class="panel-body table-responsive" style="height: 400px;" id="formularioregistros">
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Nombre:</label>
@@ -91,8 +108,13 @@ require 'header.php';
 
     </div><!-- /.content-wrapper -->
   <!--Fin-Contenido-->
-<?php
-//require 'footer.php';
-?>
+  </div> 
+ 
+
 <script type="text/javascript" src="../js/ambito.js"></script>
 
+ 
+
+
+</body>
+</html>
