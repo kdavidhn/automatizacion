@@ -16,14 +16,14 @@ Class Repositorio
 	public function insertar($nombre_repositorio,$descripcion_repositorio)
 	{
 		$sql="INSERT INTO tbl_voae_tipos_repositorios (nombre_repositorio,descripcion_repositorio,condicion)
-		VALUES ('$nombre_repositorio','$descripcion_repositorio','1')";
+		VALUES (trim(upper('$nombre_repositorio')),trim(upper('$descripcion_repositorio')),'1')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
 	public function editar($id_repositorio,$nombre_repositorio,$descripcion_repositorio)
 	{
-		$sql="UPDATE tbl_voae_tipos_repositorios SET nombre_repositorio='$nombre_repositorio',descripcion_repositorio='$descripcion_repositorio' WHERE id_repositorio='$id_repositorio'";
+		$sql="UPDATE tbl_voae_tipos_repositorios SET nombre_repositorio=trim(upper('$nombre_repositorio')),descripcion_repositorio=trim(upper('$descripcion_repositorio')) WHERE id_repositorio='$id_repositorio'";
 		return ejecutarConsulta($sql);
 	}
 

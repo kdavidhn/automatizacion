@@ -25,8 +25,10 @@ $resultado_permisos = $mysqli->query($sql_permisos);
    $_SESSION['btn_docentes']='none';
    $_SESSION['btn_mantenimientos']='none';
    $_SESSION['btn_ayuda']='none';
+   $_SESSION['btn_prueba']='none';
    $_SESSION['btn_mantenimiento']='none';
    $_SESSION['btn_comite_vida_estudiantil']='none';
+   
 
    /*Menu laterales*/
    $_SESSION['pregunta_vista']='none';
@@ -59,6 +61,7 @@ $resultado_permisos = $mysqli->query($sql_permisos);
    $_SESSION['administracion_cve']='none';
    $_SESSION['actividades_cve']='none';
    
+  
 
 
   while ($fila = $resultado_permisos->fetch_row())
@@ -387,33 +390,34 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
 
 
 //AGREGANDO MODULO CVE
-if ($_SESSION['pantalla'] = '122') {
+
+
+
+if ($_SESSION['pantalla'] = '104' or $_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '111') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['btn_comite_vida_estudiantil'] = "block";
    }
 }   
-
-if ($_SESSION['pantalla'] = '122') {
+if ($_SESSION['pantalla'] == '104') {
+      if ($_SESSION['confirmacion'] == 'block') {
+         $_SESSION['administracion_cve'] = "block";
+      }
+   }
+if ($_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '111') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['administracion_cve'] = "block";
    }
-}   
-
-if ($_SESSION['pantalla'] = '146') {
+}    
+if ($_SESSION['pantalla'] = '109') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['actividades_cve'] = "block";
    }
-}   
-if ($_SESSION['pantalla'] = '146') {
+}  
+if ($_SESSION['pantalla'] = '110') {
    if ($_SESSION['confirmacion'] == 'block') {
-      $_SESSION['btn_comite_vida_estudiantil'] = "block";
+      $_SESSION['actividades_cve'] = "block";
    }
-}   
-
-
- 
-
-
+}
 
 
 

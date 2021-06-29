@@ -16,14 +16,14 @@ Class falta
 	public function insertar($nombre_falta,$descripcion_falta)
 	{
 		$sql="INSERT INTO tbl_voae_tipos_faltas (nombre_falta,descripcion_falta,condicion)
-		VALUES ('$nombre_falta','$descripcion_falta','1')";
+		VALUES ( trim(upper('$nombre_falta')), trim(upper('$descripcion_falta')),'1')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
 	public function editar($id_falta,$nombre_falta,$descripcion_falta)
 	{
-		$sql="UPDATE tbl_voae_tipos_faltas SET nombre_falta='$nombre_falta',descripcion_falta='$descripcion_falta' WHERE id_falta='$id_falta'";
+		$sql="UPDATE tbl_voae_tipos_faltas SET nombre_falta= trim(upper('$nombre_falta')),descripcion_falta=trim(upper('$descripcion_falta')) WHERE id_falta='$id_falta'";
 		return ejecutarConsulta($sql);
 	}
 

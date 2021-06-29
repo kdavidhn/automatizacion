@@ -1,6 +1,6 @@
 <?php
 
-ob_start();
+
 session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
@@ -9,9 +9,9 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=138; 
+$Id_objeto=107; 
 
-
+ 
 $visualizacion= permiso_ver($Id_objeto);
 
 if($visualizacion==0){
@@ -23,14 +23,21 @@ if($visualizacion==0){
             showConfirmButton: false,
             timer: 3000
           });
-      window.location = "../vistas/pagina_principal_vista.php";
+      window.location = "../vistas/menu_administracion_cve_vista.php";
 
        </script>'; 
 }else{
   bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de repositorios');
 }
+if (permisos::permiso_insertar($Id_objeto)==0)
+  {
+  $_SESSION["btnagregar"]="disabled";
+  }
+else
+  {
+    $_SESSION["btnagregar"]="";
+  }
 
-ob_end_flush();
 ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -64,7 +71,7 @@ ob_end_flush();
                   <div class="box">
                     <div class="box-header with-border">
                           <h1 class="box-title">Tipos de Repositorios </h1>
-                          <h1><button class="btn btn-success" id="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar</button></h1>
+                          <h1><button class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Tipo Repositorio</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -84,15 +91,19 @@ ob_end_flush();
                         </table>
                     </div>
                     <div class="panel-body" style="height: 400px;" id="formularioregistros">
+                        <!--AQUI INICIAL EL FORMULARIO-->
                         <form name="formulario" id="formulario" method="POST">
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Nombre:</label>
                             <input type="hidden" name="id_repositorio" id="id_repositorio">
-                            <input type="text" class="form-control" name="nombre_repositorio" id="nombre_repositorio" maxlength="50" placeholder="nombre" required>
+                            
+                            <!--CAJA DE TEXTO NOMBRE TREPOSITORIO-->
+                            <input type="text" class="form-control" name="nombre_repositorio" id="nombre_repositorio" minlength="5" maxlength="50" placeholder="NOMBRE" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required/>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Descripción:</label>
-                            <input type="text" class="form-control" name="descripcion_repositorio" id="descripcion_repositorio" maxlength="256" placeholder="Descripción">
+                            <!--CAJA DE TEXTO DESCRIPCION TREPOSITORIO-->
+                            <input type="text" class="form-control" name="descripcion_repositorio" id="descripcion_repositorio" minlength="10" maxlength="255" placeholder="DESCRIPCION" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required/>
                           </div>
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
@@ -111,5 +122,26 @@ ob_end_flush();
 </div>
 
 <script type="text/javascript" src="../js/repositorio.js"></script>
+<script>
+  function soloLetras(e) {
+    var key = e.keyCode || e.which,
+      tecla = String.fromCharCode(key).toUpperCase(),
+      letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+      especiales = [8, 37, 39, 46],
+      tecla_especial = false;
 
+    for (var i in especiales) {
+      if (key == especiales[i]) {
+        tecla_especial = true;
+        break;
+      }
+    }
+
+    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+      return false;
+    }
+  }
+</script>
+</body>
+</html>
 

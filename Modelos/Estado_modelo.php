@@ -1,6 +1,8 @@
 <?php 
 //Incluímos inicialmente la conexión a la base de datos
 //require "../clases/Conexion.php";
+require_once ('../clases/Conexion.php');
+require_once ('../clases/Conexionvoae.php');
 require "../clases/Conexionvoae.php";
 
 Class Estado
@@ -15,14 +17,14 @@ Class Estado
 	public function insertar($nombre_estado,$descripcion_estado)
 	{
 		$sql="INSERT INTO tbl_voae_estados (nombre_estado,descripcion_estado,condicion)
-		VALUES ('$nombre_estado','$descripcion_estado','1')";
+		VALUES (trim(upper('$nombre_estado')),trim(upper('$descripcion_estado')),'1')";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
 	public function editar($id_estado,$nombre_estado,$descripcion_estado)
 	{
-		$sql="UPDATE tbl_voae_estados SET nombre_estado='$nombre_estado',descripcion_estado='$descripcion_estado' WHERE id_estado='$id_estado'";
+		$sql="UPDATE tbl_voae_estados SET nombre_estado=trim(upper('$nombre_estado')),descripcion_estado=trim(upper('$descripcion_estado')) WHERE id_estado='$id_estado'";
 		return ejecutarConsulta($sql);
 	}
 

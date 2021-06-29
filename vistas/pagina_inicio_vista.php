@@ -299,10 +299,11 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
-<!-- AGREGANDO COMITE DE VIDA ESTUDIANTIL -->
+           
+     <!-- AGREGANDO COMITE DE VIDA ESTUDIANTIL -->
             <li class="nav-item has-treeview" style="display:<?php echo $_SESSION['btn_comite_vida_estudiantil'] ?>">
               <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-apple-alt"></i>
+                <i class="nav-icon fas fa-address-card"></i>
                 <p>
                   Comité Vida Estudiantil
                   <i class="fas fa-angle-left right"></i>
@@ -316,30 +317,7 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p> Actividades </p>
                   </a>
                 </li>
-                <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_final_practica'] ?>">
-                  <a href="../vistas/solicitud_finalizacion_vista.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p> Aprobación de Actividades </p>
-                  </a>
-                </li>
-                <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_cambio_carrera'] ?>">
-                  <a href="../vistas/cambio_carrera_vista.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p> Consultas y Reportes </p>
-                  </a>
-                </li>
-                <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_carta_egresado'] ?>">
-                  <a href="../vistas/carta_egresado_vista.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Historial de Horas VOAE</p>
-                  </a>
-                </li>
-                <li class="nav-item" style="display:<?php echo $_SESSION['solicitud_equivalencias'] ?>">
-                  <a href="../vistas/equivalencias_vista.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Registro de Faltas </p>
-                  </a>
-                </li>
+               
                 <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
                   <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -348,6 +326,7 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
               </ul>
             </li>
+
 
 
 

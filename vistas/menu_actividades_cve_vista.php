@@ -4,8 +4,13 @@ require_once ('../clases/Conexion.php');
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
 
-
-if (permiso_ver('146')=='1') {
+if (permiso_ver('109')=='1') {
+  $_SESSION['actividades_cve']="...";
+} else {
+  $_SESSION['actividades_cve']="No 
+            tiene permisos para visualizar";
+}
+if (permiso_ver('110')=='1') {
   $_SESSION['solicitud_actividades_vista']="...";
 } else {
   $_SESSION['solicitud_actividades_vista']="No 
@@ -72,53 +77,6 @@ if (permiso_ver('146')=='1') {
             </div>
           </div>
 
-          <!-- Box 2 -->    
-          <div class="col-6 col-sm-6 col-md-4">
-            <div class="small-box bg-primary">
-              <div class="inner">
-                <h5>Mantenimiento <br> Estados de Activadad </h5>
-                <p><?php echo $_SESSION['mantenimiento_estado_vista']; ?></p> 
-              </div>
-              <div class="icon">
-                <i class="fas fa-edit"></i>
-              </div>
-              <a href="../vistas/mantenimiento_estado_vista.php" class="small-box-footer">
-                Ir <i class="fas fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Box 3 -->
-          <div class="col-6 col-sm-6 col-md-4">
-            <div class="small-box bg-primary">
-              <div class="inner">
-                <h5>Mantenimiento <br> Tipos de Repositorios</h5>
-                <p><?php echo $_SESSION['mantenimiento_tipos_repositorios_vista'];?></p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-edit"></i>
-              </div>
-              <a href="../vistas/mantenimiento_repositorio_vista.php" class="small-box-footer">
-                Ir <i class="fas fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
-
-          <!-- Box 4 -->
-          <div class="col-6 col-sm-6 col-md-4">
-            <div class="small-box bg-primary">
-              <div class="inner">
-                <h5>Mantenimiento <br> Tipos de Faltas</h5>
-                <p><?php echo $_SESSION['mantenimiento_tipos_faltas_vista']; ?></p> 
-              </div>
-              <div class="icon">
-                <i class="fas fa-edit"></i>
-              </div>
-              <a href="../vistas/mantenimiento_tipos_faltas_vista.php" class="small-box-footer">
-                Ir <i class="fas fa-arrow-circle-right"></i>
-              </a>
-            </div>
-          </div>
 
          <!-- /.row -->
         </div><!--/. container-fluid -->

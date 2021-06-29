@@ -6,33 +6,35 @@ require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/Conexionvoae.php');
 
-if (permiso_ver('138')=='1') {
+
+if (permiso_ver('105')=='1') {
   $_SESSION['mantenimiento_ambitos_vista']="...";
 } else {
   $_SESSION['mantenimiento_ambitos_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('139')=='1') {
+if (permiso_ver('106')=='1') {
   $_SESSION['mantenimiento_estado_vista']="...";
 } else {
   $_SESSION['mantenimiento_estado_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('140')=='1') {
+if (permiso_ver('107')=='1') {
   $_SESSION['mantenimiento_tipos_repositorios_vista']="...";
 } else {
   $_SESSION['mantenimiento_tipos_repositorios_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('141')=='1') {
+if (permiso_ver('108')=='1') {
   $_SESSION['mantenimiento_tipos_faltas_vista']="...";
 } else {
   $_SESSION['mantenimiento_tipos_faltas_vista']="No 
             tiene permisos para visualizar";
 }
+
 
 
 ?>
@@ -96,7 +98,7 @@ if (permiso_ver('141')=='1') {
           <div class="col-6 col-sm-6 col-md-4">
             <div class="small-box bg-primary">
               <div class="inner">
-                <h5>Mantenimiento <br> Estados de Activadad </h5>
+                <h5>Mantenimiento <br> Estados de Actividad </h5>
                 <p><?php echo $_SESSION['mantenimiento_estado_vista']; ?></p> 
               </div>
               <div class="icon">

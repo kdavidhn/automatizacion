@@ -1,7 +1,14 @@
 <?php 
+session_start();
+
+require_once ('../clases/funcion_permisos.php');
+require_once ('../clases/Conexion.php');
+require_once ('../clases/Conexionvoae.php');
+require_once ('../clases/funcion_visualizar.php');
 require_once "../Modelos/tipos_faltas_modelo.php";
 
 $falta=new falta();
+$Id_objeto=108; 
 
 $id_falta=isset($_POST["id_falta"])? limpiarCadena($_POST["id_falta"]):"";
 $nombre_falta=isset($_POST["nombre_falta"])? limpiarCadena($_POST["nombre_falta"]):"";
@@ -39,7 +46,31 @@ switch ($_GET["op"]){
 	break;
 
 	case 'listar':
+	if (permisos::permiso_modificar($Id_objeto)==0){
 		$rspta=$falta->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>',
+ 				"1"=>$reg->nombre_falta,
+ 				"2"=>$reg->descripcion_falta,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 				);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}else{
+ 			$rspta=$falta->listar();
  		//Vamos a declarar un array
  		$data= Array();
 
@@ -61,7 +92,7 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
-
+ 		}
 	break;
 }
 ?>

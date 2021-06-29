@@ -1,7 +1,14 @@
 <?php 
+session_start();
+
 require_once "../Modelos/Estado_modelo.php";
+require_once ('../clases/funcion_permisos.php');
+require_once ('../clases/Conexion.php');
+require_once ('../clases/Conexionvoae.php');
+require_once ('../clases/funcion_visualizar.php');
 
 $estado=new Estado();
+$Id_objeto=106; 
 
 $id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
 $nombre_estado=isset($_POST["nombre_estado"])? limpiarCadena($_POST["nombre_estado"]):"";
@@ -15,7 +22,7 @@ switch ($_GET["op"]){
 		}
 		else {
 			$rspta=$estado->editar($id_estado,$nombre_estado,$descripcion_estado);
-			echo $rspta ? "Estado actualizado" : "Estado no se pudo actualizar";
+			echo $rspta ? "Estado Actualizado" : "Estado no se pudo actualizar";
 		}
 	break;
 
@@ -39,7 +46,31 @@ switch ($_GET["op"]){
 	break;
 
 	case 'listar':
+	if (permisos::permiso_modificar($Id_objeto)==0){
 		$rspta=$estado->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>',
+ 				"1"=>$reg->nombre_estado,
+ 				"2"=>$reg->descripcion_estado,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 				);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}else{
+ 			$rspta=$estado->listar();
  		//Vamos a declarar un array
  		$data= Array();
 
@@ -61,7 +92,7 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
-
+ 		}
 	break;
 }
 ?>
