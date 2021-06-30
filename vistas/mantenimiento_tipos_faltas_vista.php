@@ -27,7 +27,7 @@ if($visualizacion==0){
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de faltas');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de tipos faltas');
 }
 
 if (permisos::permiso_insertar($Id_objeto)==0)
