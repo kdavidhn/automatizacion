@@ -9,9 +9,9 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=107; 
+$Id_objeto=113; 
 
- 
+
 $visualizacion= permiso_ver($Id_objeto);
 
 if($visualizacion==0){
@@ -23,11 +23,11 @@ if($visualizacion==0){
             showConfirmButton: false,
             timer: 3000
           });
-      window.location = "../vistas/menu_administracion_cve_vista.php";
+      window.location = "../vistas/pagina_principal_vista.php";
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de repositorios');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de ambitos');
 }
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
@@ -38,6 +38,7 @@ else
     $_SESSION["btnagregar"]="";
   }
 
+
 ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -46,13 +47,13 @@ else
         <div class="row mb-2">
           <div class="col-sm-6">
 
-         <h1>Mantenimiento Tipo De Repositorio</h1>
+         <h1>Registro de Faltas </h1>
           </div>
 
                 <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
-              <li class="breadcrumb-item active"><a href="../vistas/menu_administracion_cve_vista.php">Administrar Módulo CVE</a></li>
+             
             </ol>
           </div>
 
@@ -70,8 +71,8 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Tipos de Repositorios </h1>
-                          <h1><button class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Tipo Repositorio</button></h1>
+                          <h1 class="box-title">Faltas </h1>
+                          <h1><button class="btn btn-success" name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -80,33 +81,56 @@ else
                     <div class="panel-body table-responsive" id="listadoregistros">
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
-                            <th>Opciones</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
+                            <th>Editar</th>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Cuenta</th>
+                            <th>Estudiante</th>
+                            <th>Descripcion</th>
                           </thead>
                           <tbody>                            
                           </tbody>
-                          
                         </table>
                     </div>
-                    <div class="panel-body" style="height: 400px;" id="formularioregistros">
-                        <!--AQUI INICIAL EL FORMULARIO-->
+                    <div class="panel-body table-responsive" style="height: 400px;" id="formularioregistros">
+                        <!-- AQUI INICIAL EL FORMULARIO -->
                         <form name="formulario" id="formulario" method="POST">
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Nombre:</label>
-                            <input type="hidden" name="id_repositorio" id="id_repositorio">
-                            
-                            <!--CAJA DE TEXTO NOMBRE TREPOSITORIO-->
-                            <input type="text" class="form-control" name="nombre_repositorio" id="nombre_repositorio" minlength="3" maxlength="50" placeholder="NOMBRE" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required/>
+                          
+                           <input type="hidden" name="id_falta" id="id_falta">
+                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Tipo de Falta</label>
+                            <select class="form-control select2" name= "id_tipo_falta"id="id_tipo_falta"style="width: 100%;" name="id_tipo_falta" required="">
+                                <option value="0" disabled="disabled">Seleccione una Falta:</option>
+                                  <?php
+                                    $query = $mysqli -> query ("SELECT * FROM tbl_voae_tipos_faltas where condicion= 1");
+                                    while ($resultado = mysqli_fetch_array($query)) {
+                                      echo '<option value="'.$resultado['id_falta'].'"> '.$resultado['nombre_falta'].'</option>' ;
+                                    }
+                                  ?>
+                              </select>
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Descripción:</label>
-                            <!--CAJA DE TEXTO DESCRIPCION TREPOSITORIO-->
-                            <input type="text" class="form-control" name="descripcion_repositorio" id="descripcion_repositorio" minlength="10" maxlength="255" placeholder="DESCRIPCION" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required/>
+                            <label>Fecha Falta</label>
+                            <input class="form-control" type="date" id="fch_falta" name="fch_falta" required/>
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Alumno</label>
+                            <select class="form-control select2" id= "id_usuario_alumno" style="width: 100%;" name="id_usuario_alumno" required="">
+                                <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
+                                  <?php
+                                    $query = $mysqli -> query ("SELECT * FROM tbl_personas WHERE id_tipo_persona = 2");
+                                    while ($resultado = mysqli_fetch_array($query)) {
+                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
+                                    }
+                                  ?>
+                              </select>
+                          </div>
+                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <label>Descripción</label>
+                            <input class="form-control" type="text" id="descripcion" name="descripcion"  required/>
                           </div>
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                            <button class="btn btn-primary" type="submit" name= "btnGuardar" id="btnGuardar" ><i class="fa fa-save"></i> Guardar</button>
 
                             <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                           </div>
@@ -119,9 +143,11 @@ else
       </section><!-- /.content -->
 
     </div><!-- /.content-wrapper -->
-</div>
+  <!--Fin-Contenido-->
+  </div> 
+ 
 
-<script type="text/javascript" src="../js/repositorio.js"></script>
+<script type="text/javascript" src="../js/registro_faltas.js"></script>
 <script>
   function soloLetras(e) {
     var key = e.keyCode || e.which,
@@ -142,6 +168,8 @@ else
     }
   }
 </script>
+ 
+
+
 </body>
 </html>
-

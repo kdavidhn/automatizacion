@@ -34,7 +34,7 @@ switch ($_GET["op"]){
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 				$rspta=$estado->insertar($nombre_estado,$descripcion_estado);
 				echo $rspta ? "Estado Registrado" : "Estado no se pudo registrar";
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL ESTADO "' . $nombre_estado . '"');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL ESTADO: "' . $nombre_estado . '"');
 			}
 
 		} else {
@@ -54,7 +54,7 @@ switch ($_GET["op"]){
 
 				//CONDICION PARA LA MODIFICACION DEL NOMBRE Y LA DESCRIPCION
 				if ($valor_viejo['nombre_estado'] <> $nombre_estado and $valor_viejo['descripcion_estado'] <> $descripcion_estado) {
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE ESTADO "' . $valor_viejo['nombre_estado'] . '" POR "' . $nombre_estado . '" Y LA DESCRIPCION DEL ESTADO A"' . $descripcion_estado . '" ');
+					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE ESTADO "' . $valor_viejo['nombre_estado'] . '" POR "' . $nombre_estado . ', Y LA DESCRIPCION');
 					$rspta=$estado->editar($id_estado,$nombre_estado,$descripcion_estado);
 					echo $rspta ? "Estado Actualizado" : "El Estado no se pudo actualizar";
 
@@ -68,7 +68,7 @@ switch ($_GET["op"]){
 					//CONDICION PARA LA MODIFICACION DE LA DESCRIPCION DEL estado
 
 				} elseif ($valor_viejo['descripcion_estado'] <> $descripcion_estado) {
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL ESTADO "' . $descripcion_estado . '" ');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL ESTADO: ' . $nombre_estado . ' ');
 				$rspta=$estado->editar($id_estado,$nombre_estado,$descripcion_estado);
 				echo $rspta ? "Estado Actualizado" : "El Estado no se pudo actualizar";
 				}

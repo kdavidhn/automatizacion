@@ -9,7 +9,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=108; 
+$Id_objeto=112; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -96,7 +96,7 @@ else
                             <label>Nombre:</label>
                             <input type="hidden" name="id_falta" id="id_falta">
 
-                            <input type="text" class="form-control" name="nombre_falta" id="nombre_falta" style="text-transform: uppercase;" placeholder="nombre" minlength="5" maxlength="50" onkeypress="return soloLetras(event)" required="" />
+                            <input type="text" class="form-control" name="nombre_falta" id="nombre_falta" style="text-transform: uppercase;" placeholder="nombre" minlength="3" maxlength="50" onkeypress="return soloLetras(event)" required="" />
 
 
                           </div>

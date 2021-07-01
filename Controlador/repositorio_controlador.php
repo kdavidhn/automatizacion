@@ -53,7 +53,7 @@ switch ($_GET["op"]){
 
 				//CONDICION PARA LA MODIFICACION DEL NOMBRE Y LA DESCRIPCION
 				if ($valor_viejo['nombre_repositorio'] <> $nombre_repositorio and $valor_viejo['descripcion_repositorio'] <> $descripcion_repositorio) {
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE REPOSITORIO "' . $valor_viejo['nombre_repositorio'] . '" POR "' . $nombre_repositorio . '" Y LA DESCRIPCION DEL TIPO DE REPOSITORIO A"' . $descripcion_repositorio . '" ');
+					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE REPOSITORIO "' . $valor_viejo['nombre_repositorio'] . '" POR "' . $nombre_repositorio . '" Y LA DESCRIPCION DEL TIPO DE REPOSITORIO" ');
 					$rspta=$repositorio->editar($id_repositorio,$nombre_repositorio,$descripcion_repositorio);
 					echo $rspta ? "El TIPO DE REPOSITORIO fue actualizado" : "EL TIPO DE REPOSITORIO no se pudo actualizar";
 
@@ -67,7 +67,7 @@ switch ($_GET["op"]){
 					//CONDICION PARA LA MODIFICACION DE LA DESCRIPCION DEL TIPO DE REPOSITORIO
 
 				} elseif ($valor_viejo['descripcion_repositorio'] <> $descripcion_repositorio) {
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL TIPO DE REPOSITORIO "' . $descripcion_repositorio . '" ');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL TIPO DE REPOSITORIO "' . $nombre_repositorio . '" ');
 				$rspta=$repositorio->editar($id_repositorio,$nombre_repositorio,$descripcion_repositorio);
 				echo $rspta ? "El TIPO DE REPOSITORIO fue actualizado" : "EL TIPO DE REPOSITORIO no se pudo actualizar";
 				}

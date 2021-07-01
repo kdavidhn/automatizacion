@@ -35,6 +35,7 @@ switch ($_GET["op"]){
 				$rspta=$ambito->insertar($nombre_ambito,$descripcion_ambito);
 				echo $rspta ? "Ámbito Registrado" : "Ámbito no se pudo registrar";
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL AMBITO: ' . $nombre_ambito . '');
+				
 			}
 
 		} else {
@@ -54,7 +55,7 @@ switch ($_GET["op"]){
 
 				//CONDICION PARA LA MODIFICACION DEL NOMBRE Y LA DESCRIPCION
 				if ($valor_viejo['nombre_ambito'] <> $nombre_ambito and $valor_viejo['descripcion_ambito'] <> $descripcion_ambito) {
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE AMBITO: ' . $valor_viejo['nombre_ambito'] . ' POR: ' . $descripcion_ambito . ', Y LA DESCRIPCION DEL AMBITO: ' . $nombre_ambito . ' ');
+					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE AMBITO: ' . $valor_viejo['nombre_ambito'] . ' POR: ' . $nombre_ambito . ', Y LA DESCRIPCION DEL AMBITO');
 					$rspta=$ambito->editar($id_ambito,$nombre_ambito,$descripcion_ambito);
 					echo $rspta ? "Ámbito Actualizado" : "Ámbito no se pudo actualizar";
 
@@ -68,7 +69,7 @@ switch ($_GET["op"]){
 					//CONDICION PARA LA MODIFICACION DE LA DESCRIPCION DEL AMBITO
 
 				} elseif ($valor_viejo['descripcion_ambito'] <> $descripcion_ambito) {
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL AMBITO POR "' . $descripcion_ambito . '" ');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL AMBITO: "' . $nombre_ambito . '" ');
 				$rspta=$ambito->editar($id_ambito,$nombre_ambito,$descripcion_ambito);
 				echo $rspta ? "Ámbito Actualizado" : "Ámbito no se pudo actualizar";
 				}

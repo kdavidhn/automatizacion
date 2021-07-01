@@ -60,6 +60,7 @@ $resultado_permisos = $mysqli->query($sql_permisos);
    $_SESSION['mantenimiento_plan'] = 'none';
    $_SESSION['administracion_cve']='none';
    $_SESSION['actividades_cve']='none';
+   $_SESSION['faltas_cve']='none';
    
   
 
@@ -393,7 +394,7 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
 
 
 
-if ($_SESSION['pantalla'] = '104' or $_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '111') {
+if ($_SESSION['pantalla'] = '104' or $_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '111' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '112' or $_SESSION['pantalla'] == '113') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['btn_comite_vida_estudiantil'] = "block";
    }
@@ -416,6 +417,16 @@ if ($_SESSION['pantalla'] = '109') {
 if ($_SESSION['pantalla'] = '110') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['actividades_cve'] = "block";
+   }
+}
+if ($_SESSION['pantalla'] = '112') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['faltas_cve'] = "block";
+   }
+}
+if ($_SESSION['pantalla'] = '113') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['faltas_cve'] = "block";
    }
 }
 

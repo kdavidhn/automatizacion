@@ -33,7 +33,7 @@ switch ($_GET["op"]){
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 				$rspta=$falta->insertar($nombre_falta,$descripcion_falta);
 				echo $rspta ? "Tipo de falta Registrado" : "El TIPO de FALTA  no se pudo registrar";
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL TIPO DE FALTA "' . $nombre_falta . '" CON LA DESCRIPCION "' .$descripcion_falta.'"');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL TIPO DE FALTA "' . $nombre_falta . '"');
 			}
 
 		} else {
@@ -53,7 +53,7 @@ switch ($_GET["op"]){
 
 				//CONDICION PARA LA MODIFICACION DEL NOMBRE Y LA DESCRIPCION
 				if ($valor_viejo['nombre_falta'] <> $nombre_falta and $valor_viejo['descripcion_falta'] <> $descripcion_falta) {
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE FALTA "' . $valor_viejo['nombre_falta'] . '" POR "' . $nombre_falta . '" Y LA DESCRIPCION DEL TIPO DE FALTA A"' . $descripcion_falta . '" ');
+					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL NOMBRE DE FALTA "' . $valor_viejo['nombre_falta'] . '" POR "' . $nombre_falta . '" Y LA DESCRIPCION DEL TIPO DE FALTA ');
 					$rspta=$falta->editar($id_falta,$nombre_falta,$descripcion_falta);
 					echo $rspta ? "El TIPO de FALTA fue actualizado" : "EL TIPO de FALTA no se pudo actualizar";
 
@@ -67,7 +67,7 @@ switch ($_GET["op"]){
 					//CONDICION PARA LA MODIFICACION DE LA DESCRIPCION DEL TIPO DE FALTA
 
 				} elseif ($valor_viejo['descripcion_falta'] <> $descripcion_falta) {
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL TIPO DE FALTA  "' . $nombre_falta . '" A "' . $descripcion_falta . '" ');
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA DESCRIPCION DEL TIPO DE FALTA  "' . $nombre_falta . '" ');
 				$rspta=$falta->editar($id_falta,$nombre_falta,$descripcion_falta);
 				echo $rspta ? "El TIPO de FALTA fue actualizado" : "EL TIPO de FALTA no se pudo actualizar";
 				}

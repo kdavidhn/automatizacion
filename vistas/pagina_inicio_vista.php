@@ -317,7 +317,12 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p> Actividades </p>
                   </a>
                 </li>
-               
+               <li class="nav-item" style="display:<?php echo $_SESSION['faltas_cve'] ?>">
+                  <a href="../vistas/registro_faltas_conducta_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Registro Faltas</p>
+                  </a>
+                </li>   
                 <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
                   <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
