@@ -89,10 +89,20 @@ function guardaryeditar(e)
 	    processData: false,
 
 	    success: function(datos)
-	    {                    
-	          bootbox.alert(datos);	          
-	          mostrarform(false);
-	          tabla.ajax.reload();
+	    {     
+	                   
+	       swal({
+		
+		        title: datos,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+             mostrarform(false);
+             tabla.ajax.reload();
+			
 	    }
 
 	});
@@ -116,31 +126,93 @@ function mostrar(id_ambito)
 //Función para desactivar registros
 function desactivar(id_ambito)
 {
-	bootbox.confirm("¿Está seguro de desactivar el ámbito?", function(result){
-		if(result)
-        {
-        	$.post("../Controlador/ambito_controlador.php?op=desactivar", {id_ambito : id_ambito}, function(e){
-        		bootbox.alert(e);
-	            tabla.ajax.reload();
+	swal({
+		
+        title: "Alerta",
+		text:
+			"¿Está seguro de desactivar el ambito?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/ambito_controlador.php?op=desactivar", {id_ambito : id_ambito}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+
         	});	
-        }
+			
+		} 
 	})
+	
 }
 
 //Función para activar registros
 function activar(id_ambito)
 {
-	bootbox.confirm("¿Está seguro de activar el ámbito?", function(result){
-		if(result)
-        {
-        	$.post("../Controlador/ambito_controlador.php?op=activar", {id_ambito : id_ambito}, function(e){
-        		bootbox.alert(e);
-	            tabla.ajax.reload();
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de activar el ambito?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/ambito_controlador.php?op=activar", {id_ambito : id_ambito}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
         	});	
-        }
+			
+		} 
 	})
 }
 
-
+function eliminar(id_ambito)
+{
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de eliminar el ambito?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/ambito_controlador.php?op=eliminar", {id_ambito : id_ambito}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+        	});	
+			
+		} 
+	})
+}
 init();
 

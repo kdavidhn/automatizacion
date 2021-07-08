@@ -70,7 +70,6 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Tipos de Repositorios </h1>
                           <h1><button class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Tipo Repositorio</button></h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -122,6 +121,12 @@ else
 </div>
 
 <script type="text/javascript" src="../js/repositorio.js"></script>
+<script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+<script src="../plugins/select2/js/select2.min.js"></script>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   function soloLetras(e) {
     var key = e.keyCode || e.which,

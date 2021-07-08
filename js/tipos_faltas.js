@@ -89,10 +89,20 @@ function guardaryeditar(e)
       processData: false,
 
       success: function(datos)
-      {                    
-            bootbox.alert(datos);           
-            mostrarform(false);
-            tabla.ajax.reload();
+       {     
+                     
+         swal({
+    
+            title: datos,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+             mostrarform(false);
+             tabla.ajax.reload();
+      
       }
 
   });
@@ -116,29 +126,67 @@ function mostrar(id_falta)
 //Función para desactivar registros
 function desactivar(id_falta)
 {
-  bootbox.confirm("¿Está seguro de desactivar la falta?", function(result){
-    if(result)
-        {
-          $.post("../Controlador/tipos_faltas_controlador.php?op=desactivar", {id_falta : id_falta}, function(e){
-            bootbox.alert(e);
-              tabla.ajax.reload();
+  swal({
+    
+        title: "Alerta",
+    text:
+      "¿Está seguro de desactivar la falta?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false,
+  }).then((result) => {
+    if (result) {
+      
+      $.post("../Controlador/tipos_faltas_controlador.php?op=desactivar", {id_falta : id_falta}, function(e){
+            swal({
+    
+            title: e,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+      tabla.ajax.reload();
+
           }); 
-        }
+      
+    } 
   })
+  
 }
 
 //Función para activar registros
 function activar(id_falta)
 {
-  bootbox.confirm("¿Está seguro de activar la falta?", function(result){
-    if(result)
-        {
-          $.post("../Controlador/tipos_faltas_controlador.php?op=activar", {id_falta : id_falta}, function(e){
-            bootbox.alert(e);
-              tabla.ajax.reload();
+  swal({
+    
+        title: "Alerta",
+    text:
+      "¿Está seguro de activar la falta?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false,
+  }).then((result) => {
+    if (result) {
+      
+      $.post("../Controlador/tipos_faltas_controlador.php?op=activar", {id_falta : id_falta}, function(e){
+            swal({
+    
+            title: e,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+      tabla.ajax.reload();
+
           }); 
-        }
+      
+    } 
   })
+  
 }
 
 

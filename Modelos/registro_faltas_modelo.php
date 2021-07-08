@@ -19,38 +19,31 @@ Class Faltas
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($id_tipo_falta,$fch_falta,$id_usuario_alumno,$descripcion, $usuario)
+	public function insertar($id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion, $usuario_x)
 	{
-		$sql="INSERT INTO tbl_voae_faltas_conductas(id_tipo_falta,fch_falta,id_usuario_alumno,descripcion, id_usuario_registro, fch_registro)
-		VALUES ('$id_tipo_falta','$fch_falta',63,'$descripcion','$usuario',sysdate())";
+		$sql="INSERT INTO tbl_voae_faltas_conductas(id_tipo_falta,fch_falta,id_persona_alumno,descripcion, id_usuario_registro, fch_registro)
+		VALUES ('$id_tipo_falta','$fch_falta','$id_persona_alumno','$descripcion','$usuario_x',sysdate())";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para editar registros
-	public function editar($id_ambito,$nombre_ambito,$descripcion_ambito)
+	public function editar($id_falta,$id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion)
 	{
-		$sql="UPDATE tbl_voae_ambitos SET nombre_ambito=trim(upper('$nombre_ambito')),descripcion_ambito=trim(upper('$descripcion_ambito')) WHERE id_ambito='$id_ambito'";
+		$sql="UPDATE tbl_voae_faltas_conductas SET id_tipo_falta='$id_tipo_falta',fch_falta='$fch_falta', id_persona_alumno='$id_persona_alumno', descripcion = '$descripcion' WHERE id_falta='$id_falta'";
 		return ejecutarConsulta($sql);
 	}
 
-	//Implementamos un método para desactivar categorías
-	public function desactivar($id_ambito)
+	//Implementamos un método para eliminar categorías
+	public function eliminar($id_falta)
 	{
-		$sql="UPDATE tbl_voae_ambitos SET condicion='0' WHERE id_ambito='$id_ambito'";
-		return ejecutarConsulta($sql);
-	}
-
-	//Implementamos un método para activar categorías
-	public function activar($id_ambito)
-	{
-		$sql="UPDATE tbl_voae_ambitos SET condicion='1' WHERE id_ambito='$id_ambito'";
+		$sql="DELETE FROM tbl_voae_faltas_conductas WHERE id_falta='$id_falta'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id_falta)
 	{
-		$sql="SELECT id_falta, id_tipo_falta, fch_falta, id_usuario_alumno, descripcion FROM tbl_voae_faltas_conductas WHERE id_falta='$id_falta'";
+		$sql="SELECT * FROM tbl_voae_faltas_conductas WHERE id_falta='$id_falta'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
 

@@ -75,9 +75,11 @@ ob_end_flush();
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
                             <th>Opciones</th>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Estado</th>
+                            <th>Aprobación</th>
+                            <th>Fecha</th>
+                            <th>Nombre Solicitud</th>
+                            <th>Usuario</th>
+                            
                           </thead>
                           <tbody>                            
                           </tbody>
@@ -155,7 +157,7 @@ ob_end_flush();
   <!--Fin-Contenido-->
   </div> 
  
-<script type="text/javascript" src="../js/ambito.js"></script>
+<script type="text/javascript" src="../js/actividad_cve.js"></script>
 
  
 

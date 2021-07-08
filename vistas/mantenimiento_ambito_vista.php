@@ -124,6 +124,12 @@ else
  
 
 <script type="text/javascript" src="../js/ambito.js"></script>
+<script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+<script src="../plugins/select2/js/select2.min.js"></script>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   function soloLetras(e) {
     var key = e.keyCode || e.which,

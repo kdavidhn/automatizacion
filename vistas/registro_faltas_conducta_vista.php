@@ -27,7 +27,7 @@ if($visualizacion==0){
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de ambitos');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A registro de faltas');
 }
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
@@ -71,7 +71,6 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Faltas </h1>
                           <h1><button class="btn btn-success" name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button></h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -83,10 +82,10 @@ else
                           <thead>
                             <th>Editar</th>
                             <th>Fecha</th>
-                            <th>Tipo</th>
+                            <th>Tipo Falta</th>
+                            <th>Nombre Alumno</th>
                             <th>Cuenta</th>
-                            <th>Estudiante</th>
-                            <th>Descripcion</th>
+                            <th>Descripción</th>
                           </thead>
                           <tbody>                            
                           </tbody>
@@ -99,10 +98,10 @@ else
                            <input type="hidden" name="id_falta" id="id_falta">
                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Tipo de Falta</label>
-                            <select class="form-control select2" name= "id_tipo_falta"id="id_tipo_falta"style="width: 100%;" name="id_tipo_falta" required="">
-                                <option value="0" disabled="disabled">Seleccione una Falta:</option>
+                            <select class="form-control select2" name="id_tipo_falta" id="id_tipo_falta" style="width: 100%;" required="">
+                                <option value="0" disabled="disabled" >Seleccione una Falta:</option>
                                   <?php
-                                    $query = $mysqli -> query ("SELECT * FROM tbl_voae_tipos_faltas where condicion= 1");
+                                    $query = $mysqli -> query ("SELECT * FROM tbl_voae_tipos_faltas where condicion = 1");
                                     while ($resultado = mysqli_fetch_array($query)) {
                                       echo '<option value="'.$resultado['id_falta'].'"> '.$resultado['nombre_falta'].'</option>' ;
                                     }
@@ -115,10 +114,10 @@ else
                           </div>
                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Alumno</label>
-                            <select class="form-control select2" id= "id_usuario_alumno" style="width: 100%;" name="id_usuario_alumno" required="">
+                            <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
-                                    $query = $mysqli -> query ("SELECT * FROM tbl_personas WHERE id_tipo_persona = 2");
+                                    $query = $mysqli -> query ("SELECT id_persona, concat(nombres,' ',apellidos) as nombres FROM tbl_personas WHERE id_tipo_persona = 2");
                                     while ($resultado = mysqli_fetch_array($query)) {
                                       echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
                                     }
@@ -148,6 +147,12 @@ else
  
 
 <script type="text/javascript" src="../js/registro_faltas.js"></script>
+<script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+<script src="../plugins/select2/js/select2.min.js"></script>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   function soloLetras(e) {
     var key = e.keyCode || e.which,
@@ -168,8 +173,20 @@ else
     }
   }
 </script>
- 
+<script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+
+        $('.select2').select2({
+            placeholder: 'Seleccione una opcion',
+            theme: 'bootstrap4',
+            tags: true,
+        });
+
+    });
+</script>
 
 
 </body>
 </html>
+
+

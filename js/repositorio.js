@@ -89,10 +89,20 @@ function guardaryeditar(e)
 	    processData: false,
 
 	    success: function(datos)
-	    {                    
-	          bootbox.alert(datos);	          
-	          mostrarform(false);
-	          tabla.ajax.reload();
+	    {     
+	                   
+	       swal({
+		
+		        title: datos,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+             mostrarform(false);
+             tabla.ajax.reload();
+			
 	    }
 
 	});
@@ -116,28 +126,63 @@ function mostrar(id_repositorio)
 //Función para desactivar registros
 function desactivar(id_repositorio)
 {
-	bootbox.confirm("¿Está seguro de desactivar el repositorio?", function(result){
-		if(result)
-        {
-        	$.post("../Controlador/repositorio_controlador.php?op=desactivar", {id_repositorio : id_repositorio}, function(e){
-        		bootbox.alert(e);
-	            tabla.ajax.reload();
+	swal({
+		
+        title: "Alerta",
+		text:
+			"¿Está seguro de desactivar el repositorio?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/repositorio_controlador.php?op=desactivar", {id_repositorio : id_repositorio}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+
         	});	
-        }
+			
+		} 
 	})
+	
 }
 
 //Función para activar registros
 function activar(id_repositorio)
 {
-	bootbox.confirm("¿Está seguro de activar el repositorio?", function(result){
-		if(result)
-        {
-        	$.post("../Controlador/repositorio_controlador.php?op=activar", {id_repositorio : id_repositorio}, function(e){
-        		bootbox.alert(e);
-	            tabla.ajax.reload();
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de activar el repositorio?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/repositorio_controlador.php?op=activar", {id_repositorio : id_repositorio}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
         	});	
-        }
+			
+		} 
 	})
 }
 

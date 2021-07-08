@@ -14,9 +14,9 @@ function init(){
 //Función limpiar
 function limpiar()
 {
-	$("#nombre_estado").val("");
-	$("#descripcion_estado").val("");
-	$("#id_estado").val("");
+	$("#nombre_ambito").val("");
+	$("#descripcion_ambito").val("");
+	$("#id_ambito").val("");
 }
 
 //Función mostrar formulario
@@ -61,7 +61,7 @@ function listar()
 		        ],
 		"ajax":
 				{
-					url: '../Controlador/estado_controlador.php?op=listar',
+					url: '../Controlador/actividad_cve_controlador.php?op=listar',
 					type : "get",
 					dataType : "json",						
 					error: function(e){
@@ -82,109 +82,72 @@ function guardaryeditar(e)
 	var formData = new FormData($("#formulario")[0]);
 
 	$.ajax({
-		url: "../Controlador/estado_controlador.php?op=guardaryeditar",
+		url: "../Controlador/ambito_controlador.php?op=guardaryeditar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,
 	    processData: false,
 
 	    success: function(datos)
-	    {     
-	                   
-	       swal({
-		
-		        title: datos,
-				text:" ",
-				icon: "info",
-				buttons: false,
-				dangerMode: false,
-				timer: 3000,
-			});
-             mostrarform(false);
-             tabla.ajax.reload();
-			
+	    {                    
+	          bootbox.alert(datos);	          
+	          mostrarform(false);
+	          tabla.ajax.reload();
 	    }
 
 	});
 	limpiar();
 }
 
-function mostrar(id_estado)
+function mostrar(id_ambito)
 {
-	$.post("../Controlador/estado_controlador.php?op=mostrar",{id_estado : id_estado}, function(data, status)
+	$.post("../Controlador/ambito_controlador.php?op=mostrar",{id_ambito : id_ambito}, function(data, status)
 	{
 		data = JSON.parse(data);		
 		mostrarform(true);
 
-		$("#nombre_estado").val(data.nombre_estado);
-		$("#descripcion_estado").val(data.descripcion_estado);
- 		$("#id_estado").val(data.id_estado);
+		$("#nombre_ambito").val(data.nombre_ambito);
+		$("#descripcion_ambito").val(data.descripcion_ambito);
+ 		$("#id_ambito").val(data.id_ambito);
 
  	})
 }
-
-//Función para desactivar registros
-function desactivar(id_estado)
-{
-	swal({
-		
-        title: "Alerta",
-		text:
-			"¿Está seguro de desactivar el estado?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: false,
-	}).then((result) => {
-		if (result) {
-			
-		 	$.post("../Controlador/estado_controlador.php?op=desactivar", {id_estado : id_estado}, function(e){
-        		swal({
-		
-		        title: e,
-				text:" ",
-				icon: "info",
+/*swal({
+	            title: "",
+				text:"Estado Activado",	
+				icon: "success",
 				buttons: false,
 				dangerMode: false,
-				timer: 3000,
-			});
-			tabla.ajax.reload();
-
+				timer: 2000
+          	});/**/
+//Función para desactivar registros
+function desactivar(id_ambito)
+{
+	bootbox.confirm("¿Está seguro de desactivar el ámbito?", function(result){
+		if(result)
+        {
+        	$.post("../Controlador/ambito_controlador.php?op=desactivar", {id_ambito : id_ambito}, function(e){
+        		bootbox.alert(e);
+	            tabla.ajax.reload();
         	});	
-			
-		} 
+        }
 	})
-	
 }
 
 //Función para activar registros
-function activar(id_estado)
+function activar(id_ambito)
 {
-	swal({
-		title: "Alerta",
-		text:
-			"¿Está seguro de activar el estado?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: false,
-	}).then((result) => {
-		if (result) {
-			
-		 	$.post("../Controlador/estado_controlador.php?op=activar", {id_estado : id_estado}, function(e){
-        		swal({
-		
-		        title: e,
-				text:" ",
-				icon: "info",
-				buttons: false,
-				dangerMode: false,
-				timer: 3000,
-			});
-			tabla.ajax.reload();
+	bootbox.confirm("¿Está seguro de activar el ámbito?", function(result){
+		if(result)
+        {
+        	$.post("../Controlador/ambito_controlador.php?op=activar", {id_ambito : id_ambito}, function(e){
+        		bootbox.alert(e);
+	            tabla.ajax.reload();
         	});	
-			
-		} 
+        }
 	})
 }
 
 
 init();
+

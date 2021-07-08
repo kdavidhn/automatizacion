@@ -17,7 +17,7 @@ function limpiar()
   $("#id_falta").val("");
   $("#id_tipo_falta").val("");
   $("#fch_falta").val("");
-  $("#id_usuario_alumno").val("");
+  $("#id_persona_alumno").val("");
   $("#descripcion").val("");
 }
 
@@ -91,10 +91,20 @@ function guardaryeditar(e)
       processData: false,
 
       success: function(datos)
-      {                    
-            bootbox.alert(datos);           
-            mostrarform(false);
-            tabla.ajax.reload();
+      {     
+                     
+         swal({
+    
+            title: datos,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+             mostrarform(false);
+             tabla.ajax.reload();
+      
       }
 
   });
@@ -103,7 +113,7 @@ function guardaryeditar(e)
 
 function mostrar(id_falta)
 {
-  $.post("../Controlador/registro_falta_controlador.php?op=mostrar",{id_falta : id_falta}, function(data, status)
+  $.post("../Controlador/registro_faltas_controlador.php?op=mostrar",{id_falta : id_falta}, function(data, status)
   {
     data = JSON.parse(data);    
     mostrarform(true);
@@ -111,12 +121,42 @@ function mostrar(id_falta)
     $("#id_falta").val(data.id_falta);
     $("#id_tipo_falta").val(data.id_tipo_falta);
     $("#fch_falta").val(data.fch_falta);
-    $("#id_usuario_alumno").val(data.id_usuario_alumno);
+    $("#id_persona_alumno").val(data.id_persona_alumno);
     $("#descripcion").val(data.descripcion);
 
   })
 }
+function eliminar(id_falta)
+{
+  swal({
+    
+        title: "Alerta",
+    text:
+      "¿Está seguro de eliminar la falta?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false,
+  }).then((result) => {
+    if (result) {
+      
+      $.post("../Controlador/registro_faltas_controlador.php?op=eliminar", {id_falta : id_falta}, function(e){
+            swal({
+    
+            title: e,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+      tabla.ajax.reload();
 
+          }); 
+      
+    } 
+  })
+  
+} 
 
 
 init();

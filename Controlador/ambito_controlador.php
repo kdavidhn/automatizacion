@@ -106,7 +106,12 @@ switch ($_GET["op"]){
  		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ACTIVO', 'EL AMBITO: ' . $bt_nombre_ambito['nombre_ambito'] . '');
 	break;
 
+	case 'eliminar':
+	
+		$rspta=$ambito->eliminar($id_ambito);
+ 		echo $rspta ? "Registro Eliminado" : "Error";
 
+	break;
 
 	case 'mostrar':
 	
@@ -128,8 +133,9 @@ switch ($_GET["op"]){
  			$data[]=array(
  				"0"=>($reg->condicion)?'<button class="btn btn-warning" id="btnmodificar" name="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
  					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
- 					'<button class="btn btn-warning" name="btnmodificar" id="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>',
+ 					' <button class="btn btn-warning" name="btnmodificar" id="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>', 
  				"1"=>$reg->nombre_ambito,
  				"2"=>$reg->descripcion_ambito,
  				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
@@ -153,9 +159,10 @@ switch ($_GET["op"]){
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
  				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_ambito.')"><i class="fa fa-window-close"></i></button>':
- 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" onclick="activar('.$reg->id_ambito.')"><i class="fa fa-check"></i></button>',
+					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_ambito.')"><i class="fa fa-window-close"></i></button>':
+					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
+					' <button class="btn btn-primary" onclick="activar('.$reg->id_ambito.')"><i class="fa fa-check"></i></button>'.
+					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_ambito.')"><i class="fas fa-trash-alt"></i></button>',
  				"1"=>$reg->nombre_ambito,
  				"2"=>$reg->descripcion_ambito,
  				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':

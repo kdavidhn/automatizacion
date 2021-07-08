@@ -39,6 +39,7 @@ else
   }
 
 ?>
+
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -69,8 +70,7 @@ else
             <div class="card-header">
               <div class="col-md-12">
                   <div class="box">
-                    <div class="box-header with-border">
-                          <h1 class="box-title">Estados </h1>
+                    <div class="box-header with-border">                         
                           <h1><button class="btn btn-success"  name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Estado</button></h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -117,12 +117,20 @@ else
                   </div><!-- /.box -->
               </div><!-- /.col -->
           </div><!-- /.row -->
+          <div class="RespuestaAjax"></div>
       </section><!-- /.content -->
 
     </div><!-- /.content-wrapper -->
  </div>
 
 <script type="text/javascript" src="../js/estado.js"></script>
+
+<script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>
+<script src="../plugins/select2/js/select2.min.js"></script>
+
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script>
   function soloLetras(e) {
     var key = e.keyCode || e.which,

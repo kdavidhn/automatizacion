@@ -1,4 +1,3 @@
-
 <?php 
 //Incluímos inicialmente la conexión a la base de datos
 
@@ -10,7 +9,7 @@ require "../clases/funcion_permisos.php";
 
 
 
-Class Ambito
+Class Actividad
 {
 	//Implementamos nuestro constructor
 	public function __construct()
@@ -57,15 +56,8 @@ Class Ambito
 	//Implementar un método para listar los registros
 	public function listar()
 	{
-		$sql="SELECT * FROM tbl_voae_ambitos";
+		$sql="SELECT * FROM vista_actividad_cve";
 		return ejecutarConsulta($sql);		
-	}
-
-	//Implementamos un método para eliminar categorías
-	public function eliminar($id_ambito)
-	{
-		$sql="DELETE FROM tbl_voae_ambitos WHERE id_ambito='$id_ambito'";
-		return ejecutarConsulta($sql);
 	}
 }
 
