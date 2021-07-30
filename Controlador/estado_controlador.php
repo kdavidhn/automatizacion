@@ -154,7 +154,8 @@ switch ($_GET["op"]){
 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="far fa-edit"></i></button>'.
 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_estado.')"><i class="fa fa-window-close"></i></button>':
 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_estado.')"><i class="far fa-edit"></i></button>'.
-					' <button class="btn btn-primary" onclick="activar('.$reg->id_estado.')"><i class="fa fa-check"></i></button>',
+					' <button class="btn btn-primary" onclick="activar('.$reg->id_estado.')"><i class="fa fa-check"></i></button>'.
+					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_estado.')"><i class="fas fa-trash-alt"></i></button>',
 				"1"=>$reg->nombre_estado,
 				"2"=>$reg->descripcion_estado,
 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':

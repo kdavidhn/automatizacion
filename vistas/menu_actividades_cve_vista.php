@@ -16,7 +16,12 @@ if (permiso_ver('110')=='1') {
   $_SESSION['solicitud_actividades_vista']="No 
             tiene permisos para visualizar";
 }
-
+if (permiso_ver('115')=='1') {
+  $_SESSION['gestion_actividades_vista']="...";
+} else {
+  $_SESSION['gestion_actividades_vista']="No 
+            tiene permisos para visualizar";
+}
 
 
 
@@ -71,7 +76,22 @@ if (permiso_ver('110')=='1') {
               <div class="icon">
                 <i class="fas fa-edit"></i>
               </div>
-              <a href="../vistas/Actividad_cve_vista.php" class="small-box-footer">
+              <a href="../vistas/Actividad_cve_solicitud_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Box 2 -->
+          <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h5>Actividades<br> Gestión de Actividades </h5>
+                <p><?php echo $_SESSION['gestion_actividades_vista']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/actividad_cve_gestion_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

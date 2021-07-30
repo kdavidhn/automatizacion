@@ -61,6 +61,7 @@ Class Ambito
 		return ejecutarConsulta($sql);		
 	}
 
+
 	//Implementamos un método para eliminar categorías
 	public function eliminar($id_ambito)
 	{

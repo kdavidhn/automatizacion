@@ -1,5 +1,5 @@
 <?php
-
+ 
 
 session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
@@ -71,7 +71,7 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 class="box-title">Ámbitos </h1>
+                          
                           <h1><button class="btn btn-success" name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Ámbito</button></h1>
                         <div class="box-tools pull-right">
                         </div>
@@ -111,7 +111,13 @@ else
                             <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
                           </div>
                         </form>
+
                     </div>
+                    
+
+
+                        
+                    
                     <!--Fin centro -->
                   </div><!-- /.box -->
               </div><!-- /.col -->

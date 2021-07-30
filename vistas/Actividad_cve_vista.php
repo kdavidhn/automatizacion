@@ -75,9 +75,9 @@ ob_end_flush();
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
                             <th>Opciones</th>
-                            <th>Aprobación</th>
+                            <th>Solicitud</th>
                             <th>Fecha</th>
-                            <th>Nombre Solicitud</th>
+                            <th>Nombre Actividad</th>
                             <th>Usuario</th>
                             
                           </thead>
@@ -89,57 +89,8 @@ ob_end_flush();
               <form name="formulario" id="formulario" method="POST">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>No.Solicitud:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Fecha de Solicitud:</label>
-                  <input type="date" class="form-control" name="descripcion" id="descripcion" maxlength="256" placeholder="Descripción">
-                </div>
-                <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Nombre de la Actividad:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder= "Nombre" required> 
-                </div>
-                <div class="form-group col-lg-12 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Ubicacion de la Actividad:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Periodo Academico:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <select name="nombre" id="nombre"class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                    <option value="volvo">Primer Periodo</option>
-                    <option value="saab">Segundo Periodo</option>
-                    <option value="mercedes">Tercer Periodo</option>
-                  </select> 
-                </div>
-                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 maxlength">
-                  <label>Fecha Incial:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="datetime-local" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-12 maxlength">
-                  <label>Fecha Final:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="datetime-local" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Poblacion Objetiva:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Ambito:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Descripcion:</label>
-                  <input type="hidden" name="idestado" id="idestado">
-                  <input type="text" class="form-control" name="nombre" id="nombre" maxlength="50" placeholder="Nombre" required>
+                  <input type="hidden" name="id_actividad_voae" id="id_actividad_voae">
+                  <input type="text" class="form-control" name="no_solicitud" id="no_solicitud" maxlength="50" placeholder="Nombre" required>
                 </div>
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <button class="btn btn-primary pull-right" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Enviar Solicitud</button>

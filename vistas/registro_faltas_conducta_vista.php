@@ -71,16 +71,23 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1><button class="btn btn-success" name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button></h1>
+                          <h1 align="right"><button class="btn btn-success"  name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button></h1>
+                          <form method="post" action="../Controlador/reporte_faltas_conducta_controlador.php"> 
+                                <button  class="btn btn-success " id="pdfHtml5" name="pdfHtml5"> <i class="fas fa-file-pdf"></i> <a style="font-weight: bold;">Exportar a PDF</a> </button>
+                                <input type="text" class="form-control"  readonly hidden>
+
+                            </form>
+
                         <div class="box-tools pull-right">
                         </div>
                     </div>
                     <!-- /.box-header -->
                     <!-- centro -->
-                    <div class="panel-body table-responsive" id="listadoregistros">
+                    <div id="listadoregistros">
                         <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">
                           <thead>
                             <th>Editar</th>
+                            <th>ID</th>
                             <th>Fecha</th>
                             <th>Tipo Falta</th>
                             <th>Nombre Alumno</th>
@@ -95,7 +102,9 @@ else
                         <!-- AQUI INICIAL EL FORMULARIO -->
                         <form name="formulario" id="formulario" method="POST">
                           
-                           <input type="hidden" name="id_falta" id="id_falta">
+                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            <input class="form-control" type="hidden" id="id_falta" name="id_falta"  required/>
+                          </div>
                             <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             <label>Tipo de Falta</label>
                             <select class="form-control select2" name="id_tipo_falta" id="id_tipo_falta" style="width: 100%;" required="">
@@ -117,7 +126,7 @@ else
                             <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
-                                    $query = $mysqli -> query ("SELECT id_persona, concat(nombres,' ',apellidos) as nombres FROM tbl_personas WHERE id_tipo_persona = 2");
+                                    $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12;");
                                     while ($resultado = mysqli_fetch_array($query)) {
                                       echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
                                     }

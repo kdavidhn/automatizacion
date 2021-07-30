@@ -27,7 +27,6 @@ if (session_status() === PHP_SESSION_NONE) {
   <title>Informatica Administrativa</title>
 
 
-
   <!-- SweetAlert2 -->
   <link rel="stylesheet" href="../plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
   <!-- Font Awesome Icons -->
@@ -52,7 +51,7 @@ if (session_status() === PHP_SESSION_NONE) {
   <link rel="stylesheet" href="../plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables/DataTables-1.10.18/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="../plugins/datatables-responsive/css/dataTables.bootstrap4.min.css">
-  <link href="../public/datatables/buttons.dataTables.min.css" rel="stylesheet"/>
+  
   <!-- overlayScrollbars -->
   <link rel="stylesheet" href="../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
   <!-- Theme style -->
@@ -322,7 +321,19 @@ if (session_status() === PHP_SESSION_NONE) {
                     <i class="far fa-circle nav-icon"></i>
                     <p>Registro Faltas</p>
                   </a>
-                </li>   
+                </li> 
+                <li class="nav-item" style="display:<?php echo $_SESSION['memos_cve'] ?>">
+                  <a href="../vistas/memorandum_cve_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Memorándums</p>
+                  </a>
+                </li>  
+                <li class="nav-item" style="display:<?php echo $_SESSION['horas_cve'] ?>">
+                  <a href="../vistas/horas_voae_cve_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Horas VOAE</p>
+                  </a>
+                </li>  
                 <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
                   <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
@@ -561,6 +572,18 @@ if (session_status() === PHP_SESSION_NONE) {
     <script src="../public/datatables/jszip.min.js"></script>
     <script src="../public/datatables/pdfmake.min.js"></script>
     <script src="../public/datatables/vfs_fonts.js"></script>
+
+ <link rel="stylesheet" type="text/css" href="../public/DataTables-1.10.25/css/dataTables.bootstrap4.min.css"/>
+<link rel="stylesheet" type="text/css" href="../public/Buttons-1.7.1/css/buttons.bootstrap4.min.css"/>
+ 
+<script type="text/javascript" src="../public/pdfmake-0.1.36/pdfmake.min.js"></script>
+<script type="text/javascript" src="../public/pdfmake-0.1.36/vfs_fonts.js"></script>
+<script type="text/javascript" src="../public/DataTables-1.10.25/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../public/DataTables-1.10.25/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="../public/Buttons-1.7.1/js/dataTables.buttons.min.js"></script>
+<script type="text/javascript" src="../public/Buttons-1.7.1/js/buttons.bootstrap4.min.js"></script>
+<script type="text/javascript" src="../public/Buttons-1.7.1/js/buttons.html5.min.js"></script>
+
 
   <script type="text/javascript">
     //Colorpicker

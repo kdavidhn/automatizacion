@@ -1,3 +1,7 @@
+var hoy = new Date();
+fecha = hoy.getDate() + '-' + ( hoy.getMonth() + 1 ) + '-' + hoy.getFullYear();
+hora = hoy.getHours() + ':' + hoy.getMinutes() + ':' + hoy.getSeconds();
+fechaYHora = fecha + ' ' + hora;
 var tabla;
 
 //Función que se ejecuta al inicio
@@ -31,12 +35,14 @@ function mostrarform(flag)
     $("#formularioregistros").show();
     $("#btnGuardar").prop("disabled",false);
     $("#btnagregar").hide();
+    $("#pdfHtml5").hide();
   }
   else
   {
     $("#listadoregistros").show();
     $("#formularioregistros").hide();
     $("#btnagregar").show();
+    $("#pdfHtml5").show();
   }
 }
 
@@ -54,13 +60,32 @@ function listar()
   {
     "aProcessing": true,//Activamos el procesamiento del datatables
       "aServerSide": true,//Paginación y filtrado realizados por el servidor
-      dom: 'Bfrtip',//Definimos los elementos del control de tabla
-      buttons: [              
-                'copyHtml5',
-                'excelHtml5',
-                'csvHtml5',
-                'pdf'
-            ],
+      "language": {
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ registros",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ningún dato disponible en esta tabla",
+      "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sSearch": "Buscar:",
+      "sUrl": "",
+      "sInfoThousands": ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Último",
+        "sNext": "Siguiente",
+        "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+      dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
+      buttons: [],
     "ajax":
         {
           url: '../Controlador/registro_faltas_controlador.php?op=listar',
@@ -71,10 +96,12 @@ function listar()
           }
         },
     "bDestroy": true,
-    "iDisplayLength": 5,//Paginación
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+    "iDisplayLength": 10,//Paginación
       "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
   }).DataTable();
-}
+  }
+
 //Función para guardar o editar
 
 function guardaryeditar(e)
@@ -97,7 +124,7 @@ function guardaryeditar(e)
     
             title: datos,
         text:" ",
-        icon: "info",
+        icon: "success",
         buttons: false,
         dangerMode: false,
         timer: 3000,
@@ -126,6 +153,7 @@ function mostrar(id_falta)
 
   })
 }
+
 function eliminar(id_falta)
 {
   swal({
@@ -144,7 +172,7 @@ function eliminar(id_falta)
     
             title: e,
         text:" ",
-        icon: "info",
+        icon: "success",
         buttons: false,
         dangerMode: false,
         timer: 3000,

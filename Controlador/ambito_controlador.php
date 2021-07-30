@@ -120,8 +120,7 @@ switch ($_GET["op"]){
  		echo json_encode($rspta);
 	break;
 
-
-
+	
 	case 'listar':
 	//SE CREA UNA CONDICION PARA VERIFICAR SI TIENE PERMISO DE MODIFICAR
 	if (permisos::permiso_modificar($Id_objeto)==0){
