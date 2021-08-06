@@ -110,7 +110,7 @@ else
                           <!-- Card 1 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">TIPO DE FALTA Y FECHA</h3>
+                  <h3 class="card-title">Tipo de Falta y Fecha</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -144,7 +144,7 @@ else
                 <!-- Card 2 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">ALUMNO Y DESCRIPCION</h3>
+                  <h3 class="card-title">Alumno y Descripción</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -188,7 +188,7 @@ else
                 
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">SELECCION ALUMNO (SE ENLISTAN SOLO LOS ALUMNOS QUE TIENEN UNA O MAS FALTAS) </h3>
+                  <h3 class="card-title">Sección Alumno (SE ENLISTAN SOLO LOS ALUMNOS QUE TIENEN UNA O MAS FALTAS) </h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -218,7 +218,7 @@ else
                 <!-- Card 2 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">TIPO DE CONDUCTA</h3>
+                  <h3 class="card-title">Tipo de Conducta</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>

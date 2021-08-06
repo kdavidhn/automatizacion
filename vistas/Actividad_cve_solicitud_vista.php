@@ -12,11 +12,7 @@ require_once ('../clases/funcion_permisos.php');
 
 $Id_objeto=110; 
 $hoy=date("y-m-d");
-if (permisos::permiso_insertar($Id_objeto)=='0'){
-    $_SESSION["btnagregar"]="hidden";
-  } else {
-    $_SESSION["btnagregar"]="";
-  }
+
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -36,8 +32,14 @@ if($visualizacion==0){
   }else{
     bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Solicitud de Actividades CVE');
   }
-
-  ob_end_flush();
+  if (permisos::permiso_insertar($Id_objeto)==0)
+    {
+    $_SESSION["btnagregar"]="hidden";
+    }
+  else
+    {
+      $_SESSION["btnagregar"]="";
+    }
 
 
   ?>
@@ -74,10 +76,10 @@ if($visualizacion==0){
           <div class="box">
             
             <div class="box-header with-border">
-              <h1 align="right"><button class="btn btn-success" id="btnagregar" name="btnagregar" <?php $_SESSION['btnagregar'];?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Solicitud</button></h1>
+              <h1 align="right"><button style="margin-right: 10px" class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> name="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Solicitud</button>
               <div class="box-tools pull-right">
               </div>
-              <!-- /.box-header -->
+              </div><!-- /.box-header -->
               <!-- centro -->
               <div class="panel-body table-responsive" id="listadoregistros">
                 <table id="tbllistado" class="table table-striped table-bordered table-condensed table-hover">

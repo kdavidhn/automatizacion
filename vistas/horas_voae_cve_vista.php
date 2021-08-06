@@ -116,7 +116,7 @@ else
                  <!-- Card 1 -->
               <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">IDENTIFICADOR Y NOMBRE ACTIVIDAD</h3>
+                  <h3 class="card-title">Identificador y Nombre Actividad</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -148,7 +148,7 @@ else
                 <!-- Card 2 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">UBICACION Y FECHA INICIAL</h3>
+                  <h3 class="card-title">Ubicación y Fecha Inicial</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -171,7 +171,7 @@ else
                 <!-- Card 3 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">FECHA FINAL Y DESCRIPCION</h3>
+                  <h3 class="card-title">Fecha Final y Descripción</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -199,7 +199,7 @@ else
                 <!-- Card 7 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">OBSERVACIONES Y AMBITO</h3>
+                  <h3 class="card-title">Observaciones y Ámbito</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -231,7 +231,7 @@ else
                 <!-- Card 9 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">PERIODO ACADEMICO</h3>
+                  <h3 class="card-title">Periodo Académico</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -262,7 +262,7 @@ else
                 <!-- Card 1 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">SELECCION ALUMNO Y ACTIVIDAD</h3>
+                  <h3 class="card-title">Selección Alumno y Actividad</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -303,7 +303,7 @@ else
                 <!-- Card 2 -->
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">HORAS A ASIGNAR</h3>
+                  <h3 class="card-title">Horas a Asignar</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
