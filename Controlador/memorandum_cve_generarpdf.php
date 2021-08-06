@@ -1,13 +1,9 @@
 <?php
 
-require_once ('../clases/funcion_permisos.php');
-require_once ('../clases/Conexion.php');
+
 require_once('../clases/conexion_mantenimientos.php');
 require_once ('../clases/Conexionvoae.php');
-require_once ('../clases/funcion_visualizar.php');
-require_once "../Modelos/memorandum_cve_modelo.php";
-require_once ('../clases/funcion_bitacora.php');
-require_once ('../pdf/fpdf/fpdf.php');
+require_once ('../Reporte/pdf/fpdf.php');
 
 
 $instancia_conexion = new conexion();
@@ -41,6 +37,15 @@ class pdf extends FPDF
         $this->ln();
         $this->setX(35);
         $this->write(5,'Comite de Vida Estudiantil');
+        $this->ln();
+        $this->SetX(35);
+        $this->SetFont('Arial','B',8);
+        $this->SetTextColor(255,255,255);
+        $this->write(5,'Fecha de documento:');
+        $this->SetTextColor(255,255,255);
+            date_default_timezone_set("America/Tegucigalpa");
+            $fecha= date('d-m-Y H:i');
+        $this->write(5,'    '.$fecha);
 
         $this->ln();
         $this->SetFont('Arial','B',10);
@@ -135,6 +140,10 @@ class pdf extends FPDF
         
 
     }
+
+    $this->setX(40);
+    $this->SetFont('Arial','',10);
+    $this->Write(7, 'Att,');
 
     }
 

@@ -34,6 +34,12 @@ if (permiso_ver('108')=='1') {
   $_SESSION['mantenimiento_tipos_faltas_vista']="No 
             tiene permisos para visualizar";
 }
+if (permiso_ver('120')=='1') {
+  $_SESSION['mantenimiento_tipos_memorandum_vista']="...";
+} else {
+  $_SESSION['mantenimiento_tipos_memorandum_vista']="No 
+            tiene permisos para visualizar";
+}
 
 
 
@@ -137,6 +143,21 @@ if (permiso_ver('108')=='1') {
                 <i class="fas fa-edit"></i>
               </div>
               <a href="../vistas/mantenimiento_tipos_faltas_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+            <!-- Box 5 -->
+           <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h5>Mantenimiento <br> Tipos de Memorandum</h5>
+                <p><?php echo $_SESSION['mantenimiento_tipos_memorandum_vista']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/mantenimiento_tipos_memorandum_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

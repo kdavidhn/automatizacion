@@ -31,7 +31,7 @@ if($visualizacion==0){
 }
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
-  $_SESSION["btnagregar"]="disabled";
+  $_SESSION["btnagregar"]="hidden";
   }
 else
   {
@@ -40,6 +40,7 @@ else
 
 
 ?>
+<body oncopy="return false" onpaste="return false">
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -62,7 +63,14 @@ else
         </div>
       </div><!-- /.container-fluid -->
     </section>
-<!--Contenido-->
+<!--Contenido <div class=" px-12">
+                        <button class="btn btn-success "> <i class="fas fa-file-pdf"></i> <a style="font-weight: bold;" onclick="ventana1()">Exportar a PDF</a> </button>
+                      </div>
+                      <script type="text/javascript" language="javascript">
+                        function ventana3() {
+                          window.open("../Controlador/reporte_mantenimiento_periodo_controlador.php", "REPORTE");
+                        }
+                      </script>-->
       <!-- Content Wrapper. Contains page content -->
       <div class="card card-default">        
         <!-- Main content -->
@@ -71,12 +79,9 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <h1 align="right"><button class="btn btn-success"  name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button></h1>
-                          <form method="post" action="../Controlador/reporte_faltas_conducta_controlador.php"> 
-                                <button  class="btn btn-success " id="pdfHtml5" name="pdfHtml5"> <i class="fas fa-file-pdf"></i> <a style="font-weight: bold;">Exportar a PDF</a> </button>
-                                <input type="text" class="form-control"  readonly hidden>
-
-                            </form>
+                          <h1 align="right"><button class="btn btn-success"  name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button>
+                            <button class="btn btn-success"  name="btnconstancia" id="btnconstancia"  onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Generar Constancia Alumno</button></h1>
+                          
 
                         <div class="box-tools pull-right">
                         </div>
@@ -98,16 +103,26 @@ else
                           </tbody>
                         </table>
                     </div>
-                    <div class="panel-body table-responsive" style="height: 400px;" id="formularioregistros">
+                    <div  id="formularioregistros">
                         <!-- AQUI INICIAL EL FORMULARIO -->
                         <form name="formulario" id="formulario" method="POST">
                           
-                           <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <input class="form-control" type="hidden" id="id_falta" name="id_falta"  required/>
-                          </div>
-                            <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Tipo de Falta</label>
-                            <select class="form-control select2" name="id_tipo_falta" id="id_tipo_falta" style="width: 100%;" required="">
+                          <!-- Card 1 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">TIPO DE FALTA Y FECHA</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Tipo de Falta:</label>
+                  <input class="form-control" type="hidden" id="id_falta" name="id_falta"  required/>
+                  <select class="form-control select2" name="id_tipo_falta" id="id_tipo_falta" style="width: 100%;" required="">
                                 <option value="0" disabled="disabled" >Seleccione una Falta:</option>
                                   <?php
                                     $query = $mysqli -> query ("SELECT * FROM tbl_voae_tipos_faltas where condicion = 1");
@@ -116,14 +131,31 @@ else
                                     }
                                   ?>
                               </select>
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Fecha Falta</label>
-                            <input class="form-control" type="date" id="fch_falta" name="fch_falta" required/>
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Alumno</label>
-                            <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                  <label>Fecha Falta:</label>
+                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fch_falta" id="fch_falta" maxlength="256" >
+                </div>
+                </div>
+                </div>
+                </div>
+                
+
+                <!-- Card 2 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">ALUMNO Y DESCRIPCION</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Alumno:</label>
+                  <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
                                     $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12;");
@@ -132,11 +164,15 @@ else
                                     }
                                   ?>
                               </select>
-                          </div>
-                          <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                            <label>Descripción</label>
-                            <input class="form-control" type="text" id="descripcion" name="descripcion"  required/>
-                          </div>
+                </div>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Descripción:</label>
+                  <input class="form-control" minlength="5" maxlength="200" type="text" id="descripcion" name="descripcion"  style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required placeholder="Descripción" />
+                </div>
+                </div>
+                </div>
+                </div>
+
                           <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                             <button class="btn btn-primary" type="submit" name= "btnGuardar" id="btnGuardar" ><i class="fa fa-save"></i> Guardar</button>
 
@@ -144,6 +180,74 @@ else
                           </div>
                         </form>
                     </div>
+
+                    <div  id="formularioregistros2">
+             
+                <form name="formulario2" id="formulario2" method="POST" action="../Controlador/generar_conducta_cve_pdf.php">
+                <!-- Card 1 -->
+                
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">SELECCION ALUMNO (SE ENLISTAN SOLO LOS ALUMNOS QUE TIENEN UNA O MAS FALTAS) </h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Alumno:</label>
+                  <select class="form-control-lg select2" id= "id_persona" style="width: 100%;" name="id_persona" required="">
+                                <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
+                                  <?php
+                                    $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona join tbl_voae_faltas_conductas on tbl_personas.id_persona = tbl_voae_faltas_conductas.id_persona_alumno Where id_tipo_persona=2 and id_atributo=12;");
+                                    while ($resultado = mysqli_fetch_array($query)) {
+                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
+                                    }
+                                  ?>
+                              </select>
+                </div>
+                 
+                </div>
+                </div>
+                </div>
+               
+
+                <!-- Card 2 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">TIPO DE CONDUCTA</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Conducta:</label>
+                  <select class="form-control select2" name="conducta" id="conducta" class="form-control"  maxlength="50" required>
+                    <option value="EXCELENTE CONDUCTA">- EXCELENTE CONDUCTA</option>
+                    <option value="MUY BUENA CONDUCTA">- MUY BUENA CONDUCTA</option>
+                    <option value="BUENA CONDUCTA">- BUENA CONDUCTA</option>
+                    <option value="MALA CONDUCTA">- MALA CONDUCTA</option>
+                  </select>
+                </div>
+                </div>
+                </div>
+
+                
+                
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar2"><i class="fa fa-save"></i> Generar Constancia</button>
+                  
+                  <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
+                </div>
+              </form>
+            </div>
+
                     <!--Fin centro -->
                   </div><!-- /.box -->
               </div><!-- /.col -->

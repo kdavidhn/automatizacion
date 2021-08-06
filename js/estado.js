@@ -212,5 +212,33 @@ function activar(id_estado)
 	})
 }
 
+function eliminar(id_estado)
+{
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de eliminar el estado?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/estado_controlador.php?op=eliminar", {id_estado : id_estado}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+        	});	
+			
+		} 
+	})
+}
 
 init();

@@ -106,10 +106,19 @@ switch ($_GET["op"]){
  		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ACTIVO', 'EL AMBITO: ' . $bt_nombre_ambito['nombre_ambito'] . '');
 	break;
 
-	case 'eliminar':
-	
+	case 'eliminar': 
+		//SE EXTRAE EL NOMBRE DEL AMBITO A ACTIVAR Y SE GUARDA EN UNA VARIABLE
+ 		$valor = "select nombre_ambito, descripcion_ambito from tbl_voae_ambitos where id_ambito = '$id_ambito'";
+	    $result_valor = $mysqli->query($valor);
+	    $bt_nombre_ambito = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+    	//SE MANDA A LA BITACORA LA ACCION DE ACTIVAR EL AMBITO
+ 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'EL AMBITO: ' . $bt_nombre_ambito['nombre_ambito'] . '');
+ 		
 		$rspta=$ambito->eliminar($id_ambito);
  		echo $rspta ? "Registro Eliminado" : "Error";
+
+ 		
 
 	break;
 
@@ -121,20 +130,21 @@ switch ($_GET["op"]){
 	break;
 
 	
-	case 'listar':
+	case 'listar': 
 	//SE CREA UNA CONDICION PARA VERIFICAR SI TIENE PERMISO DE MODIFICAR
-	if (permisos::permiso_modificar($Id_objeto)==0){
+	if (permisos::permiso_eliminar($Id_objeto)==1 and permisos::permiso_modificar($Id_objeto)==1){
 		$rspta=$ambito->listar();
  		//Vamos a declarar un array
  		$data= Array();
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" id="btnmodificar" name="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
- 					' <button class="btn btn-warning" name="btnmodificar" id="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>'.
- 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>', 
+ 				"0"=>($reg->condicion)?
+ 				' <button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
+					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_ambito.')"><i class="fa fa-window-close"></i></button>':
+					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_ambito.')"><i class="fas fa-trash-alt"></i></button>'.
+					' <button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
+					' <button class="btn btn-primary" onclick="activar('.$reg->id_ambito.')"><i class="fa fa-check"></i></button>', 
  				"1"=>$reg->nombre_ambito,
  				"2"=>$reg->descripcion_ambito,
  				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
@@ -149,7 +159,7 @@ switch ($_GET["op"]){
  			"aaData"=>$data);
  		echo json_encode($results);	
 
- 	}else{
+ 	}elseif (permisos::permiso_eliminar($Id_objeto)==0 and permisos::permiso_modificar($Id_objeto)==0){
 
  		$rspta=$ambito->listar();
  		//Vamos a declarar un array
@@ -157,11 +167,13 @@ switch ($_GET["op"]){
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
-					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_ambito.')"><i class="fa fa-window-close"></i></button>':
-					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
-					' <button class="btn btn-primary" onclick="activar('.$reg->id_ambito.')"><i class="fa fa-check"></i></button>'.
-					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_ambito.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"0"=>($reg->condicion)?
+ 				
+ 				' <button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>'.
+ 					' <button class="btn btn-warning" name="btnmodificar" id="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>', 
  				"1"=>$reg->nombre_ambito,
  				"2"=>$reg->descripcion_ambito,
  				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
@@ -174,7 +186,63 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
- 	}	
+ 	
+ 		}elseif (permisos::permiso_modificar($Id_objeto)==0){
+ 			$rspta=$ambito->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?
+ 				
+ 				' <button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_ambito.')"><i class="fas fa-trash-alt"></i></button>'.
+ 					' <button class="btn btn-warning" name="btnmodificar" id="btnmodificar" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>', 
+ 				"1"=>$reg->nombre_ambito,
+ 				"2"=>$reg->descripcion_ambito,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 			);
+ 		}
+ 		
+		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+ 		}elseif (permisos::permiso_eliminar($Id_objeto)==0){
+ 		$rspta=$ambito->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?
+ 				
+ 				' <button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
+					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_ambito.')"><i class="fa fa-window-close"></i></button>':
+					' <button class="btn btn-danger" disabled onclick=""><i class="fas fa-trash-alt"></i></button>'.
+					' <button class="btn btn-warning" onclick="mostrar('.$reg->id_ambito.')"><i class="far fa-edit"></i></button>'.
+					' <button class="btn btn-primary" onclick="activar('.$reg->id_ambito.')"><i class="fa fa-check"></i></button>', 
+ 				"1"=>$reg->nombre_ambito,
+ 				"2"=>$reg->descripcion_ambito,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 			);
+ 		}
+ 		
+		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}
 break;
 }
 ?>

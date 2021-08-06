@@ -40,6 +40,12 @@ Class falta
 		$sql="UPDATE tbl_voae_tipos_faltas SET condicion='1' WHERE id_falta='$id_falta'";
 		return ejecutarConsulta($sql);
 	}
+	//Implementamos un método para eliminar categorías
+	public function eliminar($id_falta)
+	{
+		$sql="DELETE FROM tbl_voae_tipos_faltas WHERE id_falta='$id_falta'";
+		return ejecutarConsulta($sql);
+	}
 
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id_falta)

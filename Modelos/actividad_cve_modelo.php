@@ -34,26 +34,27 @@ Class Actividad
 	//Implementamos un método para denegar categorías
 	public function denegar($id_actividad_voae)
 	{
-		$sql="UPDATE tbl_voae_actividades SET id_estado='14' WHERE id_actividad_voae='$id_actividad_voae'";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='4' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 	public function solicitado($id_actividad_voae)
 	{
-		$sql="UPDATE tbl_voae_actividades SET id_estado='16' WHERE id_actividad_voae='$id_actividad_voae'";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='2' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para aprobar categorías
 	public function aprobar($id_actividad_voae)
 	{
-		$sql="UPDATE tbl_voae_actividades SET id_estado='13' WHERE id_actividad_voae='$id_actividad_voae'";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='3',condicion= '0' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 
 	//Implementamos un método para Finalizar Actividades
-	public function finalizar($id_actividad_voae)
+	public function finalizar($id_actividad_voae,$fch_final_actividad)
 	{
-		$sql="call procedimiento_finalizar_actividad('$id_actividad_voae')";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='6',condicion= '1' WHERE id_actividad_voae='$id_actividad_voae'
+		and id_estado='3'";
 		return ejecutarConsulta($sql);
 	}
 

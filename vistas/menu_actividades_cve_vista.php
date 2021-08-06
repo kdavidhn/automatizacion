@@ -17,13 +17,24 @@ if (permiso_ver('110')=='1') {
             tiene permisos para visualizar";
 }
 if (permiso_ver('115')=='1') {
-  $_SESSION['gestion_actividades_vista']="...";
+  $_SESSION['gestion_actividad_cve']="...";
 } else {
-  $_SESSION['gestion_actividades_vista']="No 
+  $_SESSION['gestion_actividad_cve']="No 
+            tiene permisos para visualizar";
+}
+if (permiso_ver('118')=='1') {
+  $_SESSION['informe_actividad_cve']="...";
+} else {
+  $_SESSION['informe_actividad_cve']="No 
             tiene permisos para visualizar";
 }
 
-
+if (permiso_ver('121')=='1') {
+  $_SESSION['final_actividad_cve']="...";
+} else {
+  $_SESSION['final_actividad_cve']="No 
+            tiene permisos para visualizar";
+}
 
 ?>
 <!DOCTYPE html>
@@ -85,13 +96,44 @@ if (permiso_ver('115')=='1') {
           <div class="col-6 col-sm-6 col-md-4">
             <div class="small-box bg-primary">
               <div class="inner">
-                <h5>Actividades<br> Gestión de Actividades </h5>
-                <p><?php echo $_SESSION['gestion_actividades_vista']; ?></p> 
+                <h5>Actividades<br> Gestion de Actividad </h5>
+                <p><?php echo $_SESSION['gestion_actividad_cve']; ?></p> 
               </div>
               <div class="icon">
                 <i class="fas fa-edit"></i>
               </div>
               <a href="../vistas/actividad_cve_gestion_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          <!-- Box 3 -->
+           <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h5>Actividades<br> Actividades Finalizadas </h5>
+                <p><?php echo $_SESSION['final_actividad_cve']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/actividad_cve_final_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Documentar Actividad -->
+          <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box  bg-light">
+              <div class="inner">
+                <h5>Documentación de Actividades VOAE<br> (Informes, Asistencias y Fotografias) </h5>
+                <p><?php echo $_SESSION['informe_actividad_cve']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/informe_actividad_cve_vista.php" class="small-box-footer">
                 Ir <i class="fas fa-arrow-circle-right"></i>
               </a>
             </div>

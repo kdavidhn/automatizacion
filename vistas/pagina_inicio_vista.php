@@ -334,12 +334,6 @@ if (session_status() === PHP_SESSION_NONE) {
                     <p>Horas VOAE</p>
                   </a>
                 </li>  
-                <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
-                  <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Administrar el Módulo</p>
-                  </a>
-                </li>
               </ul>
             </li>
 
@@ -458,6 +452,12 @@ if (session_status() === PHP_SESSION_NONE) {
                   <a href="../vistas/menu_mantenimiento_plan.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p> Mantenimientos Plan de Estudios</p>
+                  </a>
+                </li>
+                <li class="nav-item" style="display:<?php echo $_SESSION['administracion_cve'] ?>">
+                  <a href="../vistas/menu_administracion_cve_vista.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Mantenimiento CVE</p>
                   </a>
                 </li>
 

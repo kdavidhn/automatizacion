@@ -214,6 +214,37 @@ function activar(id_falta)
   
 }
 
+function eliminar(id_falta)
+{
+  swal({
+    
+        title: "Alerta",
+    text:
+      "¿Está seguro de eliminar la falta?",
+    icon: "warning",
+    buttons: true,
+    dangerMode: false,
+  }).then((result) => {
+    if (result) {
+      
+      $.post("../Controlador/tipos_faltas_controlador.php?op=eliminar", {id_falta : id_falta}, function(e){
+            swal({
+    
+            title: e,
+        text:" ",
+        icon: "info",
+        buttons: false,
+        dangerMode: false,
+        timer: 3000,
+      });
+      tabla.ajax.reload();
+
+          }); 
+      
+    } 
+  })
+  
+}
 
 init();
 

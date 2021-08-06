@@ -28,11 +28,29 @@ if($visualizacion==0){
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Solicitud de Actividades CVE');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Horas VOAE Gestión');
 }
+if (permisos::permiso_insertar($Id_objeto)==0)
+  {
+  $_SESSION["btnagregar"]="hidden";
+  }
+else
+  {
+    $_SESSION["btnagregar"]="";
+  }
+if (permisos::permiso_insertar($Id_objeto)==0)
+  {
+  $_SESSION["btnagregarhoras"]="hidden";
+  }
+else
+  {
+    $_SESSION["btnagregarhoras"]="";
+  }
 
-ob_end_flush();
 ?>
+<body oncopy="return false" onpaste="return false">
+  
+
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -65,9 +83,9 @@ ob_end_flush();
                   <div class="box">
                     <div class="box-header with-border">
                           
-                          <h1><button style="margin-right: 10px" class="btn btn-success" id="btnagregar" name="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Actividad Externa</button>
+                          <h1 align="right"><button style="margin-right: 10px" class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> name="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Actividad Externa</button>
 
-                            <button class="btn btn-info" id="btnagregarhoras" name="btnagregarhoras" onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Agregar Horas Alumno</button>
+                            <button class="btn btn-info" id="btnagregarhoras" name="btnagregarhoras"<?php echo $_SESSION['btnagregarhoras']; ?> onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Agregar Horas Alumno</button>
                           </h1>
                        
 
@@ -94,8 +112,22 @@ ob_end_flush();
                     <div  id="formularioregistros">
              
                 <form name="formulario" id="formulario" method="POST">
+
+                 <!-- Card 1 -->
+              <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">IDENTIFICADOR Y NOMBRE ACTIVIDAD</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="card-body">
+                <div class="row">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Identificador Actividad:</label>
+                  <label>Identificador:</label>
                   <input type="text" class="form-control" disabled maxlength="50" placeholder="<?php
                                     
                                     $query = $mysqli -> query ("SELECT MAX(id_actividad_voae) AS id FROM tbl_voae_actividades");
@@ -105,39 +137,84 @@ ob_end_flush();
                                   ?>" required>
                 </div>
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Nombre de la Actividad:</label>
+                   <label>Nombre:</label>
                   <input type="hidden" name="id_actividad_voae" id="id_actividad_voae">
-                  <input type="text" class="form-control" name="nombre_act" id="nombre_act" maxlength="50" placeholder="Nombre Actividad" required>
+                  <input type="text" class="form-control" name="nombre_act" id="nombre_act" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required maxlength="50" placeholder="Nombre Actividad" required>
                 </div>
-                
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Ubicación de la Actividad:</label>
-                  <input type="text" class="form-control" name="ubicacion" id="ubicacion" maxlength="50" placeholder="Ubicación" required>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">UBICACION Y FECHA INICIAL</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Ubicación:</label>
+                  <input type="text" class="form-control" name="ubicacion" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required id="ubicacion" maxlength="50" placeholder="Ubicación" required>
+                </div>
+                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
                   <label>Fecha Inicial:</label>
-                  <input type="datetime-local" class="form-control" name="fecha_inicio" id="fecha_inicio" maxlength="256" >
+                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fecha_inicio" id="fecha_inicio" maxlength="256" >
                 </div>
-                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                </div>
+                </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">FECHA FINAL Y DESCRIPCION</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+
+                </div>
+
+                <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
                   <label>Fecha Final:</label>
-                  <input type="datetime-local" class="form-control" name="fecha_final" id="fecha_final" maxlength="256">
+                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fecha_final" id="fecha_final" maxlength="256">
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
+                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
                   <label>Descripción:</label>
-                  <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" placeholder="Descripción" required>
+                  <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required placeholder="Descripción" required>
                 </div>
-                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
+                </div>
+                </div>
+                </div>
+              
+
+
+                <!-- Card 7 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">OBSERVACIONES Y AMBITO</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                 <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 maxlength">
                   <label>Observaciones:</label>
                   <input type="text" value ="Actividad Externa"class="form-control" name="observaciones" id="observaciones" disabled maxlength="50" placeholder="Actividad Externa" required>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Horas:</label>
-                  <input type="text" class="form-control" name="horas_voae" id="horas_voae" maxlength="50" placeholder="Horas Actividad" required>
-                </div>
-                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Ambito:</label>
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength"><label>Ámbito:</label>
                               <select class="form-control select2" name="ambito" id="ambito" style="width: 100%;" required="">
-                                <option value="0" disabled="disabled" >Seleccione una Falta:</option>
+                                <option value="0" disabled="disabled" >Seleccione un ámbito:</option>
                                   <?php
                                     $query = $mysqli -> query ("SELECT * FROM tbl_voae_ambitos where condicion = 1");
                                     while ($resultado = mysqli_fetch_array($query)) {
@@ -146,13 +223,30 @@ ob_end_flush();
                                   ?>
                               </select>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Periodo Academico:</label>
+                </div>
+                </div>
+                </div>
+                
+                
+                <!-- Card 9 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">PERIODO ACADEMICO</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength"><label>Periodo Académico:</label>
                   <select class="form-control select2" name="periodo" id="periodo" class="form-control"  maxlength="50" required>
-                    <option value="1">Primer Periodo</option>
-                    <option value="2">Segundo Periodo</option>
-                    <option value="3">Tercer Periodo</option>
+                    <option value="Primer Periodo">Primer Periodo</option>
+                    <option value="Segundo Periodo">Segundo Periodo</option>
+                    <option value="Tercer Periodo">Tercer Periodo</option>
                   </select> 
+                </div>
+                </div>
                 </div>
 
                 
@@ -165,9 +259,20 @@ ob_end_flush();
             <div  id="formularioregistros2">
              
                 <form name="formulario2" id="formulario2" method="POST">
-                
+                <!-- Card 1 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">SELECCION ALUMNO Y ACTIVIDAD</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Nombre Alumno:</label>
+                  <label>Alumno:</label>
                   <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
@@ -179,22 +284,39 @@ ob_end_flush();
                               </select>
                 </div>
                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Actividad (Externa):</label>
+                  <label>Actividad Externa:</label>
                   <select class="form-control-lg select2" id= "id_actividad" style="width: 100%;" name="id_actividad" required="">
                                 <option  value="0" disabled="disabled">Seleccione Actividad:</option>
                                   <?php
-                                    $query = $mysqli -> query ("select id_actividad_voae, concat(id_actividad_voae,' -- ',nombre_actividad,' -- ', ubicacion) as actividad from tbl_voae_actividades where tipo_actividad = 2;");
+                                    $query = $mysqli -> query ("select id_actividad_voae, concat(id_actividad_voae,' -- ',nombre_actividad,' -- ', ubicacion) as actividad from tbl_voae_actividades where tipo_actividad = 'Actividad Externa';");
                                     while ($resultado = mysqli_fetch_array($query)) {
                                       echo '<option value="'.$resultado['id_actividad_voae'].'"> '.$resultado['actividad'].'</option>' ;
                                     }
                                   ?>
                               </select>
                 </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Horas:</label>
-                  <input type="text" class="form-control" name="horas_alumno" id="horas_alumno" maxlength="50" placeholder="Horas Alumno" required>
                 </div>
-                
+                </div>
+                </div>
+               
+
+                <!-- Card 2 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">HORAS A ASIGNAR</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-12">
+                  <label>Horas:</label>
+                  <input type="number" class="form-control" name="horas_alumno" id="horas_alumno" maxlength="50" placeholder="Horas Alumno" required>
+                </div>
+                </div>
+                </div>
 
                 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -232,7 +354,26 @@ ob_end_flush();
 
     });
 </script>
+<script>
+  function soloLetras(e) {
+    var key = e.keyCode || e.which,
+      tecla = String.fromCharCode(key).toUpperCase(),
+      letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+      especiales = [8, 37, 39, 46],
+      tecla_especial = false;
 
+    for (var i in especiales) {
+      if (key == especiales[i]) {
+        tecla_especial = true;
+        break;
+      }
+    }
+
+    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+      return false;
+    }
+  }
+</script>
 
 </body>
 </html>

@@ -9,7 +9,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=116; 
+$Id_objeto=119; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -72,7 +72,7 @@ else
                   <div class="box">
 
                     <div class="box-header with-border">                         
-                          <h1 align="right"><button class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Memorandum</button></h1>
+                          <h1 style="text-align:right;"><button class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Memorandum</button></h1>
                         <div class="box-tools pull-right">
                         </div>
                     </div>
@@ -99,76 +99,162 @@ else
                         </table>
                     </div>
 
-                    <div class="card" style="height: 500px;" id="formularioregistros">
-                      
-                        <!-- AQUI INICIA EL FORMULARIO PARA UN MEMORANDUM -->
+              <div class="card" style="height: 500px;"  id="formularioregistros">
+                    <!-- AQUI INICIA EL FORMULARIO PARA UN MEMORANDUM -->
+              <form name="formulario" id="formulario" method="POST">
+               <input type="hidden" name="id_memo" id="id_memo"> <!-- ID_MEMO OCULTO-->
 
-                        <form name="formulario" id="formulario" method="POST"> 
-
-                          <input type="hidden" name="id_memo" id="id_memo"> <!-- ID_MEMO OCULTO-->
-                          
+                    <!-- Card 1 Nombre de memorandum y ultimo memo -->
+                    <div class="card card-default">
+                      <div class="card-header bg-gradient-dark">
+                        <h3 class="card-title">Numero de Memorandum</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /. card-header-->
+                      <div class="card-body">
                         <div class="row">
-                          <div class="form-group  col-md-4">
-                            <label>N° DE MEMORANDUM:</label>
-                            <input type="text" class="form-control" name="no_memo" id="no_memo" style="text-transform: uppercase;" placeholder="N° MEMORANDUM" minlength="3" maxlength="50" onkeypress="return soloLetras(event)" required="" />
+                          <!-- N MEMORANDUM -->
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>N. DE MEMORANDUM</label>
+                              <input type="text" class="form-control" name="no_memo" id="no_memo" style="text-transform: uppercase;" 
+                                placeholder="N° MEMORANDUM" minlength="3" maxlength="50" onkeypress="return soloLetras(event)" 
+                                oncopy="return false" onpaste="return false" " pattern="^[a-zA-Z]{2}-[0-9]{4}$" 
+                                title="Introduce las letras NM o MN seguido de un guion - y por ultimo un numero de 4 digitos "  required="" />
+                            </div>
                           </div>
+                          <!-- ULTIMO  MEMORANDUM -->
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>ULTIMO MEMORANDUM</label>
+                              <input type="text" class="form-control" disabled="disabled" value = <?php
+                               $query = $mysqli->query("SELECT * FROM tbl_voae_memorandums ORDER BY id_memo DESC LIMIT 1");
+                                 while ($resultado = mysqli_fetch_array($query)) {
+                                  echo ' ' .  $resultado['no_memo'] . ' ';
+                                 }
+                                ?>
+                                />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
 
-                          <!--SELECT PARA TIPO DE MEMORANDUM -->
-                          <div class="form-group col-md-4">
-                            <label>TIPO DE MEMORANDUM:</label>
-                            <select class="form-control select2" name="id_tipo_memo" id="id_tipo_memo" style="width: 100%;" required="">
-                                <option value="0" disabled="disabled" >SELECCIONE EL TIPO DE MEMORANDUM:</option>
+                    <!-- Card 2 sELECT TIPO DE MEMO -->
+                    <div class="card card-default">
+                      <div class="card-header bg-gradient-dark">
+                        <h3 class="card-title">Tipo de Memerandum</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /. card-header-->
+                      <div class="card-body">
+                        <div class="row">
+                          <!-- SELECT TIPO M -->
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>SELECCIONE EL TIPO DE MEMORANDUM</label>
+                              <select class="form-control select2" name="id_tipo_memo" id="id_tipo_memo" style="width: 100%;" required="">
+                                 <option value="0" disabled="disabled" oncopy="return false" onpaste="return false">SELECCIONE EL TIPO DE MEMORANDUM:</option>
                                   <?php
-                                    $query = $mysqli -> query ("SELECT * FROM tbl_voae_tipo_memorandum");
-                                    while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_tipo_memorandum'].'"> '.$resultado['nombre_tipo_memorandum'].'</option>' ;
-                                    }
+                                  $query = $mysqli->query("SELECT * FROM tbl_voae_tipo_memorandum WHERE condicion=1");
+                                  while ($resultado = mysqli_fetch_array($query)) {
+                                  echo '<option value="' . $resultado['id_tipo_memorandum'] . '"> ' . $resultado['nombre_tipo_memorandum'] . '</option>';
+                                   }
                                   ?>
                               </select>
+                            </div>
                           </div>
                         </div>
-
-                          
-                        <div class="row">
-                          <!-- CAMPO REMITENTE-->
-                          <div class="form-group col-md-4 ">
-                            <label> QUIEN REMITE:</label>
-                            <input type="text" class="form-control" name="remitente" id="remitente" style="text-transform: uppercase;" placeholder="REMITENTE" minlength="3" maxlength="50" onkeypress="return soloLetras(event)" required="" />
-                          </div>
-
-                          <!-- DESTINATARIO-->
-                          <div class="form-group col-md-4">
-                            <label> QUIEN RECIBE:</label>
-                            <input type="text" class="form-control" name="destinatario" id="destinatario" style="text-transform: uppercase;" placeholder="DESTINATARIO" minlength="3" maxlength="50" onkeypress="return soloLetras(event)" required="" />
-                          </div>
-                        </div>
-
-                        <div class="row">
-                          <!-- FECHA DE MEMORANDUM-->
-                          <div class="form-group  col-md-4">
-                            <label> FECHA:</label>
-                            <input type="date" class="form-control" name="fecha" id="fecha" style="text-transform: uppercase;" placeholder="FECHA" required="" />
-                          </div>
-                          <!-- ASUNTO-->
-                          <div class="form-group  col-md-4">
-                            <label> ASUNTO:</label>
-                            <input type="text" class="form-control" name="asunto" id="asunto" style="text-transform: uppercase;" placeholder="ASUNTO" required="" />
-                          </div>
-                        </div>
-
-                          <!-- CONTENIDO-->
-                          <div class="form-group col-md-12">
-                            <label> DESCRIPCION DEL MEMORAMDUM:</label>
-                            <input type="textarea" class="form-control" name="contenido" id="contenido" style="text-transform: uppercase;" placeholder="DESCRIPCION / CONTENIDO" minlength="3" onkeypress="return soloLetras(event)" required="" />
-                          </div>
-                          <!--BOTON GUARDAR-->
-                          <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                            <button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
-                            <!--BOTON CANCELAR-->
-                            <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button>
-                          </div>
-                        </form>
+                      </div>
                     </div>
+
+                   <!-- Card 3 REMITENTE Y DESTINATARIO -->
+                    <div class="card card-default">
+                      <div class="card-header bg-gradient-dark">
+                        <h3 class="card-title">Quien Remite y Quien Recibe</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /. card-header-->
+                      <div class="card-body">
+                        <div class="row">
+                          <!-- REMITENTE -->
+                          <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>REMITENTE </label>
+                              <input type="text" class="form-control" name="remitente" id="remitente" 
+                              style="text-transform: uppercase;" placeholder="REMITENTE" minlength="3" 
+                              maxlength="50" onkeypress="return soloLetras(event)" oncopy="return false" 
+                              onpaste="return false" required="" />
+                            </div>
+                          </div>
+                           <!-- DESTINATARIO -->
+                           <div class="col-sm-6">
+                            <div class="form-group">
+                              <label>DESTINATARIO </label>
+                              <input type="text" class="form-control" name="destinatario" id="destinatario" 
+                              style="text-transform: uppercase;" placeholder="DESTINATARIO" minlength="3" 
+                              maxlength="50" onkeypress="return soloLetras(event)" oncopy="return false" 
+                              onpaste="return false" required="" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Card 4 ASUNTO Y CONTENIDO -->
+                    <div class="card card-default">
+                      <div class="card-header bg-gradient-dark">
+                        <h3 class="card-title">Asunto y Contendio del Memorandum</h3>
+                        <div class="card-tools">
+                          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                            <i class="fa fa-minus"></i>
+                          </button>
+                        </div>
+                      </div>
+                      <!-- /. card-header-->
+                      <div class="card-body">
+                        <div class="row">
+                          <!-- ASUNTO -->
+                          <div class="col-sm-4">
+                            <div class="form-group">
+                              <label>ASUNTO </label>
+                              <input type="text" class="form-control" name="asunto" id="asunto" 
+                              style="text-transform: uppercase;" placeholder="ASUNTO" oncopy="return false" 
+                              onpaste="return false" required="" />
+                            </div>
+                          </div>
+                           <!-- CONTENIDO -->
+                           <div class="col-sm-8">
+                            <div class="form-group">
+                              <label>CONTENIDO </label>
+                              <textarea class="form-control" name="contenido" id="contenido" rows="8"
+                              style="text-transform: uppercase;" placeholder="DESCRIPCION / CONTENIDO" 
+                              minlength="3" onkeypress="return soloLetras(event)" oncopy="return false" 
+                              onpaste="return false" required="" ></textarea>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <!-- BOTON DE GUARDAR -->
+                 <h3 style="text-align: center;"><button class="btn btn-primary" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Guardar</button>
+                  <!-- BOTON DE CANCELAR -->
+                   <button class="btn btn-danger" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Cancelar</button></h3>
+
+              </form>
+               </div>
                     <!--Fin centro -->
                   </div><!-- /.box -->
               </div><!-- /.col -->
@@ -187,7 +273,7 @@ else
     var key = e.keyCode || e.which,
       tecla = String.fromCharCode(key).toUpperCase(),
       letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789",
-      especiales = [8, 37, 39, 46],
+      especiales = [8, 37, 39, 44, 45, 46, 58, 59],
       tecla_especial = false;
 
     for (var i in especiales) {
@@ -202,5 +288,18 @@ else
     }
   }
 </script>
+
+<!--script>
+document.getElementById("formularioregistros").addEventListener("submit", function(e) {
+  var estado = document.getElementById("no_memo").value;
+  if (estado.match("^[a-zA-Z]{2}-[0-9]{4}$")) {
+    alert("Cumple el patron");
+  } else {
+    alert("No cumple el patron");
+    e.preventDefault(); // no se envia el formulario
+  }
+})
+</script-->
+
 </body>
 </html>

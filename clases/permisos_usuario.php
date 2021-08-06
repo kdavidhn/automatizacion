@@ -63,6 +63,7 @@ $resultado_permisos = $mysqli->query($sql_permisos);
    $_SESSION['faltas_cve']='none';
    $_SESSION['horas_cve']='none';
    $_SESSION['memos_cve']='none';
+   $_SESSION['informe_actividad_cve'];
    
   
 
@@ -396,7 +397,7 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
 
 
 
-if ($_SESSION['pantalla'] = '104' or $_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '111' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '112' or $_SESSION['pantalla'] == '113' or $_SESSION['pantalla'] == '114' or $_SESSION['pantalla'] == '115' or $_SESSION['pantalla'] == '116') {
+if ($_SESSION['pantalla'] = '104' or $_SESSION['pantalla'] == '105' or $_SESSION['pantalla'] == '106' or $_SESSION['pantalla'] == '107' or $_SESSION['pantalla'] == '108' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '111' or $_SESSION['pantalla'] == '109' or $_SESSION['pantalla'] == '112' or $_SESSION['pantalla'] == '113' or $_SESSION['pantalla'] == '114' or $_SESSION['pantalla'] == '115' or $_SESSION['pantalla'] == '116' or $_SESSION['pantalla'] == '117' or $_SESSION['pantalla'] == '118' or $_SESSION['pantalla'] == '119' or $_SESSION['pantalla'] == '120' or $_SESSION['pantalla'] == '121') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['btn_comite_vida_estudiantil'] = "block";
    }
@@ -441,11 +442,22 @@ if ($_SESSION['pantalla'] = '115') {
       $_SESSION['actividades_cve'] = "block";
    }
 }
-if ($_SESSION['pantalla'] = '116') {
+if ($_SESSION['pantalla'] = '118') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['informe_actividad_cve'] = "block";
+   }
+}
+if ($_SESSION['pantalla'] = '119') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['memos_cve'] = "block";
    }
 }
+if ($_SESSION['pantalla'] = '120') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['memos_cve'] = "block";
+   }
+}
+
 
 
 

@@ -48,6 +48,7 @@ function mostrarform(flag)
 		$("#listadoregistros").show();
 		$("#formularioregistros").hide();
 		$("#btnagregar").show();
+		
 	}
 }
 
@@ -92,28 +93,35 @@ function listar()
 	    dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
 buttons: [	
 					{
-						extend: 'excelHtml5',
-						text: '<i class= "fas fa-file-excel"></i> ',
-						titleAttr: 'Exportar a Excel',
-						ClassName: 'btn btn-success',
-						exportOptions: {
+
+
+						extend: "excelHtml5",
+		        text: '<i class="fas fa-file-excel"></i> ',
+		        titleAttr: "Exportar a Excel",
+				className: "btn btn-success",
+				exportOptions: {
 					  columns: [1, 2, 3, 4, 5],		 
 				     },
 				title: "DEPARTAMENTO DE INFORMÁTICA",
-				messageTop: "REPORTE DE MEMORANDUMS                                       " + "FECHA: "
+				messageTop: "REPORTE DE MEMORANDUMS   "
 
 					},
 
 					{
-						extend: 'pdfHtml5',
-						text: '<i class= "fas fa-file-pdf"></i> ',
-						titleAttr: 'Exportar a PDF',
-						download: 'open',
-						//image: '../dist/img/encabezado.png',
-						ClassName: 'btn btn-danger',
-						orientation: "portrait",
-						pageSize: "letter",
-		        exportOptions: {
+						extend: "pdfHtml5",
+		download:'open',
+		
+		
+
+						extend: "pdfHtml5",
+		download:'open',
+		
+		text: '<i class="fas fa-file-pdf"></i> ',
+        titleAttr: "Exportar a PDF",
+        className: "btn btn-danger",
+        orientation: "poltrait",
+		pageSize: "letter",
+        exportOptions: {
 					  columns: [1, 2, 3, 4, 5],		 
 				     },
 		 title: 'Reporte de Memorandums',
@@ -167,7 +175,7 @@ buttons: [
 				},
 		"bDestroy": true,
 		lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-		"iDisplayLength": 10,//Paginación
+		"iDisplayLength": 5,//Paginación
 	    "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
 	}).DataTable();
 }
@@ -191,7 +199,7 @@ function guardaryeditar(e)
 
 	    success: function(datos)
 	    {     
-	                   
+	                  
 	       swal({
 		
 		        title: datos,

@@ -10,7 +10,25 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $falta=new Faltas();
-$Id_objeto=114; 
+$Id_objeto=113; 
+
+if (permisos::permiso_modificar($Id_objeto)==0)
+  {
+    $_SESSION["btnmodificar"]="hidden";
+  }
+else
+  {
+    $_SESSION["btnmodificar"]="";
+  }
+ if (permisos::permiso_eliminar($Id_objeto)==0)
+  {
+    $_SESSION["btneliminar"]="hidden";
+  }
+else
+  {
+    $_SESSION["btneliminar"]="";
+  }
+
 $usuario_x= $_SESSION['id_usuario'];
 
 $id_falta=isset($_POST["id_falta"])? limpiarCadena($_POST["id_falta"]):"";
@@ -54,25 +72,7 @@ switch ($_GET["op"]){
 					$rspta=$falta->editar($id_falta,$id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion);
 					echo $rspta ? "Falta Actualizada" : "Error al actualizar";
 
-				} elseif ($valor_viejo['id_tipo_falta'] <> $id_tipo_falta and $valor_viejo['fch_falta'] <> $fch_falta and $valor_viejo['id_persona_alumno'] <> $id_persona_alumno){
-
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA FALTA CON EL ID ' . $id_falta . ': CAMBIO TIPO DE FALTA: "'.$valor_viejo['nombre_falta'] . '" POR: "'.$tipo_falta_n['nombre_falta'] . '"; CAMBIO FECHA FALTA: "'.$valor_viejo['fch_falta'] . '" POR: "'.$fch_falta . '"; CAMBIO NOMBRE ALUMNO: "'.$valor_viejo['nombres'] . '" POR: "'.$valor_n['nombres'] . '"');
-
-					$rspta=$falta->editar($id_falta,$id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion);
-					echo $rspta ? "Falta Actualizada" : "Error al actualizar";
-
-				} elseif ($valor_viejo['id_tipo_falta'] <> $id_tipo_falta and $valor_viejo['fch_falta'] <> $fch_falta){
-
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA FALTA CON EL ID ' . $id_falta . ': CAMBIO TIPO DE FALTA: "'.$valor_viejo['nombre_falta'] . '" POR: "'.$tipo_falta_n['nombre_falta'] . '"; CAMBIO FECHA FALTA: "'.$valor_viejo['fch_falta'] . '" POR: "'.$fch_falta . '"');
-					
-					$rspta=$falta->editar($id_falta,$id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion);
-					echo $rspta ? "Falta Actualizada" : "Error al actualizar";
-				} elseif ($valor_viejo['id_tipo_falta'] <> $id_tipo_falta and $valor_viejo['descripcion'] <> $descripcion){
-
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA FALTA CON EL ID ' . $id_falta . ': CAMBIO TIPO DE FALTA: "'.$valor_viejo['nombre_falta'] . '" POR: "'.$tipo_falta_n['nombre_falta'] . '"; MODIFICO DESCRIPCION ');
-					
-					$rspta=$falta->editar($id_falta,$id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion);
-					echo $rspta ? "Falta Actualizada" : "Error al actualizar";
+				
 
 				//CONDICION PARA LA MODIFICACION DEL TIPO DE FALTA
 				} elseif ($valor_viejo['id_tipo_falta'] <> $id_tipo_falta) {
@@ -132,15 +132,15 @@ switch ($_GET["op"]){
 
 	case 'listar':
 	
- 		$rspta=$falta->listar();
+		$rspta=$falta->listar();
  		//Vamos a declarar un array
  		$data= Array();
- 		if (permisos::permiso_modificar($Id_objeto)==0){
+ 		
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
  				
- 				"0"=>'<button title="Modificar Registro" disabled="disabled" class="btn btn-warning" onclick="" ><i class="far fa-edit"></i></button>'.
- 					' <button title="Eliminar Registro" class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>', 
+ 				"0"=>'<button title="Modificar Registro" '.$_SESSION['btnmodificar'].' class="btn btn-warning" onclick=mostrar('.$reg->id_falta.') ><i class="far fa-edit"></i></button>'.
+ 					' <button title="Eliminar Registro" '.$_SESSION['btneliminar'].' class="btn btn-danger"  onclick=eliminar('.$reg->id_falta.')><i class="fas fa-trash-alt"></i></button>', 
  				"1"=>$reg->id_falta,
  				"2"=>$reg->fch_falta,
  				"3"=>$reg->nombre_falta,
@@ -156,28 +156,9 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
- 		}else{
- 			while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
+
+	
  				
- 				"0"=>'<button title="Modificar Registro" class="btn btn-warning" onclick="mostrar('.$reg->id_falta.')" ><i class="far fa-edit"></i></button>'.
- 					' <button title="Eliminar Registro" class="btn btn-danger" onclick="eliminar('.$reg->id_falta.')"><i class="fas fa-trash-alt"></i></button>', 
- 				"1"=>$reg->id_falta,
- 				"2"=>$reg->fch_falta,
- 				"3"=>$reg->nombre_falta,
- 				"4"=>$reg->nombres,
- 				"5"=>$reg->valor,
- 				"6"=>$reg->descripcion
- 				);
- 		}
- 		
- 		$results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
- 		}
 break;
 }
 ?>

@@ -102,6 +102,20 @@ switch ($_GET["op"]){
  		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ACTIVO', 'EL TIPO DE REPOSITORIO "' . $bt_nombre_repositorio['nombre_repositorio'] . '"');
 	break;
 
+	case 'eliminar': 
+		//SE EXTRAE EL NOMBRE DEL AMBITO A ACTIVAR Y SE GUARDA EN UNA VARIABLE
+ 		$valor = "select nombre_repositorio from tbl_voae_tipos_repositorios where id_repositorio = '$id_repositorio'";
+				$result_valor = $mysqli->query($valor);
+				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+    	//SE MANDA A LA BITACORA LA ACCION DE ACTIVAR EL AMBITO
+ 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'EL REPOSITORIO: "' . $valor_viejo['nombre_repositorio'] . '"');
+		$rspta=$repositorio->eliminar($id_repositorio);
+ 		echo $rspta ? "Registro Eliminado" : "Error";
+
+ 		
+
+	break;
 
 
 	case 'mostrar':
@@ -113,17 +127,18 @@ switch ($_GET["op"]){
 
 
 	case 'listar':
-	if (permisos::permiso_modificar($Id_objeto)==0){
+	if (permisos::permiso_eliminar($Id_objeto)==1 and permisos::permiso_modificar($Id_objeto)==1){
 		$rspta=$repositorio->listar();
  		//Vamos a declarar un array
  		$data= Array();
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
- 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>',
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_repositorio.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" onclick="activar('.$reg->id_repositorio.')"><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_repositorio.')"><i class="fas fa-trash-alt"></i></button>',
  				"1"=>$reg->nombre_repositorio,
  				"2"=>$reg->descripcion_repositorio,
  				"3"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
@@ -137,7 +152,7 @@ switch ($_GET["op"]){
  			"aaData"=>$data);
  		echo json_encode($results);
 
- 		}else{
+ 		}elseif (permisos::permiso_eliminar($Id_objeto)==0 and permisos::permiso_modificar($Id_objeto)==0){
 
  		$rspta=$repositorio->listar();
  		//Vamos a declarar un array
@@ -145,11 +160,12 @@ switch ($_GET["op"]){
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_repositorio.')"><i class="fa fa-window-close"></i></button>':
- 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" onclick="activar('.$reg->id_repositorio.')"><i class="fa fa-check"></i></button>'.
- 					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_repositorio.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>',
+ 				
  				"1"=>$reg->nombre_repositorio,
  				"2"=>$reg->descripcion_repositorio,
  				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
@@ -162,7 +178,55 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
+ 		}elseif (permisos::permiso_modificar($Id_objeto)==0){
+ 			$rspta=$repositorio->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button disabled class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button disabled class="btn btn-danger" onclick="desactivar('.$reg->id_repositorio.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button disabled class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button disabled class="btn btn-primary" onclick="activar('.$reg->id_repositorio.')"><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_repositorio.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->nombre_repositorio,
+ 				"2"=>$reg->descripcion_repositorio,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
+ 				'<span class="label bg-red">Desactivado</span>'
+ 				);
  		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}elseif (permisos::permiso_eliminar($Id_objeto)==0){
+ 			$rspta=$repositorio->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_repositorio.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_repositorio.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" onclick="activar('.$reg->id_repositorio.')"><i class="fa fa-check"></i></button>'.
+ 					' <button disabled class="btn btn-danger" onclick="eliminar('.$reg->id_repositorio.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->nombre_repositorio,
+ 				"2"=>$reg->descripcion_repositorio,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">Activado</span>':
+ 				'<span class="label bg-red">Desactivado</span>'
+ 				);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}	
 	break;
 }
 ?>

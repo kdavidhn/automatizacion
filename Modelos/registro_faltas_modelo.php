@@ -22,7 +22,7 @@ Class Faltas
 	public function insertar($id_tipo_falta,$fch_falta,$id_persona_alumno,$descripcion, $usuario_x)
 	{
 		$sql="INSERT INTO tbl_voae_faltas_conductas(id_tipo_falta,fch_falta,id_persona_alumno,descripcion, id_usuario_registro, fch_registro)
-		VALUES ('$id_tipo_falta','$fch_falta','$id_persona_alumno','$descripcion','$usuario_x',sysdate())";
+		VALUES ('$id_tipo_falta','$fch_falta','$id_persona_alumno',upper('$descripcion'),'$usuario_x',sysdate())";
 		return ejecutarConsulta($sql);
 	}
 

@@ -316,7 +316,7 @@ ob_end_flush();
                   <td style="text-align: center;">
               
                        <a href="../vistas/gestion_permiso_usuario_vista.php?rol=<?php echo $row['rol']; ?>&pantalla=<?php echo $row['objeto']?>" class="btn btn-primary btn-raised btn-xs">
-                      <i class="far fa-edit" style="display:<?php echo $_SESSION['modificar_permisos'] ?> " ></i>
+                      <i class="far fa-edit" style="display:<?php echo isset($_SESSION['modificar_permimos']) ?  $_SESSION['modificar_permisos'] :  ' '; ?> " ></i>
                     </a>
                   </td>
 

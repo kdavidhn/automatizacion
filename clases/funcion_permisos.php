@@ -41,17 +41,18 @@ public static function permiso_insertar($permiso_insertar)
 
 public static function permiso_eliminar($permiso_eliminar)
 
+
                    {
 
 
  require ('../clases/Conexion.php');
 
- session_start();
-                    $sql_permiso_eliminar="select pu.eliminar as eliminar from tbl_permisos_usuarios pu ,tbl_objetos p,tbl_usuarios u ,tbl_roles r where r.id_rol=pu.id_rol and r.id_rol=u.id_rol and pu.id_objeto=p.id_objeto and id_usuario=".$_SESSION['id_usuario']." and p.id_objeto='$permiso_eliminar' ";
 
-                  $resultado_permiso_eliminar = $mysqli->query($sql_permiso_eliminar);
+                    $sql_permiso_el="select pu.eliminar as insertar from tbl_permisos_usuarios pu ,tbl_objetos p,tbl_usuarios u ,tbl_roles r where r.id_rol=pu.id_rol and r.id_rol=u.id_rol and pu.id_objeto=p.id_objeto and id_usuario=".$_SESSION['id_usuario']." and p.id_objeto='$permiso_eliminar' ";
 
-                  $permisos= $resultado_permiso_eliminar->fetch_row();
+                  $resultado_permiso_el = $mysqli->query($sql_permiso_el);
+
+                  $permisos= $resultado_permiso_el->fetch_row();
 
                    return $permisos[0];
                 

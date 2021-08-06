@@ -210,6 +210,34 @@ function activar(id_repositorio)
 	})
 }
 
+function eliminar(id_repositorio)
+{
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de eliminar el repositorio?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/repositorio_controlador.php?op=eliminar", {id_repositorio : id_repositorio}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "info",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+        	});	
+			
+		} 
+	})
+}
 
 init();
 

@@ -78,7 +78,7 @@ switch ($_GET["op"]){
 
 	case 'desactivar':
 		$rspta=$falta->desactivar($id_falta);
- 		echo $rspta ? "El TIPO de FALTA  Desactivado" : "EL TIPO DE FALTA no se puede desactivar";
+ 		echo $rspta ? "FALTA DESCATIVADA" : "EL TIPO DE FALTA no se puede desactivar";
 
 		 //SE EXTRAE EL NOMBRE DEL TIPO DE FALTA A DESACTIVAR Y SE GUARDA EN UNA VARIABLE
  		$valor = "select nombre_falta, descripcion_falta from tbl_voae_tipos_faltas where id_falta = '$id_falta'";
@@ -93,7 +93,7 @@ switch ($_GET["op"]){
 
 	case 'activar':
 		$rspta=$falta->activar($id_falta);
- 		echo $rspta ? "El TIPO de FALTA  Activado" : "El TIPO de FALTA  no se puede activar";
+ 		echo $rspta ? "FALTA ACTIVADA" : "El TIPO de FALTA  no se puede activar";
 
  		//SE EXTRAE EL NOMBRE DEL TIPO DE FALTA A ACTIVAR Y SE GUARDA EN UNA VARIABLE
  		$valor = "select nombre_falta, descripcion_falta from tbl_voae_tipos_faltas where id_falta = '$id_falta'";
@@ -104,6 +104,19 @@ switch ($_GET["op"]){
  		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ACTIVO', 'EL TIPO DE FALTA "' . $bt_nombre_falta['nombre_falta'] . '"');
 	break;
 
+	case 'eliminar':
+		//SE EXTRAE EL NOMBRE DEL TIPO DE FALTA A ACTIVAR Y SE GUARDA EN UNA VARIABLE
+ 		$valor = "select nombre_falta, descripcion_falta from tbl_voae_tipos_faltas where id_falta = '$id_falta'";
+	    $result_valor = $mysqli->query($valor);
+	    $bt_nombre_falta = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+    	//SE MANDA A LA BITACORA LA ACCION DE ACTIVAR EL TIPO DE FALTA
+ 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'EL TIPO DE FALTA "' . $bt_nombre_falta['nombre_falta'] . '"');
+		$rspta=$falta->eliminar($id_falta);
+ 		echo $rspta ? "FALTA ELIMINADA" : "El TIPO de FALTA  no se puede activar";
+
+ 		
+	break;
 
 
 	case 'mostrar':
@@ -116,31 +129,8 @@ switch ($_GET["op"]){
 
 
 	case 'listar':
-	if (permisos::permiso_modificar($Id_objeto)==0){
+	if (permisos::permiso_eliminar($Id_objeto)==1 and permisos::permiso_modificar($Id_objeto)==1){
 		$rspta=$falta->listar();
- 		//Vamos a declarar un array
- 		$data= Array();
-
- 		while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
- 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
- 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
- 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>',
- 				"1"=>$reg->nombre_falta,
- 				"2"=>$reg->descripcion_falta,
- 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
- 				'<span class="label bg-red">DESACTIVADO</span>'
- 				);
- 		}
- 		$results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
- 		}else{
- 			$rspta=$falta->listar();
  		//Vamos a declarar un array
  		$data= Array();
 
@@ -163,7 +153,81 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
+
+ 		}elseif (permisos::permiso_eliminar($Id_objeto)==0 and permisos::permiso_modificar($Id_objeto)==0){
+ 			$rspta=$falta->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" disabled="disabled" onclick=""><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled="disabled" onclick=""><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" disabled="disabled" onclick=""><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->nombre_falta,
+ 				"2"=>$reg->descripcion_falta,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 				);
  		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}elseif (permisos::permiso_modificar($Id_objeto)==0){
+ 			$rspta=$falta->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" disabled onclick="mostrar('.$reg->id_falta.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" disabled onclick="desactivar('.$reg->id_falta.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" disabled onclick="mostrar('.$reg->id_falta.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" disabled onclick="activar('.$reg->id_falta.')"><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="eliminar('.$reg->id_falta.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->nombre_falta,
+ 				"2"=>$reg->descripcion_falta,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 				);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+ 			}elseif (permisos::permiso_eliminar($Id_objeto)==0){
+ 				$rspta=$falta->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+ 				"0"=>($reg->condicion)?'<button class="btn btn-warning" onclick="mostrar('.$reg->id_falta.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-danger" onclick="desactivar('.$reg->id_falta.')"><i class="fa fa-window-close"></i></button>':
+ 					'<button class="btn btn-warning" onclick="mostrar('.$reg->id_falta.')"><i class="far fa-edit"></i></button>'.
+ 					' <button class="btn btn-primary" onclick="activar('.$reg->id_falta.')"><i class="fa fa-check"></i></button>'.
+ 					' <button class="btn btn-danger" disabled onclick="eliminar('.$reg->id_falta.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->nombre_falta,
+ 				"2"=>$reg->descripcion_falta,
+ 				"3"=>($reg->condicion)?'<span class="label bg-green">ACTIVADO</span>':
+ 				'<span class="label bg-red">DESACTIVADO</span>'
+ 				);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 			}	
 	break;
 }
 ?>

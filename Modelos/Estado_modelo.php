@@ -42,6 +42,13 @@ Class Estado
 		return ejecutarConsulta($sql);
 	}
 
+	//Implementamos un método para eliminar categorías
+	public function eliminar($id_estado)
+	{
+		$sql="DELETE FROM tbl_voae_estados WHERE id_estado='$id_estado'";
+		return ejecutarConsulta($sql);
+	}
+
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id_estado)
 	{

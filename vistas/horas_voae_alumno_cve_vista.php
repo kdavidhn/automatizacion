@@ -11,14 +11,14 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
  
 
-$Id_objeto=114; 
+$Id_objeto=116; 
 
 $cuenta = $_POST['cuenta'];
 $nombre = $_POST['nombre'];
 
 
 $_SESSION['cuenta'] = $cuenta;
-
+$_SESSION['nombre'] = $nombre;
 
 
 $valor = "select nombre_alumno from view_horas_voae WHERE cuenta='$cuenta'";
@@ -40,7 +40,7 @@ if($visualizacion==0){
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Mantenimiento de ambitos');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Historial de Horas Alumno');
 }
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
@@ -90,9 +90,9 @@ else
                           <h5><b><i><p>Cuenta: <?php echo $cuenta;?></i></b></p></h5>
                           </section>
                     </div>
-                    <form method="post" action="../Controlador/reporte_faltas_conducta_controlador.php"> 
-                                <button  class="btn btn-success " id="pdfHtml5" name="pdfHtml5"> <i class="fas fa-file-pdf"></i> <a style="font-weight: bold;">Exportar a PDF</a> </button>
-                                <input type="text" class="form-control"  readonly hidden>
+                   <form  action="../Controlador/historial_alumno_generarpdf.php"> 
+                                <button title="Exportar Reporte Historial" class="btn btn-danger"  ><i class="fas fa-file-pdf"></i> <a style="font-weight: bold;"></a> </button>
+                                <input type="text" value="$nombre" class="form-control"  readonly hidden>
 
                             </form>
                     <!-- /.box-header -->
@@ -105,6 +105,7 @@ else
                             <th>Fecha Realización</th>
                             <th>Ámbito</th>
                             <th>Horas</th>
+                            <th>Tipo Actividad</th>
                           </thead>
                           <tbody>                            
                           </tbody>

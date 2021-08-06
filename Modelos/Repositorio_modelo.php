@@ -41,6 +41,12 @@ Class Repositorio
 		return ejecutarConsulta($sql);
 	}
 
+	public function eliminar($id_repositorio)
+	{
+		$sql="DELETE FROM tbl_voae_tipos_repositorios WHERE id_repositorio='$id_repositorio'";
+		return ejecutarConsulta($sql);
+	}
+
 	//Implementar un método para mostrar los datos de un registro a modificar
 	public function mostrar($id_repositorio)
 	{

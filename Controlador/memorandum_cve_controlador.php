@@ -9,7 +9,7 @@ require_once "../Modelos/memorandum_cve_modelo.php";
 require_once ('../clases/funcion_bitacora.php');
 
 $memorandum=new memorandum();
-$Id_objeto=114; 
+$Id_objeto=119; 
 
 // id_memo	no_memo	id_tipo_memo	remitente	destinatario	fecha	 asunto  contenido
 
@@ -18,7 +18,7 @@ $no_memo=isset($_POST["no_memo"])? limpiarCadena($_POST["no_memo"]):"";
 $id_tipo_memo=isset($_POST["id_tipo_memo"])? limpiarCadena($_POST["id_tipo_memo"]):"";
 $remitente=isset($_POST["remitente"])? limpiarCadena($_POST["remitente"]):"";
 $destinatario=isset($_POST["destinatario"])? limpiarCadena($_POST["destinatario"]):"";
-$fecha=isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
+//$fecha=isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
 $asunto=isset($_POST["asunto"])? limpiarCadena($_POST["asunto"]):"";
 $contenido=isset($_POST["contenido"])? limpiarCadena($_POST["contenido"]):"";
 
@@ -29,7 +29,6 @@ switch ($_GET["op"]){
 
 			//LOGICA PARA EL NOMBRE QUE SE REPITE
 			$sqlexiste=("select count(no_memo) as no_memo  from tbl_voae_memorandums where no_memo='$no_memo'");
-
 			//OBTENER LA ULTIMA FILA DEL QUERY
 			$existe = mysqli_fetch_assoc($mysqli->query($sqlexiste));
 
@@ -39,7 +38,7 @@ switch ($_GET["op"]){
 
 			} else {
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
-				$rspta=$memorandum->insertar($no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+				$rspta=$memorandum->insertar($no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 				echo $rspta ? "Memorandum Registrado" : "El MEMORANDUM  no se pudo registrar";
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'EL MEMORANDUM "' . $no_memo . '"');
 			}
@@ -56,7 +55,7 @@ switch ($_GET["op"]){
 			} else {
 				
 				//EXTRAEMOS LOS VALORES VIEJOS DE LA BASE DE DATOS QUE SE VAN A MODIFICAR		
-				$valor = "select id_memo, no_memo, id_tipo_memo, remitente,destinatario,fecha,asunto,contenido from tbl_voae_memorandums WHERE id_memo= '$id_memo'";
+				$valor = "select id_memo, no_memo, id_tipo_memo, remitente,destinatario,asunto,contenido from tbl_voae_memorandums WHERE id_memo= '$id_memo'";
 				$result_valor = $mysqli->query($valor);
 				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
 
@@ -64,43 +63,35 @@ switch ($_GET["op"]){
 				if ($valor_viejo['no_memo'] <> $no_memo and $valor_viejo['id_tipo_memo'] <> $id_tipo_memo) {
 					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EL MEMORANDUM "' . $valor_viejo['no_memo'] . '" POR "' . $no_memo . '" Y LA ACTIVIDAD "'. $valor_viejo['id_tipo_memo'] . '"POR"' . $id_tipo_memo .'" ');
 
-					$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+					$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 					echo $rspta ? "MEMORANDUM fue actualizado" : "MEMORANDUM no se pudo actualizar";
 
 				//CONDICION PARA LA MODIFICACION DEL REMITENTE
 				} elseif ($valor_viejo['remitente'] <> $remitente) {
 					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM EL REMITENTE"' . $valor_viejo['remitente'] . '" POR "' . $remitente . '" ');
 
-					$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+					$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 					echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
 
 				//CONDICION PARA LA MODIFICACION DEL DESTINATARIO
 				} elseif ($valor_viejo['destinatario'] <> $destinatario) {
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM EL DESTINATARIO "' . $valor_viejo['destinatario'] . '"POR "' .$destinatario .'" ');
 
-				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 				echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
-
-				//CONDICION PARA LA MODIFICACION DEL FECHA
-				}elseif ($valor_viejo['fecha'] <> $fecha) {
-				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM LA FECHA "' . $valor_viejo['fecha'] . '"POR "' .$fecha .'" ');
-				
-				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
-				echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
-
 
 				//CONDICION PARA LA MODIFICACION DE EL ASUNTO
 				}elseif ($valor_viejo['fecha'] <> $asunto) {
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM EL ASUNTO "' . $valor_viejo['asunto'] . '"POR "' .$asunto .'" ');
 				
-				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 				echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
 
 				//CONDICION PARA LA MODIFICACION DE EL CONTENIDO
 				}elseif ($valor_viejo['contenido'] <> $contenido) {
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM EL CONTENIDO "' . $valor_viejo['contenido'] . '"POR "' .$contenido .'" ');
 				
-				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$fecha,$asunto,$contenido);
+				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);
 				echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
 				} 
 
@@ -126,7 +117,13 @@ switch ($_GET["op"]){
 	break;
 
 	case 'eliminar':
-	
+		
+		$valor = "select no_memo from tbl_voae_memorandums where id_memo= '$id_memo'";
+	    $result_valor = $mysqli->query($valor);
+	    $bt_nombre_ambito = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+    	//SE MANDA A LA BITACORA LA ACCION DE ACTIVAR EL AMBITO
+ 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'EL MEMORANDUM: ' . $bt_nombre_ambito['no_memo'] . '');
 		$rspta=$memorandum->eliminar($id_memo);
  		echo $rspta ? "Registro Eliminado" : "Error";
 
@@ -135,7 +132,7 @@ switch ($_GET["op"]){
 
 	case 'listar':
 	
- 
+	if (permisos::permiso_modificar($Id_objeto)==1 and permisos::permiso_eliminar($Id_objeto)==1){
  		$rspta=$memorandum->listar();
  		//Vamos a declarar un array
  		$data= Array();
@@ -143,11 +140,11 @@ switch ($_GET["op"]){
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
 
- 				"0"=>'<button  class="btn btn-warning" style="display:inline;" onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
+ 				"0"=>'<button  class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
  					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
 					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
-					   <button title="Generar PDF"  class="btn btn-danger" type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
- 					 ' <button class="btn btn-danger" style="display:inline;" onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
+					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
+ 					 ' <button class="btn btn-danger" style="display:inline;"   onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
  				"1"=>$reg->no_memo,
  				"2"=>$reg->nombre_tipo_memorandum,		
  				"3"=>$reg->remitente,
@@ -163,13 +160,98 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
- 	
+	}elseif (permisos::permiso_modificar($Id_objeto)==0 and permisos::permiso_eliminar($Id_objeto)==0){
+	
+		$rspta=$memorandum->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+
+ 				"0"=>'<button disabled class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
+ 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
+					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
+					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
+ 					 ' <button disabled class="btn btn-danger" style="display:inline;"  onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->no_memo,
+ 				"2"=>$reg->nombre_tipo_memorandum,		
+ 				"3"=>$reg->remitente,
+ 				"4"=>$reg->destinatario,
+ 				"5"=>$reg->fecha
+
+ 				
+ 			);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+
+	}elseif (permisos::permiso_modificar($Id_objeto)==0){
+		$rspta=$memorandum->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+
+ 				"0"=>'<button disabled class="btn btn-warning" style="display:inline;"  onclick=""><i class="far fa-edit"></i></button>'.
+ 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
+					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
+					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
+ 					 ' <button class="btn btn-danger" style="display:inline;"  onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->no_memo,
+ 				"2"=>$reg->nombre_tipo_memorandum,		
+ 				"3"=>$reg->remitente,
+ 				"4"=>$reg->destinatario,
+ 				"5"=>$reg->fecha
+
+ 				
+ 			);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+
+	
+ 	}elseif (permisos::permiso_eliminar($Id_objeto)==0){
+ 		$rspta=$memorandum->listar();
+ 		//Vamos a declarar un array
+ 		$data= Array();
+
+ 		while ($reg=$rspta->fetch_object()){
+ 			$data[]=array(
+
+ 				"0"=>'<button  class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
+ 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
+					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
+					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
+ 					 ' <button class="btn btn-danger" disabled="disabled" style="display:inline;"   onclick=""><i class="fas fa-trash-alt"></i></button>',
+ 				"1"=>$reg->no_memo,
+ 				"2"=>$reg->nombre_tipo_memorandum,		
+ 				"3"=>$reg->remitente,
+ 				"4"=>$reg->destinatario,
+ 				"5"=>$reg->fecha
+
+ 				
+ 			);
+ 		}
+ 		$results = array(
+ 			"sEcho"=>1, //Información para el datatables
+ 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
+ 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
+ 			"aaData"=>$data);
+ 		echo json_encode($results);
+ 		}
 break;
 }
 
-/*							<form action="../Controlador/generar_memo_pdf.php" method="POST">
-							<input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
-							<button title="Generar PDF"  class="btn btn-danger" type="submit" ><i class="fas fa-file-pdf"></i></button></form>*/
-?>
 
 

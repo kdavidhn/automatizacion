@@ -30,9 +30,8 @@ $id_persona_alumno=isset($_POST["id_persona_alumno"])? limpiarCadena($_POST["id_
 $id_actividad=isset($_POST["id_actividad"])? limpiarCadena($_POST["id_actividad"]):"";
 $horas_alumno=isset($_POST["horas_alumno"])? limpiarCadena($_POST["horas_alumno"]):"";
 
-
-
 $usuario=$_SESSION['id_usuario'];
+
 switch ($_GET["op"]){
 case 'guardaryeditar':
 		if (empty($id_actividad_voae)){
@@ -41,19 +40,30 @@ case 'guardaryeditar':
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 				$rspta=$horas->insertar($nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$observaciones,$usuario,$ambito,$periodo);
  		echo $rspta ? "Actividad Registrada" : "Error Fechas";
- 		
+ 		 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'LA ACTIVIDAD: ' . $nombre_act . '');
 		} //FIN
 	break;
  	
 	case 'insertar_horas':
-		
+		$valor = "select concat(nombres,' ',apellidos) as nombre from tbl_personas WHERE id_persona= '$id_persona_alumno'";
+				$result_valor = $mysqli->query($valor);
+				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+		$sql = "select nombre_actividad from tbl_voae_actividades WHERE id_actividad_voae= '$id_actividad'";
+				$resultado = $mysqli->query($sql);
+				$actividad = $resultado->fetch_array(MYSQLI_ASSOC);
 		$rspta=$horas->insertar_horas($id_persona_alumno,$id_actividad,$horas_alumno);
  		echo $rspta ? "Horas Agregadas" : "Error: Actividad ya está agregada";
- 		
+ 		 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'HORAS VOAE AL ALUMNO: ' . $valor_viejo['nombre'] . ', LA CANTIDAD DE: '. $horas_alumno . ' HORAS, DE LA ACTIVIDAD: '. $actividad['nombre_actividad'] . '');
 	break;
 
 	case 'eliminar':
-	
+		$valor = "select tbl_voae_asistencias.id_asistencia,tbl_voae_asistencias.nombre_alumno,tbl_voae_asistencias.cuenta, tbl_voae_actividades.nombre_actividad from tbl_voae_asistencias JOIN tbl_voae_actividades on tbl_voae_asistencias.id_actividad_voae = tbl_voae_actividades.id_actividad_voae where tbl_voae_asistencias.id_asistencia = '$id_asistencia'";
+	    $result_valor = $mysqli->query($valor);
+	    $bt_nombre_ambito = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+    	//SE MANDA A LA BITACORA LA ACCION DE ACTIVAR EL AMBITO
+ 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'LA ACTIVIDAD: ' . $bt_nombre_ambito['nombre_actividad'] . ', DEL ALUMNO: '. $bt_nombre_ambito['nombre_alumno'] . ', CON CUENTA: '. $bt_nombre_ambito['cuenta'] . '');
 		$rspta=$horas->eliminar($id_asistencia);
  		echo $rspta ? "Registro Eliminado" : "Error";
  		
