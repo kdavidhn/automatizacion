@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-08-2021 a las 04:17:34
+-- Tiempo de generación: 06-08-2021 a las 19:42:21
 -- Versión del servidor: 10.4.19-MariaDB
 -- Versión de PHP: 8.0.7
 
@@ -32,6 +32,9 @@ UPDATE tbl_practica_estudiantes SET docente_supervisor = @nombre_docente WHERE i
 
 COMMIT;
 END$$
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_actividad` (IN `no_solicitud` INT(10), IN `nombre_actividad` VARCHAR(255), IN `ubicacion` VARCHAR(255), IN `fch_inicial_actividad` DATE, IN `fch_final_actividad` DATE, IN `descripcion` VARCHAR(255), IN `poblacion_objetivo` VARCHAR(255), IN `presupuesto` INT(50), IN `staff_alumnos` VARCHAR(255), IN `observaciones` VARCHAR(255), IN `id_usuario_registro` INT(10), IN `id_ambito` INT(10), IN `periodo` VARCHAR(50))  INSERT INTO tbl_voae_actividades (no_solicitud,fch_solicitud,nombre_actividad,ubicacion,fch_inicial_actividad,fch_final_actividad,descripcion,poblacion_objetivo,presupuesto,staff_alumnos,observaciones,id_estado,id_usuario_registro,id_ambito,periodo)
+		VALUES (upper(no_solicitud),now(),upper(nombre_actividad),upper(ubicacion),fch_inicial_actividad,fch_final_actividad,upper(descripcion),upper(poblacion_objetivo),presupuesto,upper(staff_alumnos),upper(observaciones),'1',upper(id_usuario_registro),id_ambito,upper(periodo))$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `inserta_actividad_externa` (IN `nombre_act` VARCHAR(255), IN `ubicacion` VARCHAR(255), IN `fecha_inicio` DATE, IN `fecha_final` DATE, IN `descripcion` VARCHAR(255), IN `observaciones` VARCHAR(255), IN `usuario` VARCHAR(255), IN `ambito` VARCHAR(255), IN `periodo` VARCHAR(255))  BEGIN
 set @fecha_actual = (SELECT now());
@@ -4685,7 +4688,97 @@ INSERT INTO `tbl_bitacora` (`Id_bitacora`, `Id_usuario`, `Id_objeto`, `Fecha`, `
 (30654, 1, 118, '2021-08-05 20:12:54', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
 (30655, 1, 118, '2021-08-05 20:13:15', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
 (30656, 1, 114, '2021-08-05 20:13:49', 'INGRESO', 'A Horas VOAE Gestión'),
-(30657, 1, 114, '2021-08-05 20:15:06', 'INGRESO', 'A Horas VOAE Gestión');
+(30657, 1, 114, '2021-08-05 20:15:06', 'INGRESO', 'A Horas VOAE Gestión'),
+(30658, 1, 8, '2021-08-06 00:45:40', 'Ingreso', 'A Bitacora del sistema'),
+(30659, 1, 110, '2021-08-06 00:45:46', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30660, 1, 110, '2021-08-06 00:48:35', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30661, 1, 115, '2021-08-06 00:48:41', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30662, 1, 8, '2021-08-06 00:50:54', 'Ingreso', 'A Bitacora del sistema'),
+(30663, 1, 9, '2021-08-06 00:50:58', 'Ingreso', 'A Permisos a roles y pantallas'),
+(30664, 1, 8, '2021-08-06 00:51:27', 'INSERTO', 'EL PERMISO finalizar Actividades'),
+(30665, 1, 9, '2021-08-06 00:51:27', 'Ingreso', 'A Permisos a roles y pantallas'),
+(30666, 1, 121, '2021-08-06 00:51:32', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30667, 1, 121, '2021-08-06 00:51:49', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30668, 1, 121, '2021-08-06 01:20:21', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30669, 1, 110, '2021-08-06 01:20:31', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30670, 1, 118, '2021-08-06 01:20:40', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30671, 1, 118, '2021-08-06 01:21:00', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30672, 1, 110, '2021-08-06 01:22:31', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30673, 1, 110, '2021-08-06 01:23:14', 'INSERTO', 'LA ACTIVIDAD: \"Ajedrez\"'),
+(30674, 1, 110, '2021-08-06 01:23:14', 'MODIFICO', 'EL NO DE SOLICITUD:  POR: N-1234 '),
+(30675, 1, 110, '2021-08-06 01:24:00', 'INSERTO', 'LA ACTIVIDAD: \"fubolito\"'),
+(30676, 1, 110, '2021-08-06 01:24:00', 'MODIFICO', 'EL NO DE SOLICITUD:  POR: N-1234 '),
+(30677, 1, 110, '2021-08-06 01:26:50', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30678, 1, 105, '2021-08-06 01:27:03', 'INGRESO', 'A Mantenimiento de ambitos'),
+(30679, 1, 105, '2021-08-06 01:27:07', 'ACTIVO', 'EL AMBITO: SOCIAL CULTURALPRE'),
+(30680, 1, 105, '2021-08-06 01:27:11', 'ACTIVO', 'EL AMBITO: PRUEBA2'),
+(30681, 1, 105, '2021-08-06 01:27:15', 'ACTIVO', 'EL AMBITO: PRUEBA'),
+(30682, 1, 110, '2021-08-06 01:27:24', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30683, 1, 110, '2021-08-06 01:27:54', 'INSERTO', 'LA ACTIVIDAD: \"Ajedrez\"'),
+(30684, 1, 110, '2021-08-06 01:27:54', 'MODIFICO', ' EL NO DE SOLICITUD:  POR: N-1234, Y LA DESCRIPCION DEL AMBITO'),
+(30685, 1, 110, '2021-08-06 01:28:59', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30686, 1, 110, '2021-08-06 01:29:05', 'ENVIO', 'EL No DE SOLICITUD \"0\"'),
+(30687, 1, 115, '2021-08-06 01:29:13', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30688, 1, 115, '2021-08-06 01:29:17', 'APROBO', 'EL No DE SOLICITUD\"0\"'),
+(30689, 1, 121, '2021-08-06 01:29:21', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30690, 1, 121, '2021-08-06 01:29:25', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30691, 1, 121, '2021-08-06 01:30:17', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30692, 1, 121, '2021-08-06 01:30:37', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30693, 1, 121, '2021-08-06 01:31:41', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30694, 1, 121, '2021-08-06 01:33:41', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30695, 1, 121, '2021-08-06 01:33:46', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30696, 1, 121, '2021-08-06 01:33:53', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30697, 1, 121, '2021-08-06 01:34:01', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30698, 1, 118, '2021-08-06 01:34:08', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30699, 1, 118, '2021-08-06 01:34:13', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30700, 1, 118, '2021-08-06 01:34:42', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30701, 1, 121, '2021-08-06 01:34:47', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30702, 1, 121, '2021-08-06 01:34:58', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30703, 1, 121, '2021-08-06 01:35:33', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30704, 1, 121, '2021-08-06 01:35:40', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30705, 1, 118, '2021-08-06 01:36:12', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30706, 1, 121, '2021-08-06 01:37:41', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30707, 1, 118, '2021-08-06 01:37:46', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30708, 1, 121, '2021-08-06 01:38:36', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30709, 1, 118, '2021-08-06 01:38:52', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30710, 1, 121, '2021-08-06 01:39:45', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30711, 1, 118, '2021-08-06 01:39:49', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30712, 1, 110, '2021-08-06 02:35:07', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30713, 1, 110, '2021-08-06 02:38:01', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30714, 1, 9, '2021-08-06 02:45:04', 'Ingreso', 'A Permisos a roles y pantallas'),
+(30715, 1, 110, '2021-08-06 02:45:31', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30716, 1, 115, '2021-08-06 02:45:51', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30717, 1, 121, '2021-08-06 02:46:37', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30718, 1, 115, '2021-08-06 02:46:52', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30719, 1, 110, '2021-08-06 02:46:59', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30720, 1, 110, '2021-08-06 02:47:54', 'INSERTO', 'LA ACTIVIDAD: \"DEPORTES\"'),
+(30721, 1, 110, '2021-08-06 02:47:54', 'MODIFICO', ' EL NO DE SOLICITUD:  POR: 2, Y LA DESCRIPCION DEL AMBITO'),
+(30722, 1, 110, '2021-08-06 02:48:10', 'MODIFICO', 'EL PERIODO DE LA ACTIVIDAD: PRIMER PERIODO POR: Tercer Periodo '),
+(30723, 1, 110, '2021-08-06 02:48:27', 'ENVIO', 'EL No DE SOLICITUD \"2\"'),
+(30724, 1, 110, '2021-08-06 02:49:22', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30725, 1, 110, '2021-08-06 02:49:47', 'INSERTO', 'LA ACTIVIDAD: \"Prueba5\"'),
+(30726, 1, 110, '2021-08-06 02:49:47', 'MODIFICO', ' EL NO DE SOLICITUD:  POR: 13, Y LA DESCRIPCION DEL AMBITO'),
+(30727, 1, 110, '2021-08-06 02:50:58', 'MODIFICO', 'LA UBICACION DE LA ACTIVIDAD: CIIE POR: UNAH '),
+(30728, 1, 8, '2021-08-06 02:51:02', 'Ingreso', 'A Bitacora del sistema'),
+(30729, 1, 115, '2021-08-06 02:51:22', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30730, 1, 115, '2021-08-06 02:51:27', 'APROBO', 'EL No DE SOLICITUD\"2\"'),
+(30731, 1, 121, '2021-08-06 02:51:32', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30732, 1, 121, '2021-08-06 02:51:44', 'FINALIZO', 'EL NO DE SOLICITUD \"2021\"'),
+(30733, 1, 118, '2021-08-06 02:51:46', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30734, 1, 121, '2021-08-06 02:51:49', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30735, 1, 110, '2021-08-06 02:51:55', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30736, 1, 110, '2021-08-06 02:56:50', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30737, 1, 110, '2021-08-06 02:56:59', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30738, 1, 110, '2021-08-06 02:57:35', 'INSERTO', 'LA ACTIVIDAD: \"Cultura\"'),
+(30739, 1, 110, '2021-08-06 02:58:02', 'MODIFICO', 'EL PRESUPUESTO DE LA ACTIVIDAD: 500 POR: 5000 '),
+(30740, 1, 110, '2021-08-06 02:58:10', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30741, 1, 115, '2021-08-06 02:59:04', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30742, 1, 110, '2021-08-06 02:59:11', 'INGRESO', 'A Solicitud de Actividades CVE'),
+(30743, 1, 121, '2021-08-06 02:59:16', 'INGRESO', 'A Solicitud de Actividades CVE');
+INSERT INTO `tbl_bitacora` (`Id_bitacora`, `Id_usuario`, `Id_objeto`, `Fecha`, `Accion`, `Descripcion`) VALUES
+(30744, 1, 118, '2021-08-06 03:01:48', 'INGRESO', 'A GESTION DE DOCUMENTACION'),
+(30745, 1, 119, '2021-08-06 03:02:09', 'INGRESO', 'A Memorandums'),
+(30746, 1, 120, '2021-08-06 03:02:19', 'INGRESO', 'A Mantenimiento de tipo Meorandum');
 
 -- --------------------------------------------------------
 
@@ -7214,9 +7307,10 @@ INSERT INTO `tbl_objetos` (`Id_objeto`, `objeto`, `descripcion`) VALUES
 (115, 'Gestión Actividades CVE', 'El usuario asignado podrá aprobar, denegar las actividades'),
 (116, 'Historial Alumnos CVE', 'Detalle de todas las actividades VOAE realizadas por los alumnos'),
 (117, 'Menu Documentación', 'Contiene el permiso para acceder a la página de Informe de Actividades '),
-(118, 'Informe Actividad Vista CVE', ''),
-(119, 'Carlos CVE', ''),
-(120, 'CARLOS CVE', '');
+(118, 'Informe Actividad Vista CVE', 'Gestión para la creación de los informes de las actividades ya finalizadas'),
+(119, 'Memorandums Vista CVE', 'Guardar memorandums de diferentes tipos'),
+(120, 'Tipos de Memorandums Vista CVE', 'Getsión de los diferentes tipos de memos que se puedan agregar'),
+(121, 'Finalizar Actividades CVE', 'finalizar Actividades');
 
 -- --------------------------------------------------------
 
@@ -7639,7 +7733,8 @@ INSERT INTO `tbl_permisos_usuarios` (`Id_permisos_usuario`, `Id_rol`, `Id_objeto
 (325, 46, 117, '1', '1', '1', '1', '2021-08-04 22:01:36', ' ADMIN ', NULL, NULL),
 (326, 46, 118, '1', '1', '1', '1', '2021-08-04 22:01:36', ' ADMIN ', 'ADMIN', '2021-08-05 02:17:08'),
 (327, 46, 119, '1', '1', '1', '1', '2021-08-04 22:01:36', ' ADMIN ', NULL, NULL),
-(328, 46, 120, '1', '1', '1', '1', '2021-08-04 22:01:36', ' ADMIN ', NULL, NULL);
+(328, 46, 120, '1', '1', '1', '1', '2021-08-04 22:01:36', ' ADMIN ', NULL, NULL),
+(329, 46, 121, '1', '1', '1', '1', '2021-08-06 00:51:27', ' ADMIN ', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -8645,12 +8740,12 @@ INSERT INTO `tbl_usuarios` (`Id_usuario`, `id_persona`, `Usuario`, `Id_rol`, `es
 
 CREATE TABLE `tbl_voae_actividades` (
   `id_actividad_voae` bigint(20) NOT NULL COMMENT 'Campo llave - índice de la tabla',
-  `no_solicitud` int(11) DEFAULT NULL COMMENT 'Asignación de Número de Actividad aprobada',
+  `no_solicitud` varchar(10) DEFAULT NULL COMMENT 'Asignación de Número de Actividad aprobada',
   `fch_solicitud` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `nombre_actividad` varchar(45) NOT NULL,
   `ubicacion` varchar(50) NOT NULL COMMENT 'Ubicación del lugar donde se desarollará la Actividad',
-  `fch_inicial_actividad` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp() COMMENT 'Fecha y hora que da inicio la actividad que se está registrando',
-  `fch_final_actividad` datetime NOT NULL COMMENT 'Fecha y hora que finaliza la actividad que se está registrando',
+  `fch_inicial_actividad` date NOT NULL COMMENT 'Fecha y hora que da inicio la actividad que se está registrando',
+  `fch_final_actividad` date NOT NULL COMMENT 'Fecha y hora que finaliza la actividad que se está registrando',
   `descripcion` varchar(200) NOT NULL COMMENT 'Detalles sobre la actividad que se registra.',
   `poblacion_objetivo` varchar(50) NOT NULL COMMENT 'Detalla el público objetivo de la actividad',
   `presupuesto` decimal(10,0) NOT NULL COMMENT 'Monto presupuestado requerido para el desarrollo de la actividad.',
@@ -8660,20 +8755,25 @@ CREATE TABLE `tbl_voae_actividades` (
   `id_usuario_registro` bigint(20) NOT NULL DEFAULT 0 COMMENT 'FK - indice que hace referencia al PK de la tabla de usuarios para identificar el usuario que realiza el registro.',
   `id_ambito` bigint(20) NOT NULL DEFAULT 0 COMMENT 'FK - indice que hace referencia al PK de la tabla de ambitos.',
   `periodo` varchar(50) NOT NULL,
-  `tipo_actividad` varchar(55) NOT NULL
+  `tipo_actividad` varchar(55) NOT NULL,
+  `condicion` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabla que registra las actividades VOAE del Comite de Vida Estudiantil';
 
 --
 -- Volcado de datos para la tabla `tbl_voae_actividades`
 --
 
-INSERT INTO `tbl_voae_actividades` (`id_actividad_voae`, `no_solicitud`, `fch_solicitud`, `nombre_actividad`, `ubicacion`, `fch_inicial_actividad`, `fch_final_actividad`, `descripcion`, `poblacion_objetivo`, `presupuesto`, `staff_alumnos`, `observaciones`, `id_estado`, `id_usuario_registro`, `id_ambito`, `periodo`, `tipo_actividad`) VALUES
-(1, 2021, '2021-07-08 23:32:53', 'PARTIDO DE NATACION', 'POLIDEPORTIVO', '2021-06-08 15:00:00', '2021-06-08 15:00:00', 'CAMPEONATO DE NATACION PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', ''),
-(2, 2021, '2021-07-08 23:32:53', 'FUTBOLITO', 'POLIDEPORTIVO', '2021-07-08 15:00:00', '2021-07-08 15:00:00', 'CAMPEONATO DE FUTBOL PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', ''),
-(3, 2021, '2021-07-08 23:32:53', 'DONACION DE SANGRE', 'EDIFICIO C3 - CU', '2021-07-08 15:00:00', '2021-07-08 15:00:00', 'DONAR SANGRE', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', ''),
-(4, 2021, '2021-07-08 23:32:53', 'FERIA VOCACIONAL', 'PARQUEO CU', '2021-08-01 15:00:00', '2021-08-04 15:00:00', 'FERIA VOCACIONAL PARA RESENTAR LA CARRERA DE IA A LOS ESTUDIANTES POR INGRESAR', 'ESTUDIANTES DE SECUNDARIA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', ''),
-(5, 2021, '2021-07-08 23:32:53', 'FUTBOLITO', 'POLIDEPORTIVO', '2021-09-09 15:00:00', '2021-09-09 15:00:00', 'CAMPEONATO DE FUTBOL PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', ''),
-(6, 2022, '2021-07-08 23:32:53', 'FERIA VOCACIONAL', 'POLIDEPORTIVO', '2021-06-08 15:00:00', '2021-06-08 15:00:00', 'FERIA VOCACIONAL', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', '');
+INSERT INTO `tbl_voae_actividades` (`id_actividad_voae`, `no_solicitud`, `fch_solicitud`, `nombre_actividad`, `ubicacion`, `fch_inicial_actividad`, `fch_final_actividad`, `descripcion`, `poblacion_objetivo`, `presupuesto`, `staff_alumnos`, `observaciones`, `id_estado`, `id_usuario_registro`, `id_ambito`, `periodo`, `tipo_actividad`, `condicion`) VALUES
+(1, '2021', '2021-08-06 01:35:40', 'PARTIDO DE NATACION', 'POLIDEPORTIVO', '2021-06-08', '2021-06-08', 'CAMPEONATO DE NATACION PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 6, 1, 5, '1', '', 1),
+(2, '2021', '2021-08-06 01:33:46', 'FUTBOLITO', 'POLIDEPORTIVO', '2021-07-08', '2021-07-08', 'CAMPEONATO DE FUTBOL PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 6, 1, 5, '1', '', 1),
+(3, '2021', '2021-08-06 01:34:01', 'DONACION DE SANGRE', 'EDIFICIO C3 - CU', '2021-07-08', '2021-07-08', 'DONAR SANGRE', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 6, 1, 5, '1', '', 1),
+(4, '2021', '2021-08-06 01:34:58', 'FERIA VOCACIONAL', 'PARQUEO CU', '2021-08-01', '2021-08-04', 'FERIA VOCACIONAL PARA RESENTAR LA CARRERA DE IA A LOS ESTUDIANTES POR INGRESAR', 'ESTUDIANTES DE SECUNDARIA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 6, 1, 5, '1', '', 1),
+(5, '2021', '2021-08-06 02:51:44', 'FUTBOLITO', 'POLIDEPORTIVO', '2021-09-09', '2021-09-09', 'CAMPEONATO DE FUTBOL PARA ESTUDIANTES DE LA CARRERA DE IA', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 6, 1, 5, '1', '', 1),
+(6, '2022', '2021-07-08 23:32:53', 'FERIA VOCACIONAL', 'POLIDEPORTIVO', '2021-06-08', '2021-06-08', 'FERIA VOCACIONAL', 'ESTUDIANTES IA', '0', 'CARLOS, DAVID, EVER, VICTOR', NULL, 3, 1, 5, '1', '', 0),
+(55, '0', '2021-08-06 01:29:17', 'AJEDREZ', 'UNAH', '2021-08-06', '2021-08-13', 'DESCRIPCION 2', 'ALUMNOS', '100', 'STAFF', 'VARIAS', 3, 1, 5, 'SEGUNDO PERIODO', '', 0),
+(56, '2', '2021-08-06 02:51:27', 'DEPORTES', 'UNAH', '2021-08-08', '2021-08-26', 'HGJHGHG', '500', '3000', 'JUAN, PEDRO', 'NINGUNA', 3, 1, 1, 'Tercer Periodo', '', 0),
+(57, '13', '2021-08-06 02:50:58', 'PRUEBA5', 'UNAH', '2021-08-09', '2021-08-24', 'JHJKKGHJGH', '500', '3000', 'JUAN, PEDRO', 'NINGUNA', 1, 1, 1, 'Segundo Periodo', '', 0),
+(58, '14', '2021-08-06 02:58:02', 'CULTURA', 'UNAH', '2021-08-11', '2021-08-23', 'PRUEBA', '500', '5000', 'JUAN, PEDRO', 'NINGUNA', 1, 1, 5, 'Primer Periodo', '', 0);
 
 -- --------------------------------------------------------
 
@@ -8693,9 +8793,9 @@ CREATE TABLE `tbl_voae_ambitos` (
 --
 
 INSERT INTO `tbl_voae_ambitos` (`id_ambito`, `nombre_ambito`, `descripcion_ambito`, `condicion`) VALUES
-(1, 'SOCIAL CULTURALPRE', 'PROBANDO AMBITOS', 0),
-(5, 'PRUEBA', 'PRUEBA AMBITO', 0),
-(23, 'PRUEBA2', 'GFGFG', 0);
+(1, 'SOCIAL CULTURALPRE', 'PROBANDO AMBITOS', 1),
+(5, 'PRUEBA', 'PRUEBA AMBITO', 1),
+(23, 'PRUEBA2', 'GFGFG', 1);
 
 -- --------------------------------------------------------
 
@@ -8943,10 +9043,12 @@ CREATE TABLE `tbl_voae_memorandums` (
   `id_memo` bigint(20) NOT NULL,
   `no_memo` varchar(10) NOT NULL,
   `id_actividad` bigint(20) DEFAULT NULL,
+  `id_tipo_memo` bigint(20) NOT NULL,
   `remitente` varchar(50) NOT NULL,
   `destinatario` varchar(50) NOT NULL,
   `fecha` date NOT NULL,
-  `contenido` varchar(250) NOT NULL
+  `asunto` varchar(255) NOT NULL,
+  `contenido` longtext NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='Tabla para registrar la elaboración de memorandums necesarios para la remision de las actividades VOAE del CVE';
 
 -- --------------------------------------------------------
@@ -9028,6 +9130,19 @@ INSERT INTO `tbl_voae_tipos_repositorios` (`id_repositorio`, `nombre_repositorio
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `tbl_voae_tipo_memorandum`
+--
+
+CREATE TABLE `tbl_voae_tipo_memorandum` (
+  `id_tipo_memorandum` bigint(20) NOT NULL COMMENT 'campo llave de la tabla',
+  `nombre_tipo_memorandum` varchar(50) DEFAULT NULL COMMENT 'nombre del tipo de memorandum',
+  `descripcion_memorandum` varchar(255) NOT NULL,
+  `condicion` tinyint(4) DEFAULT NULL COMMENT 'estado del memorandum'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Tabla para definir los tipos de memorandums';
+
+-- --------------------------------------------------------
+
+--
 -- Estructura Stand-in para la vista `view_faltas_conducta`
 -- (Véase abajo para la vista actual)
 --
@@ -9064,7 +9179,7 @@ CREATE TABLE `view_horas_voae` (
 --
 CREATE TABLE `view_informes_actividades` (
 `id_informe` bigint(20)
-,`no_solicitud` int(11)
+,`no_solicitud` varchar(10)
 ,`id_actividad_voae` bigint(20)
 ,`nombre` varchar(45)
 ,`asistentes` bigint(21)
@@ -9083,7 +9198,7 @@ CREATE TABLE `view_informes_actividades` (
 CREATE TABLE `view_informes_actividades_completa` (
 `id_informe` bigint(20)
 ,`id_actividad` bigint(20)
-,`no_solicitud` int(11)
+,`no_solicitud` varchar(10)
 ,`nombre_actividad` varchar(45)
 ,`introduccion` varchar(1000)
 ,`objetivos` varchar(1000)
@@ -9107,12 +9222,48 @@ CREATE TABLE `view_informes_actividades_completa` (
 --
 CREATE TABLE `vista_actividad_cve` (
 `id_actividad_voae` bigint(20)
-,`no_solicitud` int(11)
+,`no_solicitud` varchar(10)
 ,`fch_solicitud` datetime
 ,`nombre_actividad` varchar(45)
-,`id_estado` bigint(20)
+,`id_estado` varchar(25)
 ,`usuario` varchar(255)
 ,`ambito` varchar(25)
+,`periodo` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_actividad_cve_1`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_actividad_cve_1` (
+`id_actividad_voae` bigint(20)
+,`no_solicitud` varchar(10)
+,`fch_solicitud` datetime
+,`nombre_actividad` varchar(45)
+,`id_estado` varchar(25)
+,`usuario` varchar(255)
+,`ambito` varchar(25)
+,`periodo` varchar(50)
+);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura Stand-in para la vista `vista_actividad_cve_2`
+-- (Véase abajo para la vista actual)
+--
+CREATE TABLE `vista_actividad_cve_2` (
+`id_actividad_voae` bigint(20)
+,`condicion` tinyint(1)
+,`no_solicitud` varchar(10)
+,`fch_solicitud` datetime
+,`nombre_actividad` varchar(45)
+,`id_estado` varchar(25)
+,`usuario` varchar(255)
+,`ambito` varchar(25)
+,`periodo` varchar(50)
 );
 
 -- --------------------------------------------------------
@@ -9158,7 +9309,25 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 --
 DROP TABLE IF EXISTS `vista_actividad_cve`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_actividad_cve`  AS SELECT `a`.`id_actividad_voae` AS `id_actividad_voae`, `a`.`no_solicitud` AS `no_solicitud`, `a`.`fch_solicitud` AS `fch_solicitud`, `a`.`nombre_actividad` AS `nombre_actividad`, `a`.`id_estado` AS `id_estado`, `u`.`Usuario` AS `usuario`, `b`.`nombre_ambito` AS `ambito` FROM ((`tbl_voae_actividades` `a` join `tbl_usuarios` `u` on(`a`.`id_usuario_registro` = `u`.`Id_usuario`)) join `tbl_voae_ambitos` `b` on(`a`.`id_ambito` = `b`.`id_ambito`)) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_actividad_cve`  AS SELECT `a`.`id_actividad_voae` AS `id_actividad_voae`, `a`.`no_solicitud` AS `no_solicitud`, `a`.`fch_solicitud` AS `fch_solicitud`, `a`.`nombre_actividad` AS `nombre_actividad`, `e`.`nombre_estado` AS `id_estado`, `u`.`Usuario` AS `usuario`, `b`.`nombre_ambito` AS `ambito`, `a`.`periodo` AS `periodo` FROM (((`tbl_voae_actividades` `a` join `tbl_usuarios` `u` on(`a`.`id_usuario_registro` = `u`.`Id_usuario`)) join `tbl_voae_ambitos` `b` on(`a`.`id_ambito` = `b`.`id_ambito`)) join `tbl_voae_estados` `e` on(`a`.`id_estado` = `e`.`id_estado`)) WHERE `e`.`id_estado` = 1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_actividad_cve_1`
+--
+DROP TABLE IF EXISTS `vista_actividad_cve_1`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_actividad_cve_1`  AS SELECT `a`.`id_actividad_voae` AS `id_actividad_voae`, `a`.`no_solicitud` AS `no_solicitud`, `a`.`fch_solicitud` AS `fch_solicitud`, `a`.`nombre_actividad` AS `nombre_actividad`, `e`.`nombre_estado` AS `id_estado`, `u`.`Usuario` AS `usuario`, `b`.`nombre_ambito` AS `ambito`, `a`.`periodo` AS `periodo` FROM (((`tbl_voae_actividades` `a` join `tbl_usuarios` `u` on(`a`.`id_usuario_registro` = `u`.`Id_usuario`)) join `tbl_voae_ambitos` `b` on(`a`.`id_ambito` = `b`.`id_ambito`)) join `tbl_voae_estados` `e` on(`a`.`id_estado` = `e`.`id_estado`)) WHERE `e`.`id_estado` = 2 OR `e`.`id_estado` = 4 ;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura para la vista `vista_actividad_cve_2`
+--
+DROP TABLE IF EXISTS `vista_actividad_cve_2`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vista_actividad_cve_2`  AS SELECT `a`.`id_actividad_voae` AS `id_actividad_voae`, `a`.`condicion` AS `condicion`, `a`.`no_solicitud` AS `no_solicitud`, `a`.`fch_solicitud` AS `fch_solicitud`, `a`.`nombre_actividad` AS `nombre_actividad`, `e`.`nombre_estado` AS `id_estado`, `u`.`Usuario` AS `usuario`, `b`.`nombre_ambito` AS `ambito`, `a`.`periodo` AS `periodo` FROM (((`tbl_voae_actividades` `a` join `tbl_usuarios` `u` on(`a`.`id_usuario_registro` = `u`.`Id_usuario`)) join `tbl_voae_ambitos` `b` on(`a`.`id_ambito` = `b`.`id_ambito`)) join `tbl_voae_estados` `e` on(`a`.`id_estado` = `e`.`id_estado`)) WHERE `e`.`id_estado` = 3 OR `e`.`id_estado` = 6 ;
 
 --
 -- Índices para tablas volcadas
@@ -9898,7 +10067,7 @@ ALTER TABLE `tbl_aula`
 -- AUTO_INCREMENT de la tabla `tbl_bitacora`
 --
 ALTER TABLE `tbl_bitacora`
-  MODIFY `Id_bitacora` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30658;
+  MODIFY `Id_bitacora` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30747;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_cambio_carrera`
@@ -10162,7 +10331,7 @@ ALTER TABLE `tbl_nacionalidad`
 -- AUTO_INCREMENT de la tabla `tbl_objetos`
 --
 ALTER TABLE `tbl_objetos`
-  MODIFY `Id_objeto` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=121;
+  MODIFY `Id_objeto` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_parametros`
@@ -10186,7 +10355,7 @@ ALTER TABLE `tbl_periodo_plan`
 -- AUTO_INCREMENT de la tabla `tbl_permisos_usuarios`
 --
 ALTER TABLE `tbl_permisos_usuarios`
-  MODIFY `Id_permisos_usuario` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=329;
+  MODIFY `Id_permisos_usuario` bigint(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=330;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_personas`
@@ -10318,7 +10487,7 @@ ALTER TABLE `tbl_usuarios`
 -- AUTO_INCREMENT de la tabla `tbl_voae_actividades`
 --
 ALTER TABLE `tbl_voae_actividades`
-  MODIFY `id_actividad_voae` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Campo llave - índice de la tabla', AUTO_INCREMENT=53;
+  MODIFY `id_actividad_voae` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'Campo llave - índice de la tabla', AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_voae_ambitos`
@@ -10354,7 +10523,7 @@ ALTER TABLE `tbl_voae_informes`
 -- AUTO_INCREMENT de la tabla `tbl_voae_memorandums`
 --
 ALTER TABLE `tbl_voae_memorandums`
-  MODIFY `id_memo` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_memo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_voae_repositorios`
@@ -10650,12 +10819,6 @@ ALTER TABLE `tbl_voae_informes`
   ADD CONSTRAINT `FK_tbl_voae_informes_tbl_voae_actividades` FOREIGN KEY (`id_actividad`) REFERENCES `tbl_voae_actividades` (`id_actividad_voae`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_tbl_voae_informes_tbl_voae_estados` FOREIGN KEY (`id_estado`) REFERENCES `tbl_voae_estados` (`id_estado`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `FK_tbl_voae_informes_tbl_voae_repositorios` FOREIGN KEY (`id_repositorio`) REFERENCES `tbl_voae_repositorios` (`id_repositorio`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Filtros para la tabla `tbl_voae_memorandums`
---
-ALTER TABLE `tbl_voae_memorandums`
-  ADD CONSTRAINT `FK1_tbl_memorandums_tbl_actividades` FOREIGN KEY (`id_actividad`) REFERENCES `tbl_voae_actividades` (`id_actividad_voae`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `tbl_voae_repositorios`
