@@ -46,12 +46,38 @@ switch ($_GET["op"]){
 				
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 				$rspta=$listado_asistencia->insertar($id_actividad_voae,$cuenta,$nombre_alumno,$cant_horas, $carrera );
-				echo $rspta ? "Asistencia  Registrada".$id_actividad_voae." - ".$cuenta." - ".$nombre_alumno." - ".$cant_horas." - ".$carrera : "El informe no se pudo registrar - ".$id_actividad_voae." - ".$cuenta." - ".$nombre_alumno." - ".$cant_horas." - ".$carrera;
-				
+				echo $rspta ? "Asistencia  Registrada" : "El informe no se pudo registrar - ";
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'LA ASISTENCIA DEL ESTUDIANTE CON CUENTA "' . $cuenta. '" EN LA ACTIVIDAD CON ID "'. $id_actividad_voae . '"');
 			}
 			else {
+				$valor = "select * from tbl_voae_asistencias WHERE id_asistencia = '$id_asistencia'";
+				$result_valor = $mysqli->query($valor);
+				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
+
 				$rspta=$listado_asistencia->editar($id_asistencia,$cuenta,$nombre_alumno,$cant_horas, $carrera );
-				echo $rspta ? "Asistencia actualizada" .$id_actividad_voae." - ".$cuenta." - ".$nombre_alumno." - ".$cant_horas." - ".$carrera: "Artículo no se pudo actualizar".$id_actividad_voae." - ".$cuenta." - ".$nombre_alumno." - ".$cant_horas." - ".$carrera;
+				
+				$modificaciones='';
+				if ($valor_viejo['nombre_alumno']!= $nombre_alumno){
+					$modificaciones=($modificaciones.'NOMBRE ' );
+				}
+				if ($valor_viejo['cant_horas']!= $cant_horas){
+					if (empty($modificaciones)){
+						$modificaciones=($modificaciones.'CANT_HORAS ' );
+					} else {
+						$modificaciones=($modificaciones.'- CANT_HORAS ' );
+					}					
+				}
+				if ($valor_viejo['carrera']!= $carrera){
+					
+					if (empty($modificaciones)){
+						$modificaciones=($modificaciones.'CARRERA');
+					} else {
+						$modificaciones=($modificaciones.'- CARRERA ' );
+					}
+				}			
+				
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', 'LA(s) COLUMNA (S): '.$modificaciones.'(DE LA ASISTENCIA DEL ESTUDIANTE CON CUENTA "' . $cuenta. '" EN LA ACTIVIDAD CON ID "'. $id_actividad_voae . '") ');
+				echo $rspta ? "Asistencia actualizada": "Artículo no se pudo actualizar";
 				
 			}
 		}
@@ -70,6 +96,7 @@ switch ($_GET["op"]){
 	
 			$rspta=$listado_asistencia->eliminar($id_asistencia);
 			 echo $rspta ? "Asistencia de estudiante Eliminada" : "Error";
+			 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', 'LA ASISTENCIA CON ID "' . $id_asistencia.$cuenta. '" EN LA ACTIVIDAD CON ID "'. $id_actividad_voae . '" ');
 	
 		break;
 
@@ -101,6 +128,88 @@ switch ($_GET["op"]){
 			 
 		break;
 
+		case 'importar':
+
+			if (isset ($_FILES['dataCliente'])) {
+
+				$tipo       = $_FILES['dataCliente']['type'];
+				$tamanio    = $_FILES['dataCliente']['size'];
+				$archivotmp = $_FILES['dataCliente']['tmp_name'];
+				$lineas     = file($archivotmp);
+				$id_actividad_voae=$_SESSION['id_actividad_cve'];
+				$actualizaciones=0;
+				$registros =0;
+				$i = 0;
+
+				foreach ($lineas as $linea) {
+				  $cantidad_registros = count($lineas);
+				  $cantidad_regist_agregados =  ($cantidad_registros - 1);
+
+				  if ($i != 0) {
+
+					$datos = explode(";", $linea);
+					
+
+					$cuenta                = !empty(trim($datos[0]))  ? (trim($datos[0])) : '';
+					$nombre_alumno         = !empty(strtoupper(trim(quitar_tildes($datos[1]))))  ? (strtoupper(trim(quitar_tildes($datos[1])))): '';
+					$cant_horas            = !empty(trim($datos[2]))  ? (trim($datos[2])) : '';
+					$carrera               = !empty(strtoupper(trim(quitar_tildes($datos[3]))))  ? (strtoupper(trim(quitar_tildes($datos[3])))): '';
+
+					if( !empty($cuenta) ){
+						$query = $mysqli -> query ("SELECT cuenta FROM tbl_voae_asistencias WHERE id_actividad_voae ='".($id_actividad_voae)."' AND cuenta='".($cuenta)."' ");
+								$cant_duplicidad = mysqli_num_rows($query);
+					}                
+								 
+				  //No existe Registros Duplicados
+				  if ( $cant_duplicidad == 0 ) { 
+				  
+				  $insertarData = "INSERT INTO tbl_voae_asistencias( 
+					  id_actividad_voae,
+					  cuenta,
+					  nombre_alumno,
+					  cant_horas,
+					  carrera
+				  ) VALUES(
+					  '$id_actividad_voae',
+					  '$cuenta',
+					  '$nombre_alumno',
+					  '$cant_horas',
+					  '$carrera'
+				  )";
+				  ejecutarConsulta($insertarData);
+				  $registros++;
+						  
+				  } 
+				  /**Caso Contrario actualizo el o los Registros ya existentes*/
+				  else{
+					  $updateData =  ("UPDATE tbl_voae_asistencias SET 
+						  nombre_alumno='" .$nombre_alumno. "',
+					  cant_horas='" .$cant_horas. "',
+						  carrera='" .$carrera. "' 
+						  WHERE id_actividad_voae ='".($id_actividad_voae)."' AND cuenta='".($cuenta)."'
+					  ");
+					  $result_update = ejecutarConsulta($updateData);
+					  $actualizaciones++;
+
+				  }
+				}
+			
+			 $i++;
+			}
+				echo  'Se importaron un total de: '. $cantidad_regist_agregados .'filas. De las cuales '.$actualizaciones.' fueron actualizaciones y '.$registros.' nuevos registros' ;
+				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'IMPORTO', 'LISTADO DE ASISTENCIA DE LA ACTIVIDAD CON ID "' . $id_actividad_voae . '", CON: '. $registros . ' REGISTROS NUEVOS Y '.$actualizaciones. ' ACTUALIZACIONES');
+		}
+
+		break;
+
  	}
+
+	 function quitar_tildes($cadena) {
+		$cade = utf8_encode($cadena);
+		$no_permitidas= array ("á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","À","Ã","Ì","Ò","Ù","Ã™","Ã ","Ã¨","Ã¬","Ã²","Ã¹","ç","Ç","Ã¢","ê","Ã®","Ã´","Ã»","Ã‚","ÃŠ","ÃŽ","Ã”","Ã›","ü","Ã¶","Ã–","Ã¯","Ã¤","«","Ò","Ã","Ã„","Ã‹");
+		$permitidas= array ("a","e","i","o","u","A","E","I","O","U","n","N","A","E","I","O","U","a","e","i","o","u","c","C","a","e","i","o","u","A","E","I","O","U","u","o","O","i","a","e","U","I","A","E");
+		$texto = str_replace($no_permitidas, $permitidas ,$cade);
+		return $texto;
+		}
  	?>
 

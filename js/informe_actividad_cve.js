@@ -54,8 +54,8 @@ function cancelarform() {
 //Función Listar
 function listar() {
     tabla = $('#tbllistado').dataTable({
-        "aProcessing": true,//Activamos el procesamiento del datatables
-        "aServerSide": true,//Paginación y filtrado realizados por el servidor
+        "aProcessing": true, //Activamos el procesamiento del datatables
+        "aServerSide": true, //Paginación y filtrado realizados por el servidor
         "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -80,8 +80,8 @@ function listar() {
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
-        dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
-buttons: [ ],
+        dom: 'fBlrtip', //Definimos los elementos del control de tabla Bfrtilp
+        buttons: [],
         "ajax": {
             url: '../Controlador/informe_actividad_cve_controlador.php?op=listar',
             type: "get",
@@ -91,9 +91,14 @@ buttons: [ ],
             }
         },
         "bDestroy": true,
-        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-        "iDisplayLength": 5,//Paginación
-        "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, 'All']
+        ],
+        "iDisplayLength": 5, //Paginación
+        "order": [
+                [0, "desc"]
+            ] //Ordenar (columna,orden)
     }).DataTable();
 }
 //Función para guardar o editar
@@ -170,7 +175,7 @@ function eliminar(id_informe) {
                 swal({
 
                     title: e,
-                    text: " Texto 2 ",
+                    text: " ",
                     icon: "info",
                     buttons: false,
                     dangerMode: false,

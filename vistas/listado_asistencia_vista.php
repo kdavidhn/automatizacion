@@ -39,7 +39,7 @@ if($visualizacion==0){
 
     </script>'; 
   }else{
-    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A GESTION DE DOCUMENTACION');
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A LA LISTA DE ASISTENCIA DE LA ACTIVIDAD ID: '.$id_actividad);
   }
   if (permisos::permiso_insertar($Id_objeto)==0)
   {
@@ -82,91 +82,21 @@ if($visualizacion==0){
           <div class="box-header with-border">
             <div class="row"> 
 
-              <div class="col-sm-7">
+              <div class="col-sm-9">
                 <h5><i><b> &nbsp;&nbsp;&nbsp;ACTIVIDAD: </b><?php  echo $resultado['nombre_actividad'];?>
                 <br><b>&nbsp;&nbsp; LUGAR: </b><?php  echo $resultado['ubicacion'];?>
                 <br><b>&nbsp;&nbsp; FECHA: </b><?php  echo $resultado['fch_inicial_actividad'];?>
                 <br><b>&nbsp;&nbsp; CATEGORIA: </b><?php  echo $resultado['nombre_ambito'];?></i></h5>
               </div>
 
-              <div class="col-sm-3">
+              <div class="col-sm-3" align="right">
                 <div class="box" id="formularioexcel">
-
-                  <?php  
-                    if (isset ($_FILES['dataCliente'])) {
-
-                      $tipo       = $_FILES['dataCliente']['type'];
-                      $tamanio    = $_FILES['dataCliente']['size'];
-                      $archivotmp = $_FILES['dataCliente']['tmp_name'];
-                      $lineas     = file($archivotmp);
-                      $id_actividad_voae=$_SESSION['id_actividad_cve'];
-                      $actualizaciones=0;
-                      $registros =0;
-                      $i = 0;
-
-                      foreach ($lineas as $linea) {
-                        $cantidad_registros = count($lineas);
-                        $cantidad_regist_agregados =  ($cantidad_registros - 1);
-
-                        if ($i != 0) {
-
-                          $datos = explode(";", $linea);
-
-                          $cuenta                = !empty($datos[0])  ? ($datos[0]) : '';
-                          $nombre_alumno         = !empty($datos[1])  ? ($datos[1]) : '';
-                          $cant_horas            = !empty($datos[2])  ? ($datos[2]) : '';
-                          $carrera               = !empty($datos[3])  ? ($datos[3]) : '';
-
-                          if( !empty($cuenta) ){
-                            $query = $mysqli -> query ("SELECT cuenta FROM tbl_voae_asistencias WHERE id_actividad_voae ='".($id_actividad_voae)."' AND cuenta='".($cuenta)."' ");
-                            $cant_duplicidad = mysqli_num_rows($query);
-                          }                
-
-                          //No existe Registros Duplicados
-                          if ( $cant_duplicidad == 0 ) { 
-
-                            $insertarData = "INSERT INTO tbl_voae_asistencias( 
-                            id_actividad_voae,
-                            cuenta,
-                            nombre_alumno,
-                            cant_horas,
-                            carrera
-                          ) VALUES(
-                          '$id_actividad_voae',
-                          '$cuenta',
-                          '$nombre_alumno',
-                          '$cant_horas',
-                          '$carrera'
-                        )";
-                        ejecutarConsulta($insertarData);
-                        $registros++;
-
-                        /**Caso Contrario actualizo el o los Registros ya existentes*/
-                      } else{         
-                        $updateData =  ("UPDATE tbl_voae_asistencias SET 
-                          nombre_alumno='" .$nombre_alumno. "',
-                          cant_horas='" .$cant_horas. "',
-                          carrera='" .$carrera. "' 
-                          WHERE id_actividad_voae ='".($id_actividad_voae)."' AND cuenta='".($cuenta)."'
-                          ");
-                        $result_update = ejecutarConsulta($updateData);
-                        $actualizaciones++;
-
-                      }
-                    }
-
-                    $i++;
-                  }
-                  echo '<p style="text-aling:center; color:#333;">Se importaron un total de: '. $cantidad_regist_agregados .'filas </p> De las cuales '.$actualizaciones.' actualizaciones y '.$registros.($id_actividad_voae);
-                }
-                ?>
                 <?php if (!isset ($_FILES['dataCliente']) && permisos::permiso_insertar($Id_objeto)=='1') {?>
-
-                  <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>"  enctype="multipart/form-data">
+                  <form name="form_import" id="form_import" method="post" action="<?php echo $_SERVER['PHP_SELF'] ?>"  enctype="multipart/form-data">
                     <input type="hidden" id="id_actividad_cve" name="id_actividad_cve" value="<?php echo $id_actividad ?>" >
                     <div class="input-group">
                       <div class="custom-file ">                                           
-                        <input  type="file" name="dataCliente" id="file-input" class="file-input__input form-control" required>
+                        <input  type="file" name="dataCliente" id="file-input" class="file-input__input form-control" required="" accept=".csv">
                         <label class="file-input__label" for="file-input">
                           <i class="zmdi zmdi-upload zmdi-hc-2x"></i>
                         </label>
@@ -182,10 +112,8 @@ if($visualizacion==0){
               <?php } ?>
 
             </div>
-          </div>
 
-
-          <div class="row"> 
+            <div class="row"> 
             <div class="col-sm-3 text-right">
               <h1 align="right"><button class="btn btn-success" name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> 
               onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Estudiante</button></h1>
@@ -194,17 +122,22 @@ if($visualizacion==0){
             </div>
           </div>
 
-        </div>
+          </div>
+
+
+          
+
+        </div> <!-- div row after box header -->
 
 
 
 
 
-      </div>
+      </div><!-- div header -->
 
 
 
-    </div>
+    </div><!-- div box -->
     <!-- ----------------------------------------------------------------------------------------------------------------------------------------------------- /.box-header -->
     <!-- centro -->
     <div class="table-responsive" id="listadoregistros">
@@ -224,7 +157,8 @@ if($visualizacion==0){
       <!-- Inicio del Formulario --> 
       <form name="formulario" id="formulario" method="POST">  
         <input class="form-control" type="hidden" id="id_actividad_voae" name="id_actividad_voae" value="<?php echo $id_actividad; ?>">
-        <input class="form-control" type="hidden" id="id_asistencia" name="id_asistencia" value="">            
+        <input class="form-control" type="hidden" id="id_asistencia" name="id_asistencia" value="">   
+        <input class="form-control" type="hidden" id="id_cuenta2" name="id_cuenta2" value="">            
         <!-- Card  5 Desarrollo-->
         <div class ="card card-default">
           <div class="card-header bg-gradient-dark">
@@ -242,12 +176,15 @@ if($visualizacion==0){
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>CUENTA: </label>
-                  <select class="form-control-lg select2"  onkeyup="Card(event, this)" maxlength="11" minlength="7"style="width: 100%;" id="cuenta" name="cuenta" required="">
-                        <option  disabled="disabled">Cuenta:</option>
+                  <select class="form-control-lg select2"  style="width: 100%;" id="cuenta" name="cuenta" required="" >
+                        <option  disabled="disabled" >Cuenta:</option>
                           <?php
-                            $query = $mysqli -> query ("SELECT * FROM tbl_personas_extendidas  WHERE id_atributo = 12;");
+                            $query = $mysqli -> query ("SELECT cuenta, nombre_alumno
+                            FROM `tbl_voae_asistencias` as a 
+                            JOIN tbl_personas_extendidas as p
+                            GROUP by a.cuenta;");
                             while ($resultado = mysqli_fetch_array($query)) {
-                              echo '<option value="'.$resultado['valor'].'"> '.$resultado['valor'].'</option>' ;
+                              echo '<option value="'.$resultado['cuenta'].'"> '.$resultado['cuenta'].'</option>' ;
                             }
                           ?>
                     </select>
@@ -257,7 +194,7 @@ if($visualizacion==0){
               <div class="col-sm-6">
                 <div class="form-group">
                   <label>NOMBRE: </label>
-                  <input class="form-control" type="text" id="nombre_alumno" name="nombre_alumno" required="" maxlength="30" style="text-transform: uppercase"   onkeypress="return Letras(event)"  onkeypress="return comprobar(this.value, event, this.id)">
+                  <input class="form-control" type="text" id="nombre_alumno" name="nombre_alumno" required="" maxlength="50" style="text-transform: uppercase"   onkeypress="return Letras(event)"  onkeypress="return comprobar(this.value, event, this.id)">
                 </div>
               </div> 
               <!-- CARRERA -->   

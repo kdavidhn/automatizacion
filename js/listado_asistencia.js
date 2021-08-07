@@ -8,6 +8,10 @@ function init() {
     $("#formulario").on("submit", function(e) {
         guardaryeditar(e);
     })
+
+    $("#form_import").on("submit", function(e) {
+        importar(e);
+    })
 }
 
 //Función limpiar
@@ -19,6 +23,7 @@ function limpiar() {
     $("#carrera").val("");
     $("#cant_horas").val("");
     $("#file-input").val("");
+    $("#id_cuenta2").val("");
 
 
 }
@@ -29,14 +34,20 @@ function mostrarform(flag) {
     if (flag) {
         $("#listadoregistros").hide();
         $("#formularioregistros").show();
-        $("#formularioexcel").show();
+        $("#form_import").show();
         $("#btnGuardar").prop("disabled", false);
         $("#btnagregar").hide();
+        $("#btn_enviar").hide();
+        $("#file-input").hide();
+
+
     } else {
         $("#listadoregistros").show();
         $("#formularioregistros").hide();
-        $("#formularioexcel").show();
+        $("#form_import").show();
         $("#btnagregar").show();
+        $("#btn_enviar").show();
+        $("#file-input").show();
     }
 }
 
@@ -49,8 +60,8 @@ function cancelarform() {
 ///Función Listar
 function listar() {
     tabla = $('#tbllistado').dataTable({
-        "aProcessing": true,//Activamos el procesamiento del datatables
-        "aServerSide": true,//Paginación y filtrado realizados por el servidor
+        "aProcessing": true, //Activamos el procesamiento del datatables
+        "aServerSide": true, //Paginación y filtrado realizados por el servidor
         "language": {
             "sProcessing": "Procesando...",
             "sLengthMenu": "Mostrar _MENU_ registros",
@@ -75,8 +86,8 @@ function listar() {
                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
             }
         },
-        dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
-buttons: [ ],
+        dom: 'fBlrtip', //Definimos los elementos del control de tabla Bfrtilp
+        buttons: [],
         "ajax": {
             url: '../Controlador/listado_asistencia_controlador.php?op=listar',
             type: "get",
@@ -85,10 +96,15 @@ buttons: [ ],
                 console.log(e.responseText);
             }
         },
-       "bDestroy": true,
-        lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-        "iDisplayLength": 5,//Paginación
-        "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
+        "bDestroy": true,
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, 'All']
+        ],
+        "iDisplayLength": 5, //Paginación
+        "order": [
+                [0, "desc"]
+            ] //Ordenar (columna,orden)
     }).DataTable();
 }
 
@@ -127,16 +143,49 @@ function guardaryeditar(e) {
     limpiar();
 }
 
+function importar(e) {
+    e.preventDefault(); //No se activará la acción predeterminada del evento
+    $("#btn_enviar").prop("disabled", false);
+    var formData = new FormData($("#form_import")[0]);
+
+    $.ajax({
+        url: "../Controlador/listado_asistencia_controlador.php?op=importar",
+        type: "POST",
+        data: formData,
+        contentType: false,
+        processData: false,
+
+        success: function(datos) {
+
+            swal({
+
+                title: datos,
+                text: " ",
+                icon: "info",
+                buttons: false,
+                dangerMode: false,
+                timer: 3000,
+            });
+            mostrarform(false);
+            tabla.ajax.reload();
+
+        }
+
+    });
+    limpiar();
+}
+
 function mostrar(id_asistencia) {
     $.post("../Controlador/listado_asistencia_controlador.php?op=mostrar", { id_asistencia: id_asistencia }, function(data, status) {
         data = JSON.parse(data);
         mostrarform(true);
 
         $("#id_asistencia").val(data.id_asistencia);
-        $("#cuenta").val(data.cuenta);
+        $("#cuenta").select2('val', data.cuenta);
         $("#nombre_alumno").val(data.nombre_alumno);
         $("#carrera").select2('val', data.carrera);
         $("#cant_horas").val(data.cant_horas);
+        $("#id_cuenta2").val(data.cuenta);
 
     })
 }

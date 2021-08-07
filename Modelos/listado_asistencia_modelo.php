@@ -47,7 +47,7 @@ Class listado_asistencia
 	//Implementar un método para listar los registros
 	public function listar($id_actividad_voae)
 	{
-		$sql="SELECT * FROM tbl_voae_asistencias where id_actividad_voae = '$id_actividad_voae' ";
+		$sql="SELECT * FROM tbl_voae_asistencias where id_actividad_voae = '$id_actividad_voae' ORDER BY carrera DESC,  nombre_alumno ASC";
 		return ejecutarConsulta($sql);		
 	}
 
