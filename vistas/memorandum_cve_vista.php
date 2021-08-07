@@ -32,7 +32,7 @@ if($visualizacion==0){
 
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
-  $_SESSION["btnagregar"]="disabled";
+  $_SESSION["btnagregar"]="hidden";
   }
 else
   {

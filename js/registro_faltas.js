@@ -223,7 +223,7 @@ function guardaryeditar(e)
         timer: 3000,
       });
              mostrarform(false);
-             tabla.ajax.reload();
+             tabla.ajax.reload(window.location = "../vistas/registro_faltas_conducta_vista.php");
       
       }
 

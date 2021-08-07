@@ -53,8 +53,7 @@ Class Actividad
 	//Implementamos un método para Finalizar Actividades
 	public function finalizar($id_actividad_voae,$fch_final_actividad)
 	{
-		$sql="UPDATE tbl_voae_actividades SET id_estado='6',condicion= '1' WHERE id_actividad_voae='$id_actividad_voae'
-		and id_estado='3'";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='6',condicion= '1' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 

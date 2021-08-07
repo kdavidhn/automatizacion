@@ -92,7 +92,21 @@ if (permiso_ver('121')=='1') {
               </a>
             </div>
           </div>
-         
+          <!-- Box 2 -->
+          <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h5>Actividades<br> Gestion de Actividad </h5>
+                <p><?php echo $_SESSION['gestion_actividad_cve']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/actividad_cve_gestion_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
           <!-- Box 3 -->
            <div class="col-6 col-sm-6 col-md-4">
             <div class="small-box bg-primary">
@@ -111,7 +125,7 @@ if (permiso_ver('121')=='1') {
           
           <!-- Documentar Actividad -->
           <div class="col-6 col-sm-6 col-md-4">
-            <div class="small-box  bg-primary">
+            <div class="small-box  bg-light">
               <div class="inner">
                 <h5>Documentación de Actividades VOAE<br> (Informes, Asistencias y Fotografias) </h5>
                 <p><?php echo $_SESSION['informe_actividad_cve']; ?></p> 

@@ -82,8 +82,11 @@ else
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          
-                          <h1 align="right"><button style="margin-right: 10px" class="btn btn-success" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> name="btnagregar" onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Actividad Externa</button>
+                           <form action="../vistas/actividades_externas_cve_vista.php">
+
+                            <button title="Ver Actividades" id="btnact" name="btnact"class="btn btn-primary" type="submit" ><i class="far fa-eye"></i>    VER ACTIVIDADES EXTERNAS</button>
+                       </form>
+                          <h1 align="right">
 
                             <button class="btn btn-info" id="btnagregarhoras" name="btnagregarhoras"<?php echo $_SESSION['btnagregarhoras']; ?> onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Agregar Horas Alumno</button>
                           </h1>
@@ -109,153 +112,7 @@ else
                           </tbody>
                         </table>
                     </div>
-                    <div  id="formularioregistros">
-             
-                <form name="formulario" id="formulario" method="POST">
-
-                 <!-- Card 1 -->
-              <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Identificador y Nombre Actividad</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-
-                <div class="card-body">
-                <div class="row">
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Identificador:</label>
-                  <input type="text" class="form-control" disabled maxlength="50" placeholder="<?php
-                                    
-                                    $query = $mysqli -> query ("SELECT MAX(id_actividad_voae) AS id FROM tbl_voae_actividades");
-                                    while ($resultado = mysqli_fetch_array($query)) {
-                                      echo $resultado['id'] + 1;
-                                    }
-                                  ?>" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                   <label>Nombre:</label>
-                  <input type="hidden" name="id_actividad_voae" id="id_actividad_voae">
-                  <input type="text" class="form-control" name="nombre_act" id="nombre_act" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required maxlength="50" placeholder="Nombre Actividad" required>
-                </div>
-                </div>
-                </div>
-                </div>
-
-                <!-- Card 2 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Ubicación y Fecha Inicial</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Ubicación:</label>
-                  <input type="text" class="form-control" name="ubicacion" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required id="ubicacion" maxlength="50" placeholder="Ubicación" required>
-                </div>
-                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Fecha Inicial:</label>
-                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fecha_inicio" id="fecha_inicio" maxlength="256" >
-                </div>
-                </div>
-                </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Fecha Final y Descripción</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-
-                <div class="card-body">
-                <div class="row">
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Fecha Final:</label>
-                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fecha_final" id="fecha_final" maxlength="256">
-                </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Descripción:</label>
-                  <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required placeholder="Descripción" required>
-                </div>
-                </div>
-                </div>
-                </div>
-              
-
-
-                <!-- Card 7 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Observaciones y Ámbito</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="row">
-                 <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12 maxlength">
-                  <label>Observaciones:</label>
-                  <input type="text" value ="Actividad Externa"class="form-control" name="observaciones" id="observaciones" disabled maxlength="50" placeholder="Actividad Externa" required>
-                </div>
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength"><label>Ámbito:</label>
-                              <select class="form-control select2" name="ambito" id="ambito" style="width: 100%;" required="">
-                                <option value="0" disabled="disabled" >Seleccione un ámbito:</option>
-                                  <?php
-                                    $query = $mysqli -> query ("SELECT * FROM tbl_voae_ambitos where condicion = 1");
-                                    while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_ambito'].'"> '.$resultado['nombre_ambito'].'</option>' ;
-                                    }
-                                  ?>
-                              </select>
-                </div>
-                </div>
-                </div>
-                </div>
-                
-                
-                <!-- Card 9 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Periodo Académico</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength"><label>Periodo Académico:</label>
-                  <select class="form-control select2" name="periodo" id="periodo" class="form-control"  maxlength="50" required>
-                    <option value="Primer Periodo">Primer Periodo</option>
-                    <option value="Segundo Periodo">Segundo Periodo</option>
-                    <option value="Tercer Periodo">Tercer Periodo</option>
-                  </select> 
-                </div>
-                </div>
-                </div>
-
-                
-                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar"><i class="fa fa-save"></i> Agregar</button>
-                  <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
-                </div>
-              </form>
-            </div>
+                    
             <div  id="formularioregistros2">
              
                 <form name="formulario2" id="formulario2" method="POST">

@@ -63,14 +63,7 @@ else
         </div>
       </div><!-- /.container-fluid -->
     </section>
-<!--Contenido <div class=" px-12">
-                        <button class="btn btn-success "> <i class="fas fa-file-pdf"></i> <a style="font-weight: bold;" onclick="ventana1()">Exportar a PDF</a> </button>
-                      </div>
-                      <script type="text/javascript" language="javascript">
-                        function ventana3() {
-                          window.open("../Controlador/reporte_mantenimiento_periodo_controlador.php", "REPORTE");
-                        }
-                      </script>-->
+<!--Contenido -->
       <!-- Content Wrapper. Contains page content -->
       <div class="card card-default">        
         <!-- Main content -->
@@ -80,7 +73,7 @@ else
                   <div class="box">
                     <div class="box-header with-border">
                           <h1 align="right"><button class="btn btn-success"  name="btnagregar" id="btnagregar" <?php echo $_SESSION['btnagregar']; ?> onclick="mostrarform(true)"><i class="fa fa-plus-circle"></i> Agregar Nuevo Falta</button>
-                            <button class="btn btn-success"  name="btnconstancia" id="btnconstancia"  onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Generar Constancia Alumno</button></h1>
+                            <button class="btn btn-primary"  name="btnconstancia" id="btnconstancia"  onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Generar Constancia Alumno</button></h1>
                           
 
                         <div class="box-tools pull-right">
@@ -202,9 +195,9 @@ else
                   <select class="form-control-lg select2" id= "id_persona" style="width: 100%;" name="id_persona" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
-                                    $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona join tbl_voae_faltas_conductas on tbl_personas.id_persona = tbl_voae_faltas_conductas.id_persona_alumno Where id_tipo_persona=2 and id_atributo=12;");
+                                    $query = $mysqli -> query ("select count(tbl_voae_faltas_conductas.id_falta) as faltas, tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona join tbl_voae_faltas_conductas on tbl_personas.id_persona = tbl_voae_faltas_conductas.id_persona_alumno Where id_tipo_persona=2 and id_atributo=12 group by tbl_voae_faltas_conductas.id_persona_alumno;");
                                     while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
+                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].' ---- Faltas Acumuladas: '.$resultado['faltas'].'</option>' ;
                                     }
                                   ?>
                               </select>
@@ -241,7 +234,7 @@ else
                 
                 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar2"><i class="fa fa-save"></i> Generar Constancia</button>
+                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar2"><i class="fas fa-file-pdf"></i> Generar Constancia</button>
                   
                   <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
                 </div>

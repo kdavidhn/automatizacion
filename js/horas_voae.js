@@ -20,6 +20,7 @@ function init(){
 	{
 		insertar_horas(e);	
 	})
+	
 }
 
 //Función limpiar
@@ -54,6 +55,7 @@ function mostrarform(flag)
 		$("#btnGuardar").prop("disabled",false);
 		$("#btnagregar").hide();
 		$("#btnagregarhoras").hide();
+		$("#btnact").hide();
 	}
 	else
 	{
@@ -62,6 +64,7 @@ function mostrarform(flag)
 		$("#formularioregistros2").hide();
 		$("#btnagregar").show();
 		$("#btnagregarhoras").show();
+		$("#btnact").show();
 	}
 }
 function mostrarform2(flag)
@@ -74,6 +77,7 @@ function mostrarform2(flag)
 		$("#btnGuardar2").prop("disabled",false);
 		$("#btnagregar").hide();
 		$("#btnagregarhoras").hide();
+		$("#btnact").hide();
 	}
 	else
 	{
@@ -81,8 +85,10 @@ function mostrarform2(flag)
 		$("#formularioregistros2").hide();
 		$("#btnagregar").show();
 		$("#btnagregarhoras").show();
+		$("#btnact").show();
 	}
 }
+
 
 
 //Función cancelarform
@@ -212,6 +218,7 @@ function listar()
 
 	}).DataTable();
 }
+
 
 
 //Función para guardar o editar

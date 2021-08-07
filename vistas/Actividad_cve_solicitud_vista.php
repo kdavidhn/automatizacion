@@ -43,6 +43,7 @@ if($visualizacion==0){
 
 
   ?>
+  <body oncopy="return false" onpaste="return false">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -130,7 +131,7 @@ if($visualizacion==0){
                           <div class="form-group">
                            <label>No.Solicitud:</label>
                            <input type="hidden" name="id_actividad_voae" id="id_actividad_voae">
-                           <input type="text" class="form-control" name="no_solicitud" id="no_solicitud" maxlength="10" style="text-transform: uppercase "placeholder="No de Solicitud" onkeypress="return soloLetras(event)" oncopy="return false" onpaste="return false"  required="" />
+                           <input type="text" class="form-control" name="no_solicitud" id="no_solicitud" maxlength="10" style="text-transform: uppercase "placeholder="No de Solicitud" onkeypress="return soloLetras(event)" required/>
                          </div>
                        </div>
                        <!-- Nombre de la Actividad -->
@@ -144,7 +145,7 @@ if($visualizacion==0){
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label>Ubicacion</label>
-                          <input type="text" class="form-control" name="ubicacion" id="ubicacion" maxlength="50" placeholder= "Ubicacion de la Actividad" required> 
+                          <input type="text" class="form-control" name="ubicacion" id="ubicacion" maxlength="50" placeholder= "Ubicacion de la Actividad"onkeypress="return soloLetras(event)" required> 
                         </div>
                       </div>
                       <!-- Periodo Academico -->
@@ -215,21 +216,21 @@ if($visualizacion==0){
                 <div class="col-sm-6">
                   <div class="form-group">
                    <label>Descripcion:</label>
-                   <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" placeholder="Descripcion" required>
+                   <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Descripcion" required>
                  </div>
                </div>
                <!-- Poblacion Objetivo -->
                <div class="col-sm-6">
                 <div class="form-group">
                   <label>Poblacion Objetiva:</label>
-                  <input type="text" class="form-control" name="poblacion_objetivo" id="poblacion_objetivo" maxlength="50" placeholder="Poblacion Objetiva" required>
+                  <input type="text" class="form-control" name="poblacion_objetivo" id="poblacion_objetivo" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Poblacion Objetiva" required>
                 </div>
               </div>
               <!-- Presupuesto -->
               <div class="col-sm-6">
                 <div class="form-group">
                  <label>Presupuesto:</label>
-                 <input type="text" class="form-control" name="presupuesto" id="presupuesto" maxlength="50" placeholder="Presupuesto" required>
+                 <input type="number" class="form-control" name="presupuesto" id="presupuesto" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Presupuesto" required>
                </div>
              </div>
              <!-- Staff Alumnos -->
@@ -237,7 +238,7 @@ if($visualizacion==0){
               <div class="form-group">
                 <label>Staff Alumnos:</label>
                 <input type="hidden" class="form-control" name="id_estado" id="id_estado">
-                <input type="text" class="form-control" name="staff_alumnos" id="staff_alumnos" maxlength="50" placeholder="Staff Alumnos" required>
+                <input type="text" class="form-control" name="staff_alumnos" id="staff_alumnos" maxlength="50" placeholder="Staff Alumnos" onkeypress="return soloLetras(event)" required>
               </div>
             </div>
             <!-- Ambito -->
@@ -259,7 +260,7 @@ if($visualizacion==0){
           <div class="col-sm-6">
             <div class="form-group">
               <label>Observaciones:</label>
-              <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" required>
+              <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" onkeypress="return soloLetras(event)" required>
             </div>
           </div>
 

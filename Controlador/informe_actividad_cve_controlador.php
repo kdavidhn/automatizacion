@@ -113,7 +113,10 @@ switch ($_GET["op"]){
 				'<form action="../vistas/listado_asistencia_vista.php" method="POST"   style="display:inline;">
 					<input type="hidden" name="id_actividad_cve" value="'.$reg->id_actividad_voae.'" onclick="listar('.$reg->id_actividad_voae.')">
 					<button class="btn btn-info" title="Lista de Asistencia" type="submit"><i class="fas fa-list-ol"></i></button>
-				</form>',						 
+				</form>'. 
+				'<form action="../Controlador/informe_actividad_pdf.php" method="POST" style="display:inline;">
+					   <input type="hidden" name="id_informe" value="'.$reg->id_informe.'">
+					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>',						 
 				"1"=>$reg->no_solicitud,
 				"2"=>$reg->nombre,
 				"3"=>$reg->asistentes,

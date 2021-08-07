@@ -8,7 +8,7 @@ var tabla;
 function init(){
 	mostrarform(false);
 	listar();
-	
+
 	$("#formulario").on("submit",function(e)
 	{
 		guardaryeditar(e);	
@@ -18,19 +18,15 @@ function init(){
 //Función limpiar
 function limpiar()
 {
-		$("#no_solicitud").val("");
-		$("#nombre_actividad").val("");
- 		$("#ubicacion").val("");
- 		$("#fch_inicial_actividad").val("");
-		$("#fch_final_actividad").val("");
- 		$("#descripcion").val("");
- 		$("#poblacion_objetivo").val("");
-		$("#presupuesto").val("");
-		$("#staff_alumnos").val("");
-		$("#observaciones").val("");
-		$("#id_ambito").val("");
-		$("#periodo").val("");
- 		$("#id_actividad_voae").val("");
+	$("#id_actividad_voae").val("");
+	$("#nombre_act").val("");
+	$("#ubicacion").val("");
+	$("#fecha_inicio").val("");
+	$("#fecha_final").val("");
+	$("#descripcion").val("");
+	$("#ente").val("");
+	$("#ambito").val("");
+	$("#periodo").val("");
 }
 
 //Función mostrar formulario
@@ -48,25 +44,25 @@ function mostrarform(flag)
 	{
 		$("#listadoregistros").show();
 		$("#formularioregistros").hide();
+
 		$("#btnagregar").show();
 	}
 }
+
+
 
 //Función cancelarform
 function cancelarform()
 {
 	limpiar();
 	mostrarform(false);
-	$('.form-control').prop( "disabled", false );
-	
 }
-
+ 
 //Función Listar
 function listar()
-{   
+{
 	tabla=$('#tbllistado').dataTable(
-	{
-		"aProcessing": true,//Activamos el procesamiento del datatables
+	{"aProcessing": true,//Activamos el procesamiento del datatables
 	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
 	    "language": {
 			"sProcessing": "Procesando...",
@@ -102,10 +98,10 @@ function listar()
 		        titleAttr: "Exportar a Excel",
 				className: "btn btn-success",
 				exportOptions: {
-					  columns: [1, 2, 3, 4, 5, 6],		 
+					  columns: [1, 2, 3, 4],		 
 				     },
 				title: "DEPARTAMENTO DE INFORMÁTICA",
-				messageTop: "REPORTE DE ACTIVIDADES EN ELABORACIÓN  "
+				messageTop: "REPORTE DE HORAS VOAE   "
 
 					},
 
@@ -124,9 +120,9 @@ function listar()
         orientation: "poltrait",
 		pageSize: "letter",
         exportOptions: {
-					  columns: [1, 2, 3, 4, 5, 6],		 
+					  columns: [1, 2, 3, 4],		 
 				     },
-		 title: 'Reporte de Actividades en Elaboración',
+		 title: 'Reporte de Horas VOAE',
 		messageTop: "FECHA: " + fecha + " HORA: " + hora,
 
      customize: function (doc) {
@@ -165,13 +161,10 @@ function listar()
 			  };
 			},
 		},
-		        	
-		        
-		        
 		        ],
 		"ajax":
 				{
-					url: '../Controlador/actividad_cve_controlador_solicitud.php?op=listar',
+					url: '../Controlador/registro_actividad_externa.php?op=listar',
 					type : "get",
 					dataType : "json",						
 					error: function(e){
@@ -179,9 +172,10 @@ function listar()
 					}
 				},
 		"bDestroy": true,
-		lengthMenu: [[5, 25, 50, 100, -1], [5, 25, 50, 100, 'All']],
-		"iDisplayLength": 5,//Paginación
+		lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+		"iDisplayLength": 10,//Paginación
 	    "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
+
 	}).DataTable();
 }
 
@@ -193,9 +187,9 @@ function guardaryeditar(e)
 	e.preventDefault(); //No se activará la acción predeterminada del evento
 	$("#btnGuardar").prop("disabled",true);
 	var formData = new FormData($("#formulario")[0]);
- 
+
 	$.ajax({
-		url: "../Controlador/actividad_cve_controlador_solicitud.php?op=guardaryeditar",
+		url: "../Controlador/registro_actividad_externa.php?op=guardaryeditar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,
@@ -214,78 +208,12 @@ function guardaryeditar(e)
 				timer: 3000,
 			});
              mostrarform(false);
-             tabla.ajax.reload();
+             tabla.ajax.reload(window.location = "../vistas/actividades_externas_cve_vista.php");
 			
 	    }
 
 	});
 	limpiar();
-}
-
-function mostrar(id_actividad_voae, tipo=0)
-{
-	$('.form-control').prop( "disabled", false );
-	$('#btnGuardar').show();
-	if (tipo==1) {
-		$('.form-control').prop( "disabled", true );
-		$('#btnGuardar').hide();
-	
-	}
-
-	$.post("../Controlador/actividad_cve_controlador_solicitud.php?op=mostrar",{id_actividad_voae : id_actividad_voae}, function(data, status)
-	{
-		data = JSON.parse(data);		
-		mostrarform(true);
-
-		$("#no_solicitud").val(data.no_solicitud);
-		$("#nombre_actividad").val(data.nombre_actividad);
- 		$("#ubicacion").val(data.ubicacion);
- 		$("#fch_inicial_actividad").val(data.fch_inicial_actividad);
-		$("#fch_final_actividad").val(data.fch_final_actividad);
- 		$("#descripcion").val(data.descripcion);
- 		$("#poblacion_objetivo").val(data.poblacion_objetivo);
-		$("#presupuesto").val(data.presupuesto);
-		$("#staff_alumnos").val(data.staff_alumnos);
-		$("#observaciones").val(data.observaciones);
-		$("#id_ambito").val(data.id_ambito);
-		$("#periodo").val(data.periodo);
- 		$("#id_actividad_voae").val(data.id_actividad_voae);
-
- 	})
-}
-
-
-function solicitado(id_actividad_voae)
-
-{
-	swal({
-		
-        title: "Alerta",
-		text:
-			"¿Está seguro de Enviar esta Actividad para Aprobacion?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: false,
-	}).then((result) => {
-		if (result) {
-			
-		 	$.post("../Controlador/actividad_cve_controlador_solicitud.php?op=solicitado", {id_actividad_voae : id_actividad_voae}, function(e){
-        		swal({
-		
-		        title: e,
-				text:" ",
-				icon: "success",
-				buttons: false,
-				dangerMode: false,
-				timer: 3000,
-			});
-			tabla.ajax.reload();
-
-        	});	
-			
-		} 
-	})
-	
 }
 
 init();

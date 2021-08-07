@@ -48,12 +48,21 @@ if (permisos::permiso_modificar($Id_objeto)=='0')    {
 switch ($_GET["op"]){
 	
 		case 'finalizar':
+		$fechahoy= date('Y-m-d');
 
+		$sql = "select fch_final_actividad from tbl_voae_actividades where id_actividad_voae = '$id_actividad_voae'";
+	    $result_valor = $mysqli->query($sql);
+	    $fecha = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+	    if  ($fecha['fch_final_actividad'] > $fechahoy) {
+				echo 'No se puede finalizar; La actividad no ha concluido';
+				
+			} else {
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 		$rspta=$actividad->finalizar($id_actividad_voae,$fch_final_actividad);
 		echo $rspta ? "Actividad Finalizada" : "No fue Posible Finalizar la Actividad";
 
-
+		}
 		
  		$valor = "select no_solicitud from tbl_voae_actividades where id_actividad_voae = '$id_actividad_voae'";
 	    $result_valor = $mysqli->query($valor);
@@ -79,10 +88,10 @@ switch ($_GET["op"]){
 	    	$data[]=array(
 	    		"0"=>($reg->condicion)?'<button class="btn btn-info"  onclick="mostrar('.$reg->id_actividad_voae.',1)"><i class="far fa-eye"></i></button>'. 
 	    		'<form action="../vistas/informe_actividad_cve_vista.php" style="display:inline;">
-                  <button id="btn_documentos"title="Agregar documentos de Actividad" '.$_SESSION["btn_finalizar"].'  class="btn btn-warning" type="submit" ><i class="fa fa-solid fa-check"></i></button>
+                  <button title="Subir Documentos" '.$_SESSION["btn_finalizar"].' class="btn btn-primary" type="submit" ><i class="fas fa-file-upload"></i></button>
 	    		</form>':
 	    		'<button class="btn btn-info" onclick="mostrar('.$reg->id_actividad_voae.',1)"><i class="far fa-eye"></i></button>'.
-	    		'<button title="Finalizar Actividad" id="btn_finalizar" class="btn btn-danger"  '.$_SESSION["btn_finalizar"].' onclick="finalizar('.$reg->id_actividad_voae.')"><i class="fa fa-solid fa-check"></i></button>',
+	    		' <button title="Finalizar Actividad" id="btn_finalizar" class="btn btn-danger"  '.$_SESSION["btn_finalizar"].' onclick="finalizar('.$reg->id_actividad_voae.')"><i class="fa fa-solid fa-check"></i></button>',
 	    		"1"=>$reg->no_solicitud,
 	    		"2"=>$reg->fch_solicitud,
 	    		"3"=>$reg->nombre_actividad,

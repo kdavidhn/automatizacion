@@ -10,7 +10,22 @@ require_once ('../clases/funcion_bitacora.php');
 
 $memorandum=new memorandum();
 $Id_objeto=119; 
-
+if (permisos::permiso_eliminar($Id_objeto)==0)
+  {
+    $_SESSION["btneliminar"]="hidden";
+  }
+else
+  {
+    $_SESSION["btneliminar"]="";
+  }
+  if (permisos::permiso_modificar($Id_objeto)==0)
+  {
+    $_SESSION["btnmodificar"]="hidden";
+  }
+else
+  {
+    $_SESSION["btnmodificar"]="";
+  }
 // id_memo	no_memo	id_tipo_memo	remitente	destinatario	fecha	 asunto  contenido
 
 $id_memo=isset($_POST["id_memo"])? limpiarCadena($_POST["id_memo"]):"";
@@ -132,7 +147,7 @@ switch ($_GET["op"]){
 
 	case 'listar':
 	
-	if (permisos::permiso_modificar($Id_objeto)==1 and permisos::permiso_eliminar($Id_objeto)==1){
+	
  		$rspta=$memorandum->listar();
  		//Vamos a declarar un array
  		$data= Array();
@@ -140,11 +155,11 @@ switch ($_GET["op"]){
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
 
- 				"0"=>'<button  class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
+ 				"0"=>'<button  class="btn btn-warning" '.$_SESSION['btnmodificar'].' style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
  					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
 					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
 					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
- 					 ' <button class="btn btn-danger" style="display:inline;"   onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
+ 					 ' <button class="btn btn-danger" '.$_SESSION['btneliminar'].' style="display:inline;"   onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
  				"1"=>$reg->no_memo,
  				"2"=>$reg->nombre_tipo_memorandum,		
  				"3"=>$reg->remitente,
@@ -160,96 +175,8 @@ switch ($_GET["op"]){
  			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
  			"aaData"=>$data);
  		echo json_encode($results);
-	}elseif (permisos::permiso_modificar($Id_objeto)==0 and permisos::permiso_eliminar($Id_objeto)==0){
 	
-		$rspta=$memorandum->listar();
- 		//Vamos a declarar un array
- 		$data= Array();
 
- 		while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
-
- 				"0"=>'<button disabled class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
- 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
-					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
-					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
- 					 ' <button disabled class="btn btn-danger" style="display:inline;"  onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
- 				"1"=>$reg->no_memo,
- 				"2"=>$reg->nombre_tipo_memorandum,		
- 				"3"=>$reg->remitente,
- 				"4"=>$reg->destinatario,
- 				"5"=>$reg->fecha
-
- 				
- 			);
- 		}
- 		$results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
-
-
-	}elseif (permisos::permiso_modificar($Id_objeto)==0){
-		$rspta=$memorandum->listar();
- 		//Vamos a declarar un array
- 		$data= Array();
-
- 		while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
-
- 				"0"=>'<button disabled class="btn btn-warning" style="display:inline;"  onclick=""><i class="far fa-edit"></i></button>'.
- 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
-					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
-					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
- 					 ' <button class="btn btn-danger" style="display:inline;"  onclick="eliminar('.$reg->id_memo.')"><i class="fas fa-trash-alt"></i></button>',
- 				"1"=>$reg->no_memo,
- 				"2"=>$reg->nombre_tipo_memorandum,		
- 				"3"=>$reg->remitente,
- 				"4"=>$reg->destinatario,
- 				"5"=>$reg->fecha
-
- 				
- 			);
- 		}
- 		$results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
-
-	
- 	}elseif (permisos::permiso_eliminar($Id_objeto)==0){
- 		$rspta=$memorandum->listar();
- 		//Vamos a declarar un array
- 		$data= Array();
-
- 		while ($reg=$rspta->fetch_object()){
- 			$data[]=array(
-
- 				"0"=>'<button  class="btn btn-warning" style="display:inline;"  onclick="mostrar('.$reg->id_memo.')"><i class="far fa-edit"></i></button>'.
- 					 ' <form action="../Controlador/memorandum_cve_generarpdf.php" method="POST" style="display:inline;">
-					   <input type="hidden" name="id_memo" value="'.$reg->id_memo.'">
-					   <button title="Generar PDF"  class="btn btn-danger"  type="submit" ><i class="fas fa-file-pdf"></i></button></form>'.
- 					 ' <button class="btn btn-danger" disabled="disabled" style="display:inline;"   onclick=""><i class="fas fa-trash-alt"></i></button>',
- 				"1"=>$reg->no_memo,
- 				"2"=>$reg->nombre_tipo_memorandum,		
- 				"3"=>$reg->remitente,
- 				"4"=>$reg->destinatario,
- 				"5"=>$reg->fecha
-
- 				
- 			);
- 		}
- 		$results = array(
- 			"sEcho"=>1, //Información para el datatables
- 			"iTotalRecords"=>count($data), //enviamos el total registros al datatable
- 			"iTotalDisplayRecords"=>count($data), //enviamos el total registros a visualizar
- 			"aaData"=>$data);
- 		echo json_encode($results);
- 		}
 break;
 }
 
