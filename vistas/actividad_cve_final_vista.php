@@ -33,6 +33,7 @@ if($visualizacion==0){
 
   ob_end_flush();
   ?>
+  <body oncopy="return false" onpaste="return false">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -269,7 +270,7 @@ if($visualizacion==0){
 </div><!-- /.content-wrapper -->
 <!--Fin-Contenido-->
 </div> 
-
+ 
 <script type="text/javascript" src="../js/actividad_cve_final.js"></script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.js"></script>

@@ -14,6 +14,10 @@ function init(){
 	{
 		guardaryeditar(e);	
 	})
+	$("#formulario2").on("submit",function(e)
+	{
+		denegar(e);	
+	})
 }
 
 //Función limpiar
@@ -32,6 +36,11 @@ function limpiar()
 		$("#id_ambito").val("");
 		$("#periodo").val("");
  		$("#id_actividad_voae").val("");
+
+ 		$("#nombre_act").val("");
+ 		$("#solicitud_act").val("");
+ 		$("#just_act").val("");
+ 		$("#id_actividad").val("");
 }
 
 //Función mostrar formulario
@@ -42,6 +51,7 @@ function mostrarform(flag)
 	{
 		$("#listadoregistros1").hide();
 		$("#formularioregistros").show();
+		$("#formularioregistros2").hide();
 		$("#btnGuardar").prop("disabled",false);
 		$("#btnagregar").hide();
 	}
@@ -49,10 +59,31 @@ function mostrarform(flag)
 	{
 		$("#listadoregistros1").show();
 		$("#formularioregistros").hide();
+		$("#formularioregistros2").hide();
 		$("#btnagregar").show();
 	}
 }
-
+function mostrarform2(flag)
+{
+	limpiar();
+	if (flag)
+	{
+		$("#listadoregistros1").hide();
+		$("#formularioregistros2").show();
+		$("#btnGuardar2").prop("disabled",false);
+		$("#btnagregar").hide();
+		$("#btnagregarhoras").hide();
+		$("#btnact").hide();
+	}
+	else
+	{
+		$("#listadoregistros1").show();
+		$("#formularioregistros2").hide();
+		$("#btnagregar").show();
+		$("#btnagregarhoras").show();
+		$("#btnact").show();
+	}
+}
 //Función cancelarform
 function cancelarform()
 {
@@ -185,6 +216,42 @@ function listar1()
 	}).DataTable();
 }
 
+function denegar(e)
+{
+	e.preventDefault(); //No se activará la acción predeterminada del evento
+	$("#btnGuardar2").prop("disabled",true);
+	var formData = new FormData($("#formulario2")[0]);
+
+	$.ajax({
+		url: "../Controlador/actividad_cve_controlador_gestion.php?op=denegar",
+	    type: "POST",
+	    data: formData,
+	    contentType: false,
+	    processData: false,
+
+	    success: function(datos)
+	    {     
+	                   
+	       swal({
+		
+		        title: datos,
+				text:" ",
+				icon: "success",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+
+			});
+             mostrarform2(false);
+             tabla.ajax.reload();
+			
+	    }
+
+	});
+	limpiar();
+}
+
+
 function mostrar(id_actividad_voae, tipo=0)
 {
 	$('.form-control').prop( "disabled", false );
@@ -216,39 +283,22 @@ function mostrar(id_actividad_voae, tipo=0)
  	})
 }
 
-//Función para denegar registros
-function denegar(id_actividad_voae)
+function mostrar2(id_actividad_voae)
 {
-	swal({
-		
-        title: "Alerta",
-		text:
-			"¿Está seguro de Denegar esta Actividad?",
-		icon: "warning",
-		buttons: true,
-		dangerMode: false,
-	}).then((result) => {
-		if (result) {
-			
-		 	$.post("../Controlador/actividad_cve_controlador_gestion.php?op=denegar", {id_actividad_voae : id_actividad_voae}, function(e){
-        		swal({
-		
-		        title: e,
-				text:" ",
-				icon: "success",
-				buttons: false,
-				dangerMode: false,
-				timer: 3000,
-			});
-			tabla.ajax.reload();
-
-        	});	
-			
-		} 
-	})
+	$('.form-control').prop( "disabled", false );
+	$('#btnGuardar2').show();
 	
-}
 
+	$.post("../Controlador/actividad_cve_controlador_gestion.php?op=mostrar2",{id_actividad_voae : id_actividad_voae}, function(data, status)
+	{
+		data = JSON.parse(data);		
+		mostrarform2(true);
+		$("#id_actividad").val(data.id_actividad_voae);
+		$("#solicitud_act").val(data.no_solicitud);
+		$("#nombre_act").val(data.nombre_actividad);
+
+ 	})
+}
 
 //Función para activar registros
 function aprobar(id_actividad_voae)

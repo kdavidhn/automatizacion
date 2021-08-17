@@ -251,6 +251,40 @@ function finalizar(id_actividad_voae)
 	})
 	
 }
+//Función para cancelar Actividad
+function cancelar(id_actividad_voae)
+{ 
+	
+	swal({
+		
+        title: "Alerta",
+		text:
+			"¿Está seguro de cancelar esta Actividad?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/actividad_cve_controlador_final.php?op=cancelar", {id_actividad_voae : id_actividad_voae}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "success",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+
+			tabla.ajax.reload();
+           
+        	});	
+			
+		} 
+	})
+	
+}
 
 init();
 

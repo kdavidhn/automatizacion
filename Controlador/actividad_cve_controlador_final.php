@@ -72,6 +72,19 @@ switch ($_GET["op"]){
  		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'FINALIZO', 'EL NO DE SOLICITUD "' . $bt_no_solicitud['no_solicitud'] . '"');
 	    break;
 
+	   case 'cancelar':
+
+			$sql = "select nombre_actividad from tbl_voae_actividades where id_actividad_voae = '$id_actividad_voae'";
+	    $result_valor = $mysqli->query($sql);
+	    $no = $result_valor->fetch_array(MYSQLI_ASSOC);
+
+	 		$rspta=$actividad->cancelar($id_actividad_voae);
+	 		echo $rspta ? "Actividad Cancelada" : "El actividad no se puede Cancelar";
+	 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'CANCELO', 'LA ACTIVIDAD "' . $no['nombre_actividad'] . '"');
+ 		
+			break;
+
+
 	    case 'mostrar':
 
 	    $rspta=$actividad->mostrar($id_actividad_voae);
@@ -90,8 +103,9 @@ switch ($_GET["op"]){
 	    		'<form action="../vistas/informe_actividad_cve_vista.php" style="display:inline;">
                   <button title="Subir Documentos" '.$_SESSION["btn_finalizar"].' class="btn btn-primary" type="submit" ><i class="fas fa-file-upload"></i></button>
 	    		</form>':
-	    		'<button class="btn btn-info" onclick="mostrar('.$reg->id_actividad_voae.',1)"><i class="far fa-eye"></i></button>'.
-	    		' <button title="Finalizar Actividad" id="btn_finalizar" class="btn btn-danger"  '.$_SESSION["btn_finalizar"].' onclick="finalizar('.$reg->id_actividad_voae.')"><i class="fa fa-solid fa-check"></i></button>',
+	    		' <button class="btn btn-info" onclick="mostrar('.$reg->id_actividad_voae.',1)"><i class="far fa-eye"></i></button>'.
+	    		' <button class="btn btn-danger" title="Cancelar Actividad" onclick="cancelar('.$reg->id_actividad_voae.')"><i class="far fa-window-close"></i></button>'.
+	    		' <button title="Finalizar Actividad" id="btn_finalizar" class="btn btn-success"  '.$_SESSION["btn_finalizar"].' onclick="finalizar('.$reg->id_actividad_voae.')"><i class="fa fa-solid fa-check"></i></button>',
 	    		"1"=>$reg->no_solicitud,
 	    		"2"=>$reg->fch_solicitud,
 	    		"3"=>$reg->nombre_actividad,

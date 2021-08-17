@@ -24,17 +24,23 @@ Class Externa
 		return ejecutarConsulta($sql);
 	}
 
-	public function insertar_horas($id_persona_alumno,$id_actividad,$horas_alumno)
+	//Implementamos un método para editar registros
+	public function editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo)
 	{
-		$sql="CALL inserta_horas_alumno('$id_persona_alumno','$id_actividad','$horas_alumno')";
+		$sql="UPDATE tbl_voae_actividades SET nombre_actividad=trim(upper('$nombre_act')),ubicacion=trim(upper('$ubicacion')),fch_inicial_actividad='$fecha_inicio',fch_final_actividad='$fecha_final',descripcion=trim(upper('$descripcion')),staff_alumnos=trim(upper('$ente')),id_ambito='$ambito',periodo='$periodo' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 	
-	
-	public function eliminar($id_asistencia)
+	public function eliminar($id_actividad_voae)
 	{
-		$sql="DELETE FROM tbl_voae_asistencias WHERE id_asistencia='$id_asistencia'";
+		$sql="DELETE FROM tbl_voae_actividades WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
+	}
+	//Implementar un método para mostrar los datos de un registro a modificar
+	public function mostrar($id_actividad_voae)
+	{
+		$sql="SELECT * FROM tbl_voae_actividades WHERE id_actividad_voae='$id_actividad_voae'";
+		return ejecutarConsultaSimpleFila($sql);
 	}
 
 	//Implementar un método para listar los registros

@@ -23,7 +23,18 @@ Class Actividad
 	$sql="call insertar_actividad ('$no_solicitud','$nombre_actividad','$ubicacion','$fch_inicial_actividad','$fch_final_actividad','$descripcion','$poblacion_objetivo','$presupuesto','$staff_alumnos','$observaciones','$usuario','$id_ambito','$periodo')";
 		return ejecutarConsulta($sql);
 	}
-
+	//Implementamos un método para insertar registros
+	public function insertaryenviar($no_solicitud,$nombre_actividad,$ubicacion,$fch_inicial_actividad,$fch_final_actividad,$descripcion,$poblacion_objetivo,$presupuesto,$staff_alumnos,$observaciones,$usuario,$id_ambito,$periodo)
+	{
+		$sql="call insertaryenviar_actividad ('$no_solicitud','$nombre_actividad','$ubicacion','$fch_inicial_actividad','$fch_final_actividad','$descripcion','$poblacion_objetivo','$presupuesto','$staff_alumnos','$observaciones','$usuario','$id_ambito','$periodo')";
+		return ejecutarConsulta($sql);
+	}
+	public function insertaryenviar2($id_actividad_voae,$no_solicitud,$nombre_actividad,$ubicacion,$fch_inicial_actividad,$fch_final_actividad,$descripcion,$poblacion_objetivo,$presupuesto,$staff_alumnos,$observaciones,$id_ambito,$periodo)
+	{
+		$sql="UPDATE tbl_voae_actividades SET no_solicitud=trim(upper('$no_solicitud')),nombre_actividad=trim(upper('$nombre_actividad')),ubicacion=trim(upper('$ubicacion')),fch_inicial_actividad='$fch_inicial_actividad',fch_final_actividad='$fch_final_actividad',descripcion=trim(upper('$descripcion')),poblacion_objetivo=trim(upper('$poblacion_objetivo')),presupuesto='$presupuesto',staff_alumnos=trim(upper('$staff_alumnos')),observaciones=trim(upper('$observaciones')),id_ambito='$id_ambito',periodo='$periodo', ,id_estado=2 WHERE id_actividad_voae='$id_actividad_voae'";
+		return ejecutarConsulta($sql);
+	}
+	
 	//Implementamos un método para editar registros
 	public function editar($id_actividad_voae,$no_solicitud,$nombre_actividad,$ubicacion,$fch_inicial_actividad,$fch_final_actividad,$descripcion,$poblacion_objetivo,$presupuesto,$staff_alumnos,$observaciones,$id_ambito,$periodo)
 	{
@@ -32,9 +43,14 @@ Class Actividad
 	}
 
 	//Implementamos un método para denegar categorías
-	public function denegar($id_actividad_voae)
+	public function denegar($id_actividad,$just_act)
 	{
-		$sql="UPDATE tbl_voae_actividades SET id_estado='4' WHERE id_actividad_voae='$id_actividad_voae'";
+		$sql="UPDATE tbl_voae_actividades SET id_estado='4', observaciones = '$just_act'  WHERE id_actividad_voae='$id_actividad'";
+		return ejecutarConsulta($sql);
+	}
+	public function cancelar($id_actividad_voae)
+	{
+		$sql="UPDATE tbl_voae_actividades SET id_estado='7' WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsulta($sql);
 	}
 	public function solicitado($id_actividad_voae)
@@ -63,7 +79,11 @@ Class Actividad
 		$sql="SELECT * FROM tbl_voae_actividades WHERE id_actividad_voae='$id_actividad_voae'";
 		return ejecutarConsultaSimpleFila($sql);
 	}
-
+	public function mostrar2($id_actividad_voae)
+	{
+		$sql="SELECT * FROM tbl_voae_actividades WHERE id_actividad_voae='$id_actividad_voae'";
+		return ejecutarConsultaSimpleFila($sql);
+	}
 	//Implementar un método para listar los registros
 	public function listar()
 	{

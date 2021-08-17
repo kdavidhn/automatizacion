@@ -9,10 +9,14 @@ function init(){
 	mostrarform(false);
 	listar();
 	
-	$("#formulario").on("submit",function(e)
-	{
-		guardaryeditar(e);	
-	})
+	// $("#formulario").on("submit",function(e)
+	// {
+	// 	guardaryeditar(e);	
+	// })
+	// $("#btnGuardarEnviar").on("submit",function(e)
+	// {
+	// 	insertaryenviar(e);	
+	// })
 }
 
 //Función limpiar
@@ -41,6 +45,7 @@ function mostrarform(flag)
 	{
 		$("#listadoregistros").hide();
 		$("#formularioregistros").show();
+		$("#btnGuardarEnviar").prop("disabled",false);
 		$("#btnGuardar").prop("disabled",false);
 		$("#btnagregar").hide();
 	}
@@ -188,14 +193,48 @@ function listar()
 
 //Función para guardar o editar
 
-function guardaryeditar(e)
+function guardaryeditar()
 {
-	e.preventDefault(); //No se activará la acción predeterminada del evento
+	//e.preventDefault(); //No se activará la acción predeterminada del evento
 	$("#btnGuardar").prop("disabled",true);
 	var formData = new FormData($("#formulario")[0]);
  
 	$.ajax({
 		url: "../Controlador/actividad_cve_controlador_solicitud.php?op=guardaryeditar",
+	    type: "POST",
+	    data: formData,
+	    contentType: false,
+	    processData: false,
+
+	    success: function(datos)
+	    {     
+	                   
+	       swal({
+		
+		        title: datos,
+				text:" ",
+				icon: "success",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+             mostrarform(false);
+             tabla.ajax.reload();
+			
+	    }
+
+	});
+	limpiar();
+}
+
+function insertaryenviar()
+{
+	//e.preventDefault(); //No se activará la acción predeterminada del evento
+	$("#btnGuardarEnviar").prop("disabled",true);
+	var formData = new FormData($("#formulario")[0]);
+ 
+	$.ajax({
+		url: "../Controlador/actividad_cve_controlador_solicitud.php?op=insertaryenviar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,

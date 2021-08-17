@@ -33,6 +33,7 @@ if($visualizacion==0){
 
   ob_end_flush();
   ?>
+  <body oncopy="return false" onpaste="return false">
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content-header">
@@ -238,7 +239,7 @@ if($visualizacion==0){
           <div class="col-sm-6">
             <div class="form-group">
               <label>Observaciones:</label>
-              <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" required>
+              <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" onkeypress="return soloLetras(event)" required>
             </div>
           </div>
 
@@ -254,6 +255,63 @@ if($visualizacion==0){
   </div>
             </form>
           </div>
+          <div  id="formularioregistros2">
+            <form name="formulario2" id="formulario2" method="POST">
+             <section><h5><b><i><p>DENEGACIÓN DE ACTIVIDAD </p></i></b></h5>
+                          
+                          </section>
+                
+                <!-- Card 1 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">Actividad y Numero de Solicitud</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Actividad:</label>
+                   <input type="hidden" class="form-control" name="id_actividad" id="id_actividad"  required>
+                  <input type="text" class="form-control" name="nombre_act" id="nombre_act" maxlength="50" maxlength="50" style="text-transform: uppercase;" disabled onkeypress="return soloLetras(event)"  required>
+                </div>
+                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                  <label>Numero de Solicitud:</label>
+                  <input type="text" class="form-control" name="solicitud_act" id="solicitud_act" maxlength="50"  maxlength="50" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" disabled required>
+                </div>
+                </div>
+                </div>
+                </div>
+               
+
+                <!-- Card 2 -->
+                <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">Justifación Denegar</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fas fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <div class="card-body">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <label>Justificar:</label>
+                  <input type="text" class="form-control" name="just_act" id="just_act" maxlength="50" placeholder="Justificar Actividad" required>
+                </div>
+                </div>
+                </div>
+
+                
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar2"><i class="fa fa-check"></i> Denegar Actividad</button>
+                  <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
+                </div>
+              </form>
+            </div>
           <!--Fin centro -->
         </div><!-- /.box -->
       </div><!-- /.col -->
@@ -282,6 +340,53 @@ if($visualizacion==0){
 
   });
 </script>
+<script>
+  function soloLetras(e) {
+    var key = e.keyCode || e.which,
+      tecla = String.fromCharCode(key).toUpperCase(),
+      letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ",
+      especiales = [8, 37, 39, 46],
+      tecla_especial = false;
 
+    for (var i in especiales) {
+      if (key == especiales[i]) {
+        tecla_especial = true;
+        break;
+      }
+    }
+
+    if (letras.indexOf(tecla) == -1 && !tecla_especial) {
+      return false;
+    }
+  }
+</script>
+<script>
+document.getElementById("formulario").addEventListener("keydown", teclear);
+
+var flag = false;
+var teclaAnterior = "";
+
+function teclear(event) {
+  teclaAnterior = teclaAnterior + " " + event.keyCode;
+  var arregloTA = teclaAnterior.split(" ");
+  if (event.keyCode == 32 && arregloTA[arregloTA.length - 2] == 32) {
+    event.preventDefault();
+  }
+}
+</script>
+<script>
+document.getElementById("formulario2").addEventListener("keydown", teclear);
+
+var flag = false;
+var teclaAnterior = "";
+
+function teclear(event) {
+  teclaAnterior = teclaAnterior + " " + event.keyCode;
+  var arregloTA = teclaAnterior.split(" ");
+  if (event.keyCode == 32 && arregloTA[arregloTA.length - 2] == 32) {
+    event.preventDefault();
+  }
+}
+</script>
 </body>
 </html>

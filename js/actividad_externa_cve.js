@@ -19,13 +19,13 @@ function init(){
 function limpiar()
 {
 	$("#id_actividad_voae").val("");
-	$("#nombre_act").val("");
+	$("#nombre_actividad").val("");
 	$("#ubicacion").val("");
-	$("#fecha_inicio").val("");
-	$("#fecha_final").val("");
+	$("#fch_inicial_actividad").val("");
+	$("#fch_final_actividad").val("");
 	$("#descripcion").val("");
-	$("#ente").val("");
-	$("#ambito").val("");
+	$("#staff_alumnos").val("");
+	$("#id_ambito").val("");
 	$("#periodo").val("");
 }
 
@@ -57,39 +57,41 @@ function cancelarform()
 	limpiar();
 	mostrarform(false);
 }
- 
+
 //Función Listar
 function listar()
 {
 	tabla=$('#tbllistado').dataTable(
-	{"aProcessing": true,//Activamos el procesamiento del datatables
-	    "aServerSide": true,//Paginación y filtrado realizados por el servidor
-	    "language": {
-			"sProcessing": "Procesando...",
-			"sLengthMenu": "Mostrar _MENU_ registros",
-			"sZeroRecords": "No se encontraron resultados",
-			"sEmptyTable": "Ningún dato disponible en esta tabla",
-			"sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-			"sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-			"sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
-			"sInfoPostFix": "",
-			"sSearch": "Buscar:",
-			"sUrl": "",
-			"sInfoThousands": ",",
-			"sLoadingRecords": "Cargando...",
-			"oPaginate": {
-				"sFirst": "Primero",
-				"sLast": "Último",
-				"sNext": "Siguiente",
-				"sPrevious": "Anterior"
-			},
-			"oAria": {
-				"sSortAscending": ": Activar para ordenar la columna de manera ascendente",
-				"sSortDescending": ": Activar para ordenar la columna de manera descendente"
-			}
-		},
-	    dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
-	    buttons: [	
+	{
+		"aProcessing": true,//Activamos el procesamiento del datatables
+      "aServerSide": true,//Paginación y filtrado realizados por el servidor
+      "language": {
+      "sProcessing": "Procesando...",
+      "sLengthMenu": "Mostrar _MENU_ registros",
+      "sZeroRecords": "No se encontraron resultados",
+      "sEmptyTable": "Ningún dato disponible en esta tabla",
+      "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+      "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+      "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+      "sInfoPostFix": "",
+      "sSearch": "Buscar:",
+      "sUrl": "",
+      "sInfoThousands": ",",
+      "sLoadingRecords": "Cargando...",
+      "oPaginate": {
+        "sFirst": "Primero",
+        "sLast": "Último",
+        "sNext": "Siguiente",
+        "sPrevious": "Anterior"
+      },
+      "oAria": {
+        "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+        "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+      }
+    },
+      dom: 'fBlrtip',//Definimos los elementos del control de tabla Bfrtilp
+	    buttons: [		          
+		            	
 					{
 
 
@@ -98,10 +100,10 @@ function listar()
 		        titleAttr: "Exportar a Excel",
 				className: "btn btn-success",
 				exportOptions: {
-					  columns: [1, 2, 3, 4],		 
+					  columns: [1, 2, 3, 4, 5, 6],		 
 				     },
 				title: "DEPARTAMENTO DE INFORMÁTICA",
-				messageTop: "REPORTE DE HORAS VOAE   "
+				messageTop: "REPORTE DE ACTIVIDADES EXTERNAS   "
 
 					},
 
@@ -120,9 +122,10 @@ function listar()
         orientation: "poltrait",
 		pageSize: "letter",
         exportOptions: {
-					  columns: [1, 2, 3, 4],		 
+					  columns: [1, 2, 3, 4, 5, 6],		 
 				     },
-		 title: 'Reporte de Horas VOAE',
+
+		 title: 'Reporte de Actividades Externas',
 		messageTop: "FECHA: " + fecha + " HORA: " + hora,
 
      customize: function (doc) {
@@ -161,10 +164,11 @@ function listar()
 			  };
 			},
 		},
+		        
 		        ],
 		"ajax":
 				{
-					url: '../Controlador/registro_actividad_externa.php?op=listar',
+					url: '../Controlador/registro_actividad_externa_controlador.php?op=listar',
 					type : "get",
 					dataType : "json",						
 					error: function(e){
@@ -172,10 +176,9 @@ function listar()
 					}
 				},
 		"bDestroy": true,
-		lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
-		"iDisplayLength": 10,//Paginación
-	    "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
-
+    lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'All']],
+    "iDisplayLength": 10,//Paginación
+      "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
 	}).DataTable();
 }
 
@@ -189,7 +192,7 @@ function guardaryeditar(e)
 	var formData = new FormData($("#formulario")[0]);
 
 	$.ajax({
-		url: "../Controlador/registro_actividad_externa.php?op=guardaryeditar",
+		url: "../Controlador/registro_actividad_externa_controlador.php?op=guardaryeditar",
 	    type: "POST",
 	    data: formData,
 	    contentType: false,
@@ -208,7 +211,7 @@ function guardaryeditar(e)
 				timer: 3000,
 			});
              mostrarform(false);
-             tabla.ajax.reload(window.location = "../vistas/actividades_externas_cve_vista.php");
+             tabla.ajax.reload();
 			
 	    }
 
@@ -216,5 +219,55 @@ function guardaryeditar(e)
 	limpiar();
 }
 
-init();
+function mostrar(id_actividad_voae)
+{
+	$.post("../Controlador/registro_actividad_externa_controlador.php?op=mostrar",{id_actividad_voae : id_actividad_voae}, function(data, status)
+	{
+		data = JSON.parse(data);		
+		mostrarform(true);
 
+		$("#id_actividad_voae").val(data.id_actividad_voae);
+ 		$("#nombre_actividad").val(data.nombre_actividad);
+		$("#ubicacion").val(data.ubicacion);
+		$("#fch_inicial_actividad").val(data.fch_inicial_actividad);
+		$("#fch_final_actividad").val(data.fch_final_actividad);
+		$("#descripcion").val(data.descripcion);
+		$("#staff_alumnos").val(data.staff_alumnos);
+		$("#id_ambito").val(data.id_ambito);
+		$("#periodo").val(data.periodo);
+
+ 	})
+}
+
+function eliminar(id_actividad_voae)
+{
+	swal({
+		title: "Alerta",
+		text:
+			"¿Está seguro de eliminar la actividad?",
+		icon: "warning",
+		buttons: true,
+		dangerMode: false,
+	}).then((result) => {
+		if (result) {
+			
+		 	$.post("../Controlador/registro_actividad_externa_controlador.php?op=eliminar", {id_actividad_voae : id_actividad_voae}, function(e){
+        		swal({
+		
+		        title: e,
+				text:" ",
+				icon: "success",
+				buttons: false,
+				dangerMode: false,
+				timer: 3000,
+			});
+			tabla.ajax.reload();
+        	});	
+			
+		} 
+	})
+}
+
+
+
+init();

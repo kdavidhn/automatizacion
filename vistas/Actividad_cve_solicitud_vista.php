@@ -131,21 +131,21 @@ if($visualizacion==0){
                           <div class="form-group">
                            <label>No.Solicitud:</label>
                            <input type="hidden" name="id_actividad_voae" id="id_actividad_voae">
-                           <input type="text" class="form-control" name="no_solicitud" id="no_solicitud" maxlength="10" style="text-transform: uppercase "placeholder="No de Solicitud" onkeypress="return soloLetras(event)" required/>
+                           <input type="text" class="form-control" name="no_solicitud" id="no_solicitud" maxlength="10" style="text-transform: uppercase "placeholder="No de Solicitud" oncopy="return false" onpaste="return false" required/>
                          </div>
                        </div>
                        <!-- Nombre de la Actividad -->
                        <div class="col-sm-6">
                         <div class="form-group">
                           <label>Nombre de la Actividad:</label>
-                          <input type="text" class="form-control" name="nombre_actividad" id="nombre_actividad" maxlength="50" placeholder= "Nombre de la Actividad" required> 
+                          <input type="text" class="form-control" style="text-transform: uppercase " onkeypress="return soloLetras(event)" name="nombre_actividad" oncopy="return false" onpaste="return false" id="nombre_actividad" maxlength="50" placeholder= "Nombre de la Actividad" required> 
                         </div>
                       </div>
                       <!-- Ubicacion de la Actividad -->
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label>Ubicacion</label>
-                          <input type="text" class="form-control" name="ubicacion" id="ubicacion" maxlength="50" placeholder= "Ubicacion de la Actividad"onkeypress="return soloLetras(event)" required> 
+                          <input type="text" class="form-control" oncopy="return false" onpaste="return false" name="ubicacion" id="ubicacion" maxlength="50" placeholder= "Ubicacion de la Actividad"onkeypress="return soloLetras(event)" required> 
                         </div>
                       </div>
                       <!-- Periodo Academico -->
@@ -216,21 +216,21 @@ if($visualizacion==0){
                 <div class="col-sm-6">
                   <div class="form-group">
                    <label>Descripcion:</label>
-                   <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Descripcion" required>
+                   <input type="text" class="form-control" oncopy="return false" onpaste="return false" name="descripcion" onkeypress="return soloLetras(event)" id="descripcion" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Descripcion" required>
                  </div>
                </div>
                <!-- Poblacion Objetivo -->
                <div class="col-sm-6">
                 <div class="form-group">
                   <label>Poblacion Objetiva:</label>
-                  <input type="text" class="form-control" name="poblacion_objetivo" id="poblacion_objetivo" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Poblacion Objetiva" required>
+                  <input type="text" class="form-control" oncopy="return false" onpaste="return false" onkeypress="return soloLetras(event)" name="poblacion_objetivo" id="poblacion_objetivo" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Poblacion Objetiva" required>
                 </div>
               </div>
               <!-- Presupuesto -->
               <div class="col-sm-6">
                 <div class="form-group">
                  <label>Presupuesto:</label>
-                 <input type="number" class="form-control" name="presupuesto" id="presupuesto" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Presupuesto" required>
+                 <input type="number" class="form-control" oncopy="return false" onpaste="return false" name="presupuesto" id="presupuesto" maxlength="50" onkeypress="return soloLetras(event)" placeholder="Presupuesto" required>
                </div>
              </div>
              <!-- Staff Alumnos -->
@@ -238,7 +238,7 @@ if($visualizacion==0){
               <div class="form-group">
                 <label>Staff Alumnos:</label>
                 <input type="hidden" class="form-control" name="id_estado" id="id_estado">
-                <input type="text" class="form-control" name="staff_alumnos" id="staff_alumnos" maxlength="50" placeholder="Staff Alumnos" onkeypress="return soloLetras(event)" required>
+                <input type="text" class="form-control" oncopy="return false" onpaste="return false" name="staff_alumnos" id="staff_alumnos" maxlength="50" placeholder="Staff Alumnos" onkeypress="return soloLetras(event)" required>
               </div>
             </div>
             <!-- Ambito -->
@@ -260,7 +260,7 @@ if($visualizacion==0){
           <div class="col-sm-6">
             <div class="form-group">
               <label>Observaciones:</label>
-              <input type="text" class="form-control" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" onkeypress="return soloLetras(event)" required>
+              <input type="text" class="form-control" oncopy="return false" onpaste="return false" name="observaciones" id="observaciones" maxlength="50" placeholder="Observaciones" onkeypress="return soloLetras(event)" required>
             </div>
           </div>
 
@@ -271,7 +271,9 @@ if($visualizacion==0){
 
 
   <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-    <button class="btn btn-primary pull-right" type="submit" id="btnGuardar"><i class="fa fa-solid fa-check"></i> Guardar</button>
+    <button class="btn btn-primary pull-right" type="button"  onclick="guardaryeditar()"  ><i class="fa fa-solid fa-check"></i> Guardar</button>
+     <button class="btn btn-primary pull-right" type="button" onclick="insertaryenviar()"  ><i class="fa fa-solid fa-check"></i> Guardar y Enviar</button>
+    
     <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
   </div>
 </form>
@@ -305,7 +307,7 @@ if($visualizacion==0){
   function soloLetras(e) {
     var key = e.keyCode || e.which,
     tecla = String.fromCharCode(key).toUpperCase(),
-    letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ0123456789-",
+    letras = " ÀÈÌÒÙABCDEFGHIJKLMNÑOPQRSTUVWXYZ-",
 
     especiales = [8, 37, 39, 46],
     tecla_especial = false;
@@ -322,6 +324,19 @@ if($visualizacion==0){
     }
   }
 </script>
+<script>
+document.getElementById("formulario").addEventListener("keydown", teclear);
 
+var flag = false;
+var teclaAnterior = "";
+
+function teclear(event) {
+  teclaAnterior = teclaAnterior + " " + event.keyCode;
+  var arregloTA = teclaAnterior.split(" ");
+  if (event.keyCode == 32 && arregloTA[arregloTA.length - 2] == 32) {
+    event.preventDefault();
+  }
+}
+</script>
 </body>
 </html>

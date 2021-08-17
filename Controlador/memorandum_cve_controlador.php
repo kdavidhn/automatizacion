@@ -96,7 +96,7 @@ switch ($_GET["op"]){
 				echo $rspta ? "El MEMORANDUM fue actualizado" : "EL MEMORANDUM no se pudo actualizar";
 
 				//CONDICION PARA LA MODIFICACION DE EL ASUNTO
-				}elseif ($valor_viejo['fecha'] <> $asunto) {
+				}elseif ($valor_viejo['asunto'] <> $asunto) {
 				bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' EN EL MEMORANDUM EL ASUNTO "' . $valor_viejo['asunto'] . '"POR "' .$asunto .'" ');
 				
 				$rspta=$memorandum->editar($id_memo,$no_memo,$id_tipo_memo,$remitente,$destinatario,$asunto,$contenido);

@@ -58,7 +58,7 @@ else
         <div class="row mb-2">
           <div class="col-sm-6">
 
-         <h1>Horas VOAE Gestión</h1>
+         <h1>Horas VOAE Historial</h1>
           </div>
 
                 <div class="col-sm-6">
@@ -88,7 +88,7 @@ else
                        </form>
                           <h1 align="right">
 
-                            <button class="btn btn-info" id="btnagregarhoras" name="btnagregarhoras"<?php echo $_SESSION['btnagregarhoras']; ?> onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Agregar Horas Alumno</button>
+                            <button class="btn btn-success" id="btnagregarhoras" name="btnagregarhoras"<?php echo $_SESSION['btnagregarhoras']; ?> onclick="mostrarform2(true)"><i class="fa fa-plus-circle"></i> Agregar Horas Externas Alumno</button>
                           </h1>
                        
 
@@ -131,11 +131,12 @@ else
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>Alumno:</label>
                   <select class="form-control-lg select2" id= "id_persona_alumno" style="width: 100%;" name="id_persona_alumno" required="">
-                                <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
+                                <option  value="0" disabled="disabled">CUENTA --- NOMBRES</option>
                                   <?php
-                                    $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12;");
+                                  $espacio=" --";
+                                    $query = $mysqli -> query ("select tbl_personas.id_persona, upper(concat(tbl_personas.nombres,' ',tbl_personas.apellidos)) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12;");
                                     while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
+                                      echo '<option value="'.$resultado['id_persona'].'">'.$resultado['valor'].''.$espacio.' '.$resultado['nombres'].'</option>' ;
                                     }
                                   ?>
                               </select>
@@ -143,9 +144,9 @@ else
                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>Actividad Externa:</label>
                   <select class="form-control-lg select2" id= "id_actividad" style="width: 100%;" name="id_actividad" required="">
-                                <option  value="0" disabled="disabled">Seleccione Actividad:</option>
+                                <option  value="0" disabled="disabled">ID --- NOMBRE</option>
                                   <?php
-                                    $query = $mysqli -> query ("select id_actividad_voae, concat(id_actividad_voae,' -- ',nombre_actividad,' -- ', ubicacion) as actividad from tbl_voae_actividades where tipo_actividad = 'Actividad Externa';");
+                                    $query = $mysqli -> query ("select id_actividad_voae, concat(id_actividad_voae,' -- ',nombre_actividad) as actividad from tbl_voae_actividades where tipo_actividad = 'Actividad Externa';");
                                     while ($resultado = mysqli_fetch_array($query)) {
                                       echo '<option value="'.$resultado['id_actividad_voae'].'"> '.$resultado['actividad'].'</option>' ;
                                     }
@@ -231,6 +232,19 @@ else
     }
   }
 </script>
+<script>
+document.getElementById("formulario2").addEventListener("keydown", teclear);
 
+var flag = false;
+var teclaAnterior = "";
+
+function teclear(event) {
+  teclaAnterior = teclaAnterior + " " + event.keyCode;
+  var arregloTA = teclaAnterior.split(" ");
+  if (event.keyCode == 32 && arregloTA[arregloTA.length - 2] == 32) {
+    event.preventDefault();
+  }
+}
+</script>
 </body>
 </html>
