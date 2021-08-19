@@ -9,7 +9,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=118; 
+$Id_objeto=232; 
 
 $visualizacion= permiso_ver($Id_objeto);
 $id_actividad=$_POST['id_actividad_cve'];
@@ -49,7 +49,7 @@ if($visualizacion==0){
   {
     $_SESSION["btnagregar"]="";
   }
-
+ob_end_flush();
   ?>
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->

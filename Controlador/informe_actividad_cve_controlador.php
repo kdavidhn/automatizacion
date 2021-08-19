@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/informe_actividad_cve_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $informe_actividad=new informe_actividad();
-$Id_objeto=118; 
+$Id_objeto=232; 
 
 $id_informe=isset($_POST["id_informe"])? limpiarCadena($_POST["id_informe"]):"";
 $id_actividad=isset($_POST["id_actividad"])? limpiarCadena($_POST["id_actividad"]):"";
@@ -135,5 +135,6 @@ switch ($_GET["op"]){
 		break;
 
  	}
+ 	  ob_end_flush();
  	?>
 

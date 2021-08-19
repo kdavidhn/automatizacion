@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/Estado_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $estado=new Estado();
-$Id_objeto=106; 
+$Id_objeto=221; 
 
 $id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
 $nombre_estado=isset($_POST["nombre_estado"])? limpiarCadena($_POST["nombre_estado"]):"";
@@ -238,5 +238,6 @@ switch ($_GET["op"]){
 		}	
 break;
 }
+  ob_end_flush();
 ?>
 

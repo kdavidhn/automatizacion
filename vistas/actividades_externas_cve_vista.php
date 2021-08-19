@@ -10,7 +10,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=114; 
+$Id_objeto=228; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -30,8 +30,15 @@ if($visualizacion==0){
 }else{
   bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Actividades Externas');
 }
-
-
+if (permisos::permiso_insertar($Id_objeto)==0)
+    {
+    $_SESSION["btnagregar"]="hidden";
+    }
+  else
+    {
+      $_SESSION["btnagregar"]="";
+    }
+ob_end_flush();
 ?>
 <body oncopy="return false" onpaste="return false">
   

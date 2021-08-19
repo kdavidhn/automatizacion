@@ -1,4 +1,5 @@
-<?php 
+<?php
+ob_start(); 
 session_start();
 
 require_once ('../clases/funcion_permisos.php');
@@ -9,7 +10,7 @@ require_once "../Modelos/tipos_faltas_modelo.php";
 require_once ('../clases/funcion_bitacora.php');
 
 $falta=new falta();
-$Id_objeto=108; 
+$Id_objeto=223; 
 
 $id_falta=isset($_POST["id_falta"])? limpiarCadena($_POST["id_falta"]):"";
 $nombre_falta=isset($_POST["nombre_falta"])? limpiarCadena($_POST["nombre_falta"]):"";
@@ -230,6 +231,7 @@ switch ($_GET["op"]){
  			}	
 	break;
 }
+ob_end_flush();
 ?>
 
 

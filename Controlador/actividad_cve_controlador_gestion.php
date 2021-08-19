@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/actividad_cve_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $actividad=new Actividad();
-$Id_objeto=115;
+$Id_objeto=229;
 $usuario= $_SESSION['id_usuario'];
 
 $id_actividad_voae=isset($_POST["id_actividad_voae"])? limpiarCadena($_POST["id_actividad_voae"]):"";
@@ -118,5 +118,6 @@ switch ($_GET["op"]){
  			"aaData"=>$data);
  		echo json_encode($results);
 }
+  ob_end_flush();
 ?>
 

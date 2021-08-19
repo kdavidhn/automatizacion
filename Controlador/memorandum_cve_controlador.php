@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 session_start();
 
 require_once ('../clases/funcion_permisos.php');
@@ -9,7 +10,7 @@ require_once "../Modelos/memorandum_cve_modelo.php";
 require_once ('../clases/funcion_bitacora.php');
 
 $memorandum=new memorandum();
-$Id_objeto=119; 
+$Id_objeto=233; 
 if (permisos::permiso_eliminar($Id_objeto)==0)
   {
     $_SESSION["btneliminar"]="hidden";
@@ -178,6 +179,7 @@ switch ($_GET["op"]){
 	
 
 break;
+ob_end_flush();
 }
 
 

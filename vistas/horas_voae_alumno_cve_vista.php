@@ -11,7 +11,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
  
 
-$Id_objeto=116; 
+$Id_objeto=230; 
 
 $cuenta = $_POST['cuenta'];
 $nombre = $_POST['nombre'];
@@ -51,7 +51,7 @@ else
     $_SESSION["btnagregar"]="";
   }
 
-
+ob_end_flush();
 ?>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->

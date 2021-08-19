@@ -10,7 +10,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=114; 
+$Id_objeto=228; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -46,7 +46,7 @@ else
   {
     $_SESSION["btnagregarhoras"]="";
   }
-
+ob_end_flush();
 ?>
 <body oncopy="return false" onpaste="return false">
   

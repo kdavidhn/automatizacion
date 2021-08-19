@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/listado_asistencia_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $listado_asistencia=new listado_asistencia();
-$Id_objeto=118; 
+$Id_objeto=232; 
 
 $id_asistencia=isset($_POST["id_asistencia"])? limpiarCadena($_POST["id_asistencia"]):"";
 $cuenta=isset($_POST["cuenta"])? limpiarCadena($_POST["cuenta"]):"";
@@ -211,5 +211,7 @@ switch ($_GET["op"]){
 		$texto = str_replace($no_permitidas, $permitidas ,$cade);
 		return $texto;
 		}
+
+		ob_end_flush();
  	?>
 

@@ -10,8 +10,8 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=121; 
-$poanta=0;
+$Id_objeto=235; 
+
 
 $visualizacion= permiso_ver($Id_objeto);
 

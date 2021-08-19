@@ -10,7 +10,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=110; 
+$Id_objeto=225; 
 $hoy=date("y-m-d");
 
 
@@ -41,7 +41,7 @@ if($visualizacion==0){
       $_SESSION["btnagregar"]="";
     }
 
-
+ob_end_flush();
   ?>
   <body oncopy="return false" onpaste="return false">
   <div class="content-wrapper">

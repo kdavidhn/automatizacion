@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 session_start();
 
 require_once "../Modelos/repositorio_modelo.php";
@@ -9,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $repositorio=new Repositorio();
-$Id_objeto=107; 
+$Id_objeto=222; 
 
 $id_repositorio=isset($_POST["id_repositorio"])? limpiarCadena($_POST["id_repositorio"]):"";
 $nombre_repositorio=isset($_POST["nombre_repositorio"])? limpiarCadena($_POST["nombre_repositorio"]):"";
@@ -229,6 +230,7 @@ switch ($_GET["op"]){
  		}	
 	break;
 }
+ob_end_flush();
 ?>
 
 

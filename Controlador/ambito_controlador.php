@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/Ambito_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $ambito=new Ambito();
-$Id_objeto=105; 
+$Id_objeto=220; 
 
 $id_ambito=isset($_POST["id_ambito"])? limpiarCadena($_POST["id_ambito"]):"";
 $nombre_ambito=isset($_POST["nombre_ambito"])? limpiarCadena($_POST["nombre_ambito"]):"";
@@ -245,5 +245,6 @@ switch ($_GET["op"]){
  		}
 break;
 }
+  ob_end_flush();
 ?>
 

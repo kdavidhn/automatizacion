@@ -11,7 +11,7 @@ require_once ('../clases/funcion_bitacora.php');
 
 
 $horas=new Horas();
-$Id_objeto=114; 
+$Id_objeto=228; 
 
 $id_actividad_voae=isset($_POST["id_actividad_voae"])? limpiarCadena($_POST["id_actividad_voae"]):"";
 $id_asistencia=isset($_POST["id_asistencia"])? limpiarCadena($_POST["id_asistencia"]):"";

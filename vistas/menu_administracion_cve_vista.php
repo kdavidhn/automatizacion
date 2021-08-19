@@ -1,5 +1,6 @@
 <?php
-
+ob_start();
+session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
 require_once ('../clases/conexion_mantenimientos.php');
@@ -7,34 +8,34 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/Conexionvoae.php');
 
 
-if (permiso_ver('105')=='1') {
+if (permiso_ver('220')=='1') {
   $_SESSION['mantenimiento_ambitos_vista']="...";
 } else {
   $_SESSION['mantenimiento_ambitos_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('106')=='1') {
+if (permiso_ver('221')=='1') {
   $_SESSION['mantenimiento_estado_vista']="...";
 } else {
   $_SESSION['mantenimiento_estado_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('107')=='1') {
+if (permiso_ver('222')=='1') {
   $_SESSION['mantenimiento_tipos_repositorios_vista']="...";
 } else {
   $_SESSION['mantenimiento_tipos_repositorios_vista']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('108')=='1') {
+if (permiso_ver('223')=='1') {
   $_SESSION['mantenimiento_tipos_faltas_vista']="...";
 } else {
   $_SESSION['mantenimiento_tipos_faltas_vista']="No 
             tiene permisos para visualizar";
 }
-if (permiso_ver('120')=='1') {
+if (permiso_ver('234')=='1') {
   $_SESSION['mantenimiento_tipos_memorandum_vista']="...";
 } else {
   $_SESSION['mantenimiento_tipos_memorandum_vista']="No 
@@ -42,7 +43,7 @@ if (permiso_ver('120')=='1') {
 }
 
 
-
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>

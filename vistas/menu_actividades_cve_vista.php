@@ -1,41 +1,43 @@
 <?php
+ob_start();
+session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
 
-if (permiso_ver('109')=='1') {
+if (permiso_ver('224')=='1') {
   $_SESSION['actividades_cve']="...";
 } else {
   $_SESSION['actividades_cve']="No 
             tiene permisos para visualizar";
 }
-if (permiso_ver('110')=='1') {
+if (permiso_ver('225')=='1') {
   $_SESSION['solicitud_actividades_vista']="...";
 } else {
   $_SESSION['solicitud_actividades_vista']="No 
             tiene permisos para visualizar";
 }
-if (permiso_ver('115')=='1') {
+if (permiso_ver('229')=='1') {
   $_SESSION['gestion_actividad_cve']="...";
 } else {
   $_SESSION['gestion_actividad_cve']="No 
             tiene permisos para visualizar";
 }
-if (permiso_ver('118')=='1') {
+if (permiso_ver('232')=='1') {
   $_SESSION['informe_actividad_cve']="...";
 } else {
   $_SESSION['informe_actividad_cve']="No 
             tiene permisos para visualizar";
 }
 
-if (permiso_ver('121')=='1') {
+if (permiso_ver('235')=='1') {
   $_SESSION['final_actividad_cve']="...";
 } else {
   $_SESSION['final_actividad_cve']="No 
             tiene permisos para visualizar";
 }
-
+ob_end_flush();
 ?>
 <!DOCTYPE html>
 <html>

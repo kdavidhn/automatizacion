@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/registro_actividad_externa_cve_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $externa=new Externa();
-$Id_objeto=114; 
+$Id_objeto=228; 
 
 if (permisos::permiso_modificar($Id_objeto)==0)
   {
@@ -176,6 +176,7 @@ switch ($_GET["op"]){
  				
 break;
 }
+ob_end_flush();
 ?>
 
 

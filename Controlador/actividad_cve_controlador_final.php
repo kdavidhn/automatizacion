@@ -1,7 +1,6 @@
 <?php 
-
+ob_start();
 session_start();
-
 require_once "../Modelos/actividad_cve_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
@@ -10,7 +9,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $actividad=new Actividad();
-$Id_objeto=121;
+$Id_objeto=235;
 $usuario= $_SESSION['id_usuario'];
 $hoy=date("y-m-d");
 
@@ -124,5 +123,6 @@ switch ($_GET["op"]){
 
 	    break;
 	}
+	  ob_end_flush();
 	?>
 

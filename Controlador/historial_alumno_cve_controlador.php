@@ -11,7 +11,7 @@ require_once ('../clases/funcion_bitacora.php');
 
 
 $horas=new Horas();
-$Id_objeto = 116;
+$Id_objeto = 230;
 
 $cuenta=$_SESSION['cuenta'];
 

@@ -1,5 +1,5 @@
 <?php 
-
+ob_start();
 session_start();
 
 require_once "../Modelos/registro_faltas_modelo.php";
@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $falta=new Faltas();
-$Id_objeto=113; 
+$Id_objeto=227; 
 
 if (permisos::permiso_modificar($Id_objeto)==0)
   {
@@ -161,5 +161,6 @@ switch ($_GET["op"]){
  				
 break;
 }
+ob_end_flush();
 ?>
 
