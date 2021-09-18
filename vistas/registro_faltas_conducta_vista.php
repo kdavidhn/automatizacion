@@ -37,6 +37,15 @@ else
   {
     $_SESSION["btnagregar"]="";
   }
+if (permisos::permiso_modificar($Id_objeto)==0)
+  {
+  $_SESSION["btnGuardar2"]="hidden";
+  }
+else
+  {
+    $_SESSION["btnGuardar2"]="";
+  }
+
 
 ob_end_flush();
 ?>
@@ -153,7 +162,7 @@ ob_end_flush();
                                   <?php
                                     $query = $mysqli -> query ("select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12;");
                                     while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'</option>' ;
+                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'-----'.$resultado['valor'].'</option>' ;
                                     }
                                   ?>
                               </select>
@@ -181,7 +190,7 @@ ob_end_flush();
                 
                 <div class="card card-default">
                 <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Sección Alumno (SE ENLISTAN SOLO LOS ALUMNOS QUE TIENEN UNA O MAS FALTAS) </h3>
+                  <h3 class="card-title">Sección Alumno (Se enlistan únicamente los alumnos que no tienen faltas)</h3>
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -195,9 +204,9 @@ ob_end_flush();
                   <select class="form-control-lg select2" id= "id_persona" style="width: 100%;" name="id_persona" required="">
                                 <option  value="0" disabled="disabled">Seleccione un Alumno:</option>
                                   <?php
-                                    $query = $mysqli -> query ("select count(tbl_voae_faltas_conductas.id_falta) as faltas, tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona join tbl_voae_faltas_conductas on tbl_personas.id_persona = tbl_voae_faltas_conductas.id_persona_alumno Where id_tipo_persona=2 and id_atributo=12 group by tbl_voae_faltas_conductas.id_persona_alumno;");
+                                    $query = $mysqli -> query ("Select tbl_personas.id_persona, concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona Where id_tipo_persona=2 and id_atributo=12 AND not exists (select id_persona_alumno from tbl_voae_faltas_conductas where tbl_voae_faltas_conductas.id_persona_alumno = tbl_personas.id_persona);");
                                     while ($resultado = mysqli_fetch_array($query)) {
-                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].' ---- Faltas Acumuladas: '.$resultado['faltas'].'</option>' ;
+                                      echo '<option value="'.$resultado['id_persona'].'"> '.$resultado['nombres'].'-----'.$resultado['valor'].'</option>' ;
                                     }
                                   ?>
                               </select>
@@ -221,12 +230,7 @@ ob_end_flush();
                 <div class="card-body">
                 <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>Conducta:</label>
-                  <select class="form-control select2" name="conducta" id="conducta" class="form-control"  maxlength="50" required>
-                    <option value="EXCELENTE CONDUCTA">- EXCELENTE CONDUCTA</option>
-                    <option value="MUY BUENA CONDUCTA">- MUY BUENA CONDUCTA</option>
-                    <option value="BUENA CONDUCTA">- BUENA CONDUCTA</option>
-                    <option value="MALA CONDUCTA">- MALA CONDUCTA</option>
-                  </select>
+                 <input disabled class="form-control" minlength="5" maxlength="200" type="text" id="conducta" name="conducta"  style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required placeholder="EXCELENTE CONDUCTA" />
                 </div>
                 </div>
                 </div>
@@ -234,7 +238,7 @@ ob_end_flush();
                 
                 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <button class="btn btn-primary pull-right" type="submit" id="btnGuardar2"><i class="fas fa-file-pdf"></i> Generar Constancia</button>
+                  <button class="btn btn-primary pull-right" type="submit" name="btnGuardar2" id="btnGuardar2"><i class="fas fa-file-pdf"></i> Generar Constancia</button>
                   
                   <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
                 </div>

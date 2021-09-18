@@ -18,9 +18,9 @@ Class Externa
 	}
 
 	//Implementamos un método para insertar registros
-	public function insertar($nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo)
+	public function insertar($nombre_act,$ente,$usuario,$ambito,$periodo,$tipo)
 	{
-		$sql="CALL inserta_actividad_externa('$nombre_act','$ubicacion','$fecha_inicio','$fecha_final','$descripcion','$ente','$usuario','$ambito','$periodo')";
+		$sql="CALL inserta_actividad_externa('$nombre_act','$ente','$usuario','$ambito','$periodo')";
 		return ejecutarConsulta($sql);
 	}
 

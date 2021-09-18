@@ -32,6 +32,8 @@ $horas_alumno=isset($_POST["horas_alumno"])? limpiarCadena($_POST["horas_alumno"
 
 $usuario=$_SESSION['id_usuario'];
 
+$parametro = "1";
+
 switch ($_GET["op"]){
 case 'guardaryeditar':
 		if (empty($id_actividad_voae)){
@@ -76,7 +78,7 @@ case 'guardaryeditar':
 
 
 	   
- 		$rspta=$horas->listar();
+ 		$rspta=$horas->listar($parametro);
  		//Vamos a declarar un array
  		$data= Array();
 

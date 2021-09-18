@@ -397,7 +397,7 @@ if ($_SESSION['pantalla']>='34' and $_SESSION['pantalla']<='38' )
 
 
 
-if ($_SESSION['pantalla'] = '219' or $_SESSION['pantalla'] == '220' or $_SESSION['pantalla'] == '221' or $_SESSION['pantalla'] == '222' or $_SESSION['pantalla'] == '223' or $_SESSION['pantalla'] == '224' or $_SESSION['pantalla'] == '225' or $_SESSION['pantalla'] == '226' or $_SESSION['pantalla'] == '227' or $_SESSION['pantalla'] == '228' or $_SESSION['pantalla'] == '229' or $_SESSION['pantalla'] == '230' or $_SESSION['pantalla'] == '231' or $_SESSION['pantalla'] == '232' or $_SESSION['pantalla'] == '233' or $_SESSION['pantalla'] == '234' or $_SESSION['pantalla'] == '235') {
+if ($_SESSION['pantalla'] = '219' or $_SESSION['pantalla'] == '220' or $_SESSION['pantalla'] == '221' or $_SESSION['pantalla'] == '222' or $_SESSION['pantalla'] == '223' or $_SESSION['pantalla'] == '224' or $_SESSION['pantalla'] == '225' or $_SESSION['pantalla'] == '226' or $_SESSION['pantalla'] == '227' or $_SESSION['pantalla'] == '228' or $_SESSION['pantalla'] == '229' or $_SESSION['pantalla'] == '230' or $_SESSION['pantalla'] == '231' or $_SESSION['pantalla'] == '232' or $_SESSION['pantalla'] == '233' or $_SESSION['pantalla'] == '234' or $_SESSION['pantalla'] == '235'or $_SESSION['pantalla'] == '236') {
    if ($_SESSION['confirmacion'] == 'block') {
       $_SESSION['btn_comite_vida_estudiantil'] = "block";
    }
@@ -444,7 +444,7 @@ if ($_SESSION['pantalla'] = '229') {
 }
 if ($_SESSION['pantalla'] = '232') {
    if ($_SESSION['confirmacion'] == 'block') {
-      $_SESSION['informe_actividad_cve'] = "block";
+      $_SESSION['actividades_cve'] = "block";
    }
 }
 if ($_SESSION['pantalla'] = '233') {
@@ -457,6 +457,12 @@ if ($_SESSION['pantalla'] = '234') {
       $_SESSION['memos_cve'] = "block";
    }
 }
+if ($_SESSION['pantalla'] = '236') {
+   if ($_SESSION['confirmacion'] == 'block') {
+      $_SESSION['actividades_cve'] = "block";
+   }
+}
+
 
 
 

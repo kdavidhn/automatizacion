@@ -129,55 +129,6 @@ ob_end_flush();
                 </div>
                 </div>
 
-                <!-- Card 2 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Ubicación y Fecha Inicial</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-                </div>
-                <div class="card-body">
-                <div class="row">
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                  <label>Ubicación:</label>
-                  <input type="text" class="form-control" name="ubicacion" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required id="ubicacion" maxlength="50" placeholder="Ubicación" required>
-                </div>
-                <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Fecha Inicial:</label>
-                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fch_inicial_actividad" id="fch_inicial_actividad" maxlength="256" >
-                </div>
-                </div>
-                </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="card card-default">
-                <div class="card-header bg-gradient-dark">
-                  <h3 class="card-title">Fecha Final y Descripción</h3>
-                  <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
-                      <i class="fas fa-minus"></i>
-                    </button>
-                  </div>
-
-                </div>
-
-                <div class="card-body">
-                <div class="row">
-                    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                  <label>Fecha Final:</label>
-                  <input type="date" max="<?php $hoy=date("Y-m-d"); echo $hoy;?>" class="form-control" name="fch_final_actividad" id="fch_final_actividad" maxlength="256">
-                </div>
-                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12 maxlength">
-                  <label>Descripción:</label>
-                  <input type="text" class="form-control" name="descripcion" id="descripcion" maxlength="50" style="text-transform: uppercase;" onkeypress="return soloLetras(event)" required placeholder="Descripción" required>
-                </div>
-                </div>
-                </div>
-                </div>
-              
 
 
                 <!-- Card 7 -->

@@ -162,6 +162,7 @@ switch ($_GET["op"]){
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
 		$rspta=$actividad->insertaryenviar($no_solicitud,$nombre_actividad,$ubicacion,$fch_inicial_actividad,$fch_final_actividad,$descripcion,$poblacion_objetivo,$presupuesto,$staff_alumnos,$observaciones,$usuario,$id_ambito,$periodo);
 		echo $rspta ? "ACTIVIDAD REGISTRADA" : "actividad no se pudo registrar";
+		
 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'LA ACTIVIDAD: "' . $nombre_actividad . '"');
 		}else {
 		$rspta=$actividad->insertaryenviar2($id_actividad_voae,$no_solicitud,$nombre_actividad,$ubicacion,$fch_inicial_actividad,$fch_final_actividad,$descripcion,$poblacion_objetivo,$presupuesto,$staff_alumnos,$observaciones,$usuario,$id_ambito,$periodo);

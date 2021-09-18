@@ -42,7 +42,8 @@ $ente=isset($_POST["staff_alumnos"])? limpiarCadena($_POST["staff_alumnos"]):"";
 $horas_voae=isset($_POST["horas_voae"])? limpiarCadena($_POST["horas_voae"]):"";
 $ambito=isset($_POST["id_ambito"])? limpiarCadena($_POST["id_ambito"]):"";
 $periodo=isset($_POST["periodo"])? limpiarCadena($_POST["periodo"]):"";
-
+$tipo = "ACTIVIDAD EXTERNA";
+$estado = "6";
 
 switch ($_GET["op"]){
 	
@@ -51,13 +52,15 @@ switch ($_GET["op"]){
 				
 			
 				//SE MANDA A LA BITACORA LA ACCION DE INSERTAR
-				$rspta=$externa->insertar($nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+				
 
 				$sql = "select MAX(id_actividad_voae) as id from tbl_voae_actividades";
 				$result_valor2 = $mysqli->query($sql);
 				$id = $result_valor2->fetch_array(MYSQLI_ASSOC);
-				
+
+				$rspta=$externa->insertar($nombre_act,$ente,$usuario,$ambito,$periodo,$tipo);
 				echo $rspta ? "Actividad Registrada" : "No se pudo registrar";
+				
 				 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'LA ACTIVIDAD EXTERNA: "' . $nombre_act . '" CON EL ID: "' . $id['id'] . '" ');
 				
 			
@@ -72,7 +75,7 @@ switch ($_GET["op"]){
 				$result_valor2 = $mysqli->query($sql);
 				$valor_viejo2 = $result_valor2->fetch_array(MYSQLI_ASSOC);
 
-				if ($valor_viejo['nombre_actividad'] <> $nombre_act and $valor_viejo['ubicacion'] <> $ubicacion and $valor_viejo['fch_inicial_actividad'] <> $fecha_inicio and $valor_viejo['fch_final_actividad'] <> $fecha_final and $valor_viejo['descripcion'] <> $descripcion and $valor_viejo['staff_alumnos'] <> $ente and $valor_viejo['id_ambito'] <> $ambito and $valor_viejo['periodo'] <> $periodo) {
+				if ($valor_viejo['nombre_actividad'] <> $nombre_act and $valor_viejo['staff_alumnos'] <> $ente and $valor_viejo['id_ambito'] <> $ambito and $valor_viejo['periodo'] <> $periodo) {
 
 					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO NOMBRE: "'.$valor_viejo['nombre_actividad'] . '" POR: "'.$nombre_act . '"; CAMBIO UBICACION: "'.$valor_viejo['ubicacion'] . '" POR: "'.$ubicacion . '"; CAMBIO FECHA INICIO: "'.$valor_viejo['fch_inicial_actividad'] . '" POR: "'.$fecha_inicio . '";  CAMBIO FECHA FINAL: "'.$valor_viejo['fch_final_actividad'] . '" POR: "'.$fecha_final . '"; CAMBIO ENTE: "'.$valor_viejo['staff_alumnos'] . '" POR: "'.$ente . '";  CAMBIO AMBITO: "'.$valor_viejo2['nombre_ambito'] . '" POR: "'.$ambito . '";  CAMBIO PERIODO: "'.$valor_viejo['periodo'] . '" POR: "'.$periodo . '";');
 			$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
@@ -84,25 +87,6 @@ switch ($_GET["op"]){
 		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 
-		 }elseif($valor_viejo['ubicacion'] <> $ubicacion) {
-		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO UBICACION: "'.$valor_viejo['ubicacion'] . '" POR: "'.$ubicacion . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
-				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
-			
-			}elseif($valor_viejo['fch_inicial_actividad'] <> $fecha_inicio) {
-		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO FECHA INICIAL: "'.$valor_viejo['fch_inicial_actividad'] . '" POR: "'.$fecha_inicio . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
-				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
-			
-			}elseif($valor_viejo['fch_final_actividad'] <> $fecha_final) {
-		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO FECHA FINAL: "'.$valor_viejo['fch_final_actividad'] . '" POR: "'.$fecha_final . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_final,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
-				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
-			
-			}elseif($valor_viejo['descripcion'] <> $descripcion) {
-		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO DESCRIPCION: "'.$valor_viejo['descripcion'] . '" POR: "'.$descripcion . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_final,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
-				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 			
 			}elseif($valor_viejo['staff_alumnos'] <> $ente) {
 		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO ENTE ORGANIZADOR: "'.$valor_viejo['staff_alumnos'] . '" POR: "'.$ente . '');

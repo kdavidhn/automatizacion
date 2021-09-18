@@ -78,7 +78,7 @@ class pdf extends FPDF
     }
     public function cuerpo(){
         $id_persona = $_POST['id_persona'];
-        $conducta = $_POST['conducta'];
+        
         global $instancia_conexion;
         $sql="select concat(tbl_personas.nombres,' ',tbl_personas.apellidos) AS nombres, tbl_personas_extendidas.valor as cuenta from tbl_personas join tbl_personas_extendidas on tbl_personas.id_persona = tbl_personas_extendidas.id_persona where tbl_personas.id_persona ='$id_persona'";
 
@@ -102,7 +102,7 @@ class pdf extends FPDF
 A quien corresponda:
 
 
-El comite de vida Estudiantil, de la Universidad Nacional Autonoma de Honduras (UNAH), por medio de la presente que el Alumno(a): '. $reg->nombres . ', con numero de cuenta: '. $reg->cuenta . ',  durante su proceso estudiantil ha demostrado una '.$conducta . '. 
+El comite de vida Estudiantil, de la Universidad Nacional Autonoma de Honduras (UNAH), por medio de la presente que el Alumno(a): '. $reg->nombres . ', con numero de cuenta: '. $reg->cuenta . ',  durante su proceso estudiantil ha demostrado una EXCELENTE CONDUCTA. 
 Y, para los fines que al interesado(a) estime conserniente, se le extiende la presente en la Ciudad de Tegucigalpa a los  '.$dia. ' dias del mes de '. $meses[date('n')-1] . ' del '. $anio .'
     
 Atte.

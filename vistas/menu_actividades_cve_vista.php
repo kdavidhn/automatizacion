@@ -37,6 +37,13 @@ if (permiso_ver('235')=='1') {
   $_SESSION['final_actividad_cve']="No 
             tiene permisos para visualizar";
 }
+
+if (permiso_ver('236')=='1') {
+  $_SESSION['reporte_act']="...";
+} else {
+  $_SESSION['reporte_act']="No 
+            tiene permisos para visualizar";
+}
 ob_end_flush();
 ?>
 <!DOCTYPE html>
@@ -140,7 +147,21 @@ ob_end_flush();
               </a>
             </div>
           </div>
-
+          <!-- Box  -->
+          <div class="col-6 col-sm-6 col-md-4">
+            <div class="small-box bg-primary">
+              <div class="inner">
+                <h5>Actividades<br> Reporte de Actividades </h5>
+                <p><?php echo $_SESSION['reporte_act']; ?></p> 
+              </div>
+              <div class="icon">
+                <i class="fas fa-edit"></i>
+              </div>
+              <a href="../vistas/reporte_actividad_cve_vista.php" class="small-box-footer">
+                Ir <i class="fas fa-arrow-circle-right"></i>
+              </a>
+            </div>
+          </div>
 
          <!-- /.row -->
         </div><!--/. container-fluid -->
