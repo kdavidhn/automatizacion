@@ -38,9 +38,9 @@ Class Horas
 	}
 
 	//Implementar un método para listar los registros
-	public function listar($parametro)
+	public function listar($usuario)
 	{
-		$sql="CALL vista_horas('$parametro')";
+		$sql="CALL vista_horas('$usuario')";
 		return ejecutarConsulta($sql);	
 			
 	}

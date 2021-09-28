@@ -404,7 +404,7 @@ if ($_SESSION['pantalla'] = '219' or $_SESSION['pantalla'] == '220' or $_SESSION
 }   
 if ($_SESSION['pantalla'] == '219') {
       if ($_SESSION['confirmacion'] == 'block') {
-         $_SESSION['administracion_cve'] = "block";
+         $_SESSION['administracion_cve'] = "block"; 
       }
    }
 if ($_SESSION['pantalla'] == '220' or $_SESSION['pantalla'] == '221' or $_SESSION['pantalla'] == '222' or $_SESSION['pantalla'] == '223') {

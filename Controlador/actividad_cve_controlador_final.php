@@ -92,7 +92,7 @@ switch ($_GET["op"]){
 	    break;
 
 	    case 'listar2':
-	    $rspta=$actividad->listar2();
+	    $rspta=$actividad->listar2($usuario);
  		//Vamos a declarar un array
 	    $data= Array();
 

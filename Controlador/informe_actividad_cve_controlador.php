@@ -27,7 +27,7 @@ $usuario=isset($_POST["usuario"])? limpiarCadena($_POST["usuario"]):"";
 $id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
 $nombre_estado=isset($_POST["nombre_estado"])? limpiarCadena($_POST["nombre_estado"]):"";
 $archivo=isset($_POST["archivo"])? limpiarCadena($_POST["archivo"]):"";
-
+$id_usuario=$_SESSION['id_usuario'];
 if (permisos::permiso_eliminar($Id_objeto)=='0')    {
     $_SESSION["btn_eliminar"]="hidden";
   } else {
@@ -102,7 +102,7 @@ switch ($_GET["op"]){
 
 		case 'listar':
 			
-			$rspta=$informe_actividad->listar();
+			$rspta=$informe_actividad->listar($id_usuario);
 			//Vamos a declarar un array
 			$data= Array();
 

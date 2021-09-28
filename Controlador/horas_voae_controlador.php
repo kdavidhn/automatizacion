@@ -78,7 +78,7 @@ case 'guardaryeditar':
 
 
 	   
- 		$rspta=$horas->listar($parametro);
+ 		$rspta=$horas->listar($usuario);
  		//Vamos a declarar un array
  		$data= Array();
 

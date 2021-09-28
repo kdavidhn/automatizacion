@@ -85,9 +85,9 @@ Class Actividad
 		return ejecutarConsultaSimpleFila($sql);
 	}
 	//Implementar un método para listar los registros
-	public function listar()
+	public function listar($usuario)
 	{
-		$sql="SELECT * FROM vista_actividad_cve";
+		$sql="CALL vista_solicitud('$usuario') ";
 		return ejecutarConsulta($sql);		
 	}
 	//Implementar un método para listar los registros
@@ -98,9 +98,9 @@ Class Actividad
 	}
 
 	//Implementar un método para listar los registros
-	public function listar2()
+	public function listar2($usuario)
 	{
-		$sql="SELECT * FROM vista_actividad_cve_2";
+		$sql="CALL vista_finalizar('$usuario')";
 		return ejecutarConsulta($sql);		
 	}
 }

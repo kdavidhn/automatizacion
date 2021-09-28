@@ -194,7 +194,7 @@ switch ($_GET["op"]){
 
 
 	    case 'listar':
-	    $rspta=$actividad->listar();
+	    $rspta=$actividad->listar($usuario);
  		//Vamos a declarar un array
 	    $data= Array();
 
