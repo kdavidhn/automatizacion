@@ -10,7 +10,7 @@ require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');
 
-$Id_objeto=228; 
+$Id_objeto=237; 
 
 
 $visualizacion= permiso_ver($Id_objeto);
@@ -24,11 +24,11 @@ if($visualizacion==0){
             showConfirmButton: false,
             timer: 3000
           });
-      window.location = "../vistas/pagina_principal_vista.php";
+      window.location = "../vistas/horas_voae_cve_vista.php";
 
        </script>'; 
 }else{
-  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Actividades Externas');
+  bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Actividades Externas Gestión');
 }
 if (permisos::permiso_insertar($Id_objeto)==0)
     {
@@ -93,9 +93,7 @@ ob_end_flush();
                             <th>Identificador</th>
                             <th>Nombre Actividad</th>
                             <th>Ente Organizador</th>
-                            <th>Ubicación</th>
-                            <th>Fecha Inicial</th>
-                            <th>Fecha Final</th>
+                            
                             
                           </thead>
                           <tbody>                            

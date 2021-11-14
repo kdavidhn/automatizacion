@@ -566,12 +566,9 @@ if (session_status() === PHP_SESSION_NONE) {
   <script src="../js/bootbox.min.js"></script> 
 
      
-    <script src="../public/datatables/dataTables.buttons.min.js"></script>
-    <script src="../public/datatables/buttons.html5.min.js"></script>
-    <script src="../public/datatables/buttons.colVis.min.js"></script>
+
     <script src="../public/datatables/jszip.min.js"></script>
-    <script src="../public/datatables/pdfmake.min.js"></script>
-    <script src="../public/datatables/vfs_fonts.js"></script>
+    
 
  <link rel="stylesheet" type="text/css" href="../public/DataTables-1.10.25/css/dataTables.bootstrap4.min.css"/>
 <link rel="stylesheet" type="text/css" href="../public/Buttons-1.7.1/css/buttons.bootstrap4.min.css"/>

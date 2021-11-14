@@ -20,10 +20,9 @@ $nombre = $_POST['nombre'];
 $_SESSION['cuenta'] = $cuenta;
 $_SESSION['nombre'] = $nombre;
 
+$variable = "";
 
-$valor = "select nombre_alumno from view_horas_voae WHERE cuenta='$cuenta'";
-				$result_valor = $mysqli->query($valor);
-				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
+
 
 $visualizacion= permiso_ver($Id_objeto);
 
@@ -59,15 +58,28 @@ ob_end_flush();
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-
+            <?php
+                          $sql = "SELECT IF( EXISTS(
+                          select valor from tbl_personas_extendidas where valor = '$cuenta'), 1, 0) as total";
+                          $result = $mysqli->query($sql);
+                          $valorcuenta = $result->fetch_array(MYSQLI_ASSOC);
+                          $ultim = $valorcuenta['total'];
+                            if (($ultim) == 0) {
+                              $variable = "*Nota: Este usuario no está registrado en el sistema";    
+                            }
+        
+                          ?>
          <h1><p>Detalle Horas Alumno </p></h1>
+         <h7><b><p><?php echo $variable;?></p></b></h7>
           </div>
 
                 <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
+
                     <li class="breadcrumb-item"><a href="../vistas/pagina_principal_vista.php">Inicio</a></li>
               <li class="breadcrumb-item active"><a href="../vistas/horas_voae_cve_vista.php">Horas Voae Gestion</a></li>
-              <li class="breadcrumb-item active"><a>Detalle Horas Alumno </a></li>
+              <li class="breadcrumb-item active"><a>Detalle Horas Alumno </a>
+              
             </ol>
           </div>
 
@@ -86,11 +98,14 @@ ob_end_flush();
               <div class="col-md-12">
                   <div class="box">
                     <div class="box-header with-border">
-                          <section><h5><b><i><p>Nombre Alumno: <?php echo $nombre;?></p></i></b></h5>
+                          
+                          <section>
+                          
+                          <h5><b><i><p>Nombre Alumno: <?php echo $nombre;?></p></i></b></h5>
                           <h5><b><i><p>Cuenta: <?php echo $cuenta;?></i></b></p></h5>
                           </section>
                     </div>
-                   <form  action="../Controlador/historial_alumno_generarpdf.php"> 
+                   <form  target="_black" action="../Controlador/historial_alumno_generarpdf.php"> 
                                 <button title="Exportar Reporte Historial" class="btn btn-danger"  ><i class="fas fa-file-pdf"></i> <a style="font-weight: bold;"></a> </button>
                                 <input type="text" value="$nombre" class="form-control"  readonly hidden>
 

@@ -11,7 +11,7 @@ require_once ('../clases/funcion_permisos.php');
 
 $Id_objeto=232; 
 
-
+$usuario = $_SESSION['id_usuario'];
 $visualizacion= permiso_ver($Id_objeto);
 
 if($visualizacion==0){
@@ -80,7 +80,8 @@ ob_end_flush();
                   <th>NOMBRE DE ACTIVIDAD</th>
                   <th>ASISTENCIA</th>
                   <th>FECHA INFORME</th> 
-                  <th>USUARIO</th>                                   
+                  <th>USUARIO</th> 
+                  <th>EVIDENCIA ACTIVIDAD</th>                                  
                 </thead>
                 <tbody>                            
                 </tbody>
@@ -110,9 +111,9 @@ ob_end_flush();
                     <select class="form-control-lg select2" id= "id_actividad" style="width: 100%;" name="id_actividad" required="">
                         <option  disabled="disabled">Seleccione una actividad realizada:</option>
                           <?php
-                            $query = $mysqli -> query ("SELECT * FROM tbl_voae_actividades WHERE id_estado = 6");
+                            $query = $mysqli -> query ("call vista_act_usuario('$usuario')");
                             while ($resultado = mysqli_fetch_array($query)) {
-                              echo '<option value="'.$resultado['id_actividad_voae'].'"> '.$resultado['nombre_actividad'].'</option>' ;
+                              echo '<option value="'.$resultado['id_actividad_voae'].'"> '.$resultado['nombre_actividad'].'---'.$resultado['no_solicitud'].'</option>' ;
                             }
                           ?>
                     </select>
@@ -278,7 +279,27 @@ ob_end_flush();
 
     });
 </script>
-
+<script>
+$('input[type="file"]').on('change', function(){
+  var ext = $( this ).val().split('.').pop();
+  if ($( this ).val() != '') {
+    if(ext == "pdf" || ext == "PDF"){
+    }
+    else
+    {
+      $( this ).val('');
+      swal({
+                     title:"ALERTA",
+                     text:"EXTENSIÓN NO PERMITIDA: " + ext,
+                     type: "error",
+                     icon: "warning",
+                     showConfirmButton: false,
+                     timer: 3000
+                  });
+    }
+  }
+});
+</script>
 <script src="../plugins/select2/js/select2.min.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js">
 </script>

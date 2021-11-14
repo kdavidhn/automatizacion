@@ -10,7 +10,7 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $externa=new Externa();
-$Id_objeto=228; 
+$Id_objeto=237; 
 
 if (permisos::permiso_modificar($Id_objeto)==0)
   {
@@ -142,10 +142,7 @@ switch ($_GET["op"]){
  					' <button title="Eliminar Registro" '.$_SESSION['btneliminar'].' class="btn btn-danger"  onclick="eliminar('.$reg->id_actividad_voae.')"><i class="fas fa-trash-alt"></i></button>', 
  				"1"=>$reg->id_actividad_voae,
  				"2"=>$reg->nombre_actividad,
- 				"3"=>$reg->staff_alumnos,
- 				"4"=>$reg->ubicacion,
- 				"5"=>$reg->fch_inicial_actividad,
- 				"6"=>$reg->fch_final_actividad
+ 				"3"=>$reg->staff_alumnos
  				);
  		}
  		

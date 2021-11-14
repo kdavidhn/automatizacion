@@ -185,7 +185,7 @@ ob_end_flush();
 
                     <div  id="formularioregistros2">
              
-                <form name="formulario2" id="formulario2" method="POST" action="../Controlador/generar_conducta_cve_pdf.php">
+                <form name="formulario2" id="formulario2" method="POST" target="_black" action="../Controlador/generar_conducta_cve_pdf.php">
                 <!-- Card 1 -->
                 
                 <div class="card card-default">

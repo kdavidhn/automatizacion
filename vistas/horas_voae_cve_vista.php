@@ -15,6 +15,7 @@ $Id_objeto=228;
 
 $visualizacion= permiso_ver($Id_objeto);
 
+
 if($visualizacion==0){
   echo '<script type="text/javascript">
       swal({
@@ -30,6 +31,8 @@ if($visualizacion==0){
 }else{
   bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'],'INGRESO' , 'A Horas VOAE Gestión');
 }
+
+
 if (permisos::permiso_insertar($Id_objeto)==0)
   {
   $_SESSION["btnagregar"]="hidden";
@@ -46,6 +49,7 @@ else
   {
     $_SESSION["btnagregarhoras"]="";
   }
+
 ob_end_flush();
 ?>
 <body oncopy="return false" onpaste="return false">
@@ -84,7 +88,7 @@ ob_end_flush();
                     <div class="box-header with-border">
                            <form action="../vistas/actividades_externas_cve_vista.php">
 
-                            <button title="Ver Actividades" id="btnact" name="btnact"class="btn btn-primary" type="submit" ><i class="far fa-eye"></i>    VER ACTIVIDADES EXTERNAS</button>
+                            <button title="Ver Actividades" id="btnact" name="btnact" class="btn btn-primary" type="submit" ><i class="far fa-eye"></i>    VER ACTIVIDADES EXTERNAS</button>
                        </form>
                           <h1 align="right">
 

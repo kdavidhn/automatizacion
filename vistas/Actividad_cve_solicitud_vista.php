@@ -272,7 +272,7 @@ ob_end_flush();
 
   <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
     <button class="btn btn-primary pull-right" type="button"  onclick="guardaryeditar()"  ><i class="fa fa-solid fa-check"></i> Guardar</button>
-     <button class="btn btn-primary pull-right" type="button" onclick="insertaryenviar()"  ><i class="fa fa-solid fa-check"></i> Guardar y Enviar</button>
+     
     
     <button class="btn btn-danger pull-right" onclick="cancelarform()" type="button"><i class="fa fa-arrow-circle-left"></i> Salir</button>
   </div>
