@@ -4,7 +4,7 @@ session_start();
 
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once "../Modelos/tipos_faltas_modelo.php";
 require_once ('../clases/funcion_bitacora.php');
@@ -12,9 +12,9 @@ require_once ('../clases/funcion_bitacora.php');
 $falta=new falta();
 $Id_objeto=223; 
 
-$id_falta=isset($_POST["id_falta"])? limpiarCadena($_POST["id_falta"]):"";
-$nombre_falta=isset($_POST["nombre_falta"])? limpiarCadena($_POST["nombre_falta"]):"";
-$descripcion_falta=isset($_POST["descripcion_falta"])? limpiarCadena($_POST["descripcion_falta"]):"";
+$id_falta=isset($_POST["id_falta"])? $instancia_conexion->limpiarCadena($_POST["id_falta"]):"";
+$nombre_falta=isset($_POST["nombre_falta"])? $instancia_conexion->limpiarCadena($_POST["nombre_falta"]):"";
+$descripcion_falta=isset($_POST["descripcion_falta"])? $instancia_conexion->limpiarCadena($_POST["descripcion_falta"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':

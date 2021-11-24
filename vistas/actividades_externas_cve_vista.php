@@ -4,7 +4,7 @@ ob_start();
 session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
@@ -93,7 +93,8 @@ ob_end_flush();
                             <th>Identificador</th>
                             <th>Nombre Actividad</th>
                             <th>Ente Organizador</th>
-                            
+                            <th>Fecha Final</th>
+                            <th>Periodo</th>
                             
                           </thead>
                           <tbody>                            
@@ -181,6 +182,41 @@ ob_end_flush();
                 </div>
                 </div>
                 </div>
+                
+              <!-- Card 1 Fechas de la Actividad -->
+              <div class="card card-default">
+                <div class="card-header bg-gradient-dark">
+                  <h3 class="card-title">Fechas Inicial/Final de la Actividad</h3>
+                  <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                      <i class="fa fa-minus"></i>
+                    </button>
+                  </div>
+                </div>
+                <!-- /. card-header-->
+                <div class="card-body">
+                  <div class="row">
+                    <!-- Fecha Inical -->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                        <label>Fecha Incial:</label>
+                        <input type="date" class="form-control" placeholder="FECHA" name="fch_inicial_actividad" id="fch_inicial_actividad" required="" required max=<?php $hoy=date("Y-m-d"); echo $hoy;?>
+                        />
+                    </div>
+                    </div>
+                    <!-- Fecha Final-->
+                    <div class="col-sm-6">
+                      <div class="form-group">
+                       <label>Fecha Final:</label>
+                       <input type="date" class="form-control" name="fch_final_actividad" id="fch_final_actividad" required="" required max=<?php $hoy=date("Y-m-d"); echo $hoy;?>
+                       >
+                     </div>
+                   </div>
+
+                 </div>
+               </div>
+             </div>
+
 
                 
                 <div class="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">

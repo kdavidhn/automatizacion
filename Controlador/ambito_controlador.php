@@ -5,16 +5,16 @@ session_start();
 require_once "../Modelos/Ambito_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $ambito=new Ambito();
 $Id_objeto=220; 
 
-$id_ambito=isset($_POST["id_ambito"])? limpiarCadena($_POST["id_ambito"]):"";
-$nombre_ambito=isset($_POST["nombre_ambito"])? limpiarCadena($_POST["nombre_ambito"]):"";
-$descripcion_ambito=isset($_POST["descripcion_ambito"])? limpiarCadena($_POST["descripcion_ambito"]):"";
+$id_ambito=isset($_POST["id_ambito"])? $instancia_conexion->limpiarCadena($_POST["id_ambito"]):"";
+$nombre_ambito=isset($_POST["nombre_ambito"])? $instancia_conexion->limpiarCadena($_POST["nombre_ambito"]):"";
+$descripcion_ambito=isset($_POST["descripcion_ambito"])? $instancia_conexion->limpiarCadena($_POST["descripcion_ambito"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':

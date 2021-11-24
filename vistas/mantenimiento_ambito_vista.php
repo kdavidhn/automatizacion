@@ -5,7 +5,7 @@ ob_start();
 session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_permisos.php');

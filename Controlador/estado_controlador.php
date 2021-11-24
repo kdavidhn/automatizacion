@@ -5,16 +5,16 @@ session_start();
 require_once "../Modelos/Estado_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $estado=new Estado();
 $Id_objeto=221; 
 
-$id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
-$nombre_estado=isset($_POST["nombre_estado"])? limpiarCadena($_POST["nombre_estado"]):"";
-$descripcion_estado=isset($_POST["descripcion_estado"])? limpiarCadena($_POST["descripcion_estado"]):"";
+$id_estado=isset($_POST["id_estado"])? $instancia_conexion->limpiarCadena($_POST["id_estado"]):"";
+$nombre_estado=isset($_POST["nombre_estado"])? $instancia_conexion->limpiarCadena($_POST["nombre_estado"]):"";
+$descripcion_estado=isset($_POST["descripcion_estado"])? $instancia_conexion->limpiarCadena($_POST["descripcion_estado"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':

@@ -5,28 +5,28 @@ session_start();
 require_once "../Modelos/informe_actividad_cve_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $informe_actividad=new informe_actividad();
 $Id_objeto=232; 
 
-$id_informe=isset($_POST["id_informe"])? limpiarCadena($_POST["id_informe"]):"";
-$id_actividad=isset($_POST["id_actividad"])? limpiarCadena($_POST["id_actividad"]):"";
-$introduccion=isset($_POST["introduccion"])? limpiarCadena($_POST["introduccion"]):"";
-$objetivos=isset($_POST["objetivos"])? limpiarCadena($_POST["objetivos"]):"";
-$desarrollo=isset($_POST["desarrollo"])? limpiarCadena($_POST["desarrollo"]):"";
-$conclusiones=isset($_POST["conclusiones"])? limpiarCadena($_POST["conclusiones"]):"";
-$fch_informe=isset($_POST["fch_informe"])? limpiarCadena($_POST["fch_informe"]):"";
-$id_repositorio=isset($_POST["id_repositorio"])? limpiarCadena($_POST["id_repositorio"]):"";
-$nombre_archivo=isset($_POST["nombre_archivo"])? limpiarCadena($_POST["nombre_archivo"]):"";
-$dir_repositorio=isset($_POST["dir_repositorio"])? limpiarCadena($_POST["dir_repositorio"]):"";
+$id_informe=isset($_POST["id_informe"])? $instancia_conexion->limpiarCadena($_POST["id_informe"]):"";
+$id_actividad=isset($_POST["id_actividad"])? $instancia_conexion->limpiarCadena($_POST["id_actividad"]):"";
+$introduccion=isset($_POST["introduccion"])? $instancia_conexion->limpiarCadena($_POST["introduccion"]):"";
+$objetivos=isset($_POST["objetivos"])? $instancia_conexion->limpiarCadena($_POST["objetivos"]):"";
+$desarrollo=isset($_POST["desarrollo"])? $instancia_conexion->limpiarCadena($_POST["desarrollo"]):"";
+$conclusiones=isset($_POST["conclusiones"])? $instancia_conexion->limpiarCadena($_POST["conclusiones"]):"";
+$fch_informe=isset($_POST["fch_informe"])? $instancia_conexion->limpiarCadena($_POST["fch_informe"]):"";
+$id_repositorio=isset($_POST["id_repositorio"])? $instancia_conexion->limpiarCadena($_POST["id_repositorio"]):"";
+$nombre_archivo=isset($_POST["nombre_archivo"])? $instancia_conexion->limpiarCadena($_POST["nombre_archivo"]):"";
+$dir_repositorio=isset($_POST["dir_repositorio"])? $instancia_conexion->limpiarCadena($_POST["dir_repositorio"]):"";
 $id_usuario_registro=$_SESSION['id_usuario'];
-$usuario=isset($_POST["usuario"])? limpiarCadena($_POST["usuario"]):"";
-$id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
-$nombre_estado=isset($_POST["nombre_estado"])? limpiarCadena($_POST["nombre_estado"]):"";
-$archivo=isset($_POST["archivo"])? limpiarCadena($_POST["archivo"]):"";
+$usuario=isset($_POST["usuario"])? $instancia_conexion->limpiarCadena($_POST["usuario"]):"";
+$id_estado=isset($_POST["id_estado"])? $instancia_conexion->limpiarCadena($_POST["id_estado"]):"";
+$nombre_estado=isset($_POST["nombre_estado"])? $instancia_conexion->limpiarCadena($_POST["nombre_estado"]):"";
+$archivo=isset($_POST["archivo"])? $instancia_conexion->limpiarCadena($_POST["archivo"]):"";
 $usuario=$_SESSION['id_usuario'];
 if (permisos::permiso_eliminar($Id_objeto)=='0')    {
     $_SESSION["btn_eliminar"]="hidden";

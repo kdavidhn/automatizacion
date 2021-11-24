@@ -5,7 +5,7 @@ session_start();
 require_once "../Modelos/registro_actividad_externa_cve_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
@@ -31,17 +31,17 @@ else
 
 
 $usuario= $_SESSION['id_usuario'];
-$id_actividad_voae=isset($_POST["id_actividad_voae"])? limpiarCadena($_POST["id_actividad_voae"]):"";
+$id_actividad_voae=isset($_POST["id_actividad_voae"])? $instancia_conexion->limpiarCadena($_POST["id_actividad_voae"]):"";
 
-$nombre_act=isset($_POST["nombre_actividad"])? limpiarCadena($_POST["nombre_actividad"]):"";
-$ubicacion=isset($_POST["ubicacion"])? limpiarCadena($_POST["ubicacion"]):"";
-$fecha_inicio=isset($_POST["fch_inicial_actividad"])? limpiarCadena($_POST["fch_inicial_actividad"]):"";
-$fecha_final=isset($_POST["fch_final_actividad"])? limpiarCadena($_POST["fch_final_actividad"]):"";
-$descripcion=isset($_POST["descripcion"])? limpiarCadena($_POST["descripcion"]):"";
-$ente=isset($_POST["staff_alumnos"])? limpiarCadena($_POST["staff_alumnos"]):"";
-$horas_voae=isset($_POST["horas_voae"])? limpiarCadena($_POST["horas_voae"]):"";
-$ambito=isset($_POST["id_ambito"])? limpiarCadena($_POST["id_ambito"]):"";
-$periodo=isset($_POST["periodo"])? limpiarCadena($_POST["periodo"]):"";
+$nombre_act=isset($_POST["nombre_actividad"])? $instancia_conexion->limpiarCadena($_POST["nombre_actividad"]):"";
+
+$fecha_inicio=isset($_POST["fch_inicial_actividad"])? $instancia_conexion->limpiarCadena($_POST["fch_inicial_actividad"]):"";
+$fecha_final=isset($_POST["fch_final_actividad"])? $instancia_conexion->limpiarCadena($_POST["fch_final_actividad"]):"";
+$descripcion=isset($_POST["descripcion"])? $instancia_conexion->limpiarCadena($_POST["descripcion"]):"";
+$ente=isset($_POST["staff_alumnos"])? $instancia_conexion->limpiarCadena($_POST["staff_alumnos"]):"";
+
+$ambito=isset($_POST["id_ambito"])? $instancia_conexion->limpiarCadena($_POST["id_ambito"]):"";
+$periodo=isset($_POST["periodo"])? $instancia_conexion->limpiarCadena($_POST["periodo"]):"";
 $tipo = "ACTIVIDAD EXTERNA";
 $estado = "6";
 
@@ -58,7 +58,7 @@ switch ($_GET["op"]){
 				$result_valor2 = $mysqli->query($sql);
 				$id = $result_valor2->fetch_array(MYSQLI_ASSOC);
 
-				$rspta=$externa->insertar($nombre_act,$ente,$usuario,$ambito,$periodo,$tipo);
+				$rspta=$externa->insertar($nombre_act,$ente,$usuario,$ambito,$periodo,$tipo,$fecha_inicio,$fecha_final);
 				echo $rspta ? "Actividad Registrada" : "No se pudo registrar";
 				
 				 bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'INSERTO', 'LA ACTIVIDAD EXTERNA: "' . $nombre_act . '" CON EL ID: "' . $id['id'] . '" ');
@@ -77,30 +77,40 @@ switch ($_GET["op"]){
 
 				if ($valor_viejo['nombre_actividad'] <> $nombre_act and $valor_viejo['staff_alumnos'] <> $ente and $valor_viejo['id_ambito'] <> $ambito and $valor_viejo['periodo'] <> $periodo) {
 
-					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO NOMBRE: "'.$valor_viejo['nombre_actividad'] . '" POR: "'.$nombre_act . '"; CAMBIO UBICACION: "'.$valor_viejo['ubicacion'] . '" POR: "'.$ubicacion . '"; CAMBIO FECHA INICIO: "'.$valor_viejo['fch_inicial_actividad'] . '" POR: "'.$fecha_inicio . '";  CAMBIO FECHA FINAL: "'.$valor_viejo['fch_final_actividad'] . '" POR: "'.$fecha_final . '"; CAMBIO ENTE: "'.$valor_viejo['staff_alumnos'] . '" POR: "'.$ente . '";  CAMBIO AMBITO: "'.$valor_viejo2['nombre_ambito'] . '" POR: "'.$ambito . '";  CAMBIO PERIODO: "'.$valor_viejo['periodo'] . '" POR: "'.$periodo . '";');
-			$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+					bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO NOMBRE: "'.$valor_viejo['nombre_actividad'] . '" POR: "'.$nombre_act . '"; CAMBIO FECHA INICIO: "'.$valor_viejo['fch_inicial_actividad'] . '" POR: "'.$fecha_inicio . '";  CAMBIO FECHA FINAL: "'.$valor_viejo['fch_final_actividad'] . '" POR: "'.$fecha_final . '"; CAMBIO ENTE: "'.$valor_viejo['staff_alumnos'] . '" POR: "'.$ente . '";  CAMBIO AMBITO: "'.$valor_viejo2['nombre_ambito'] . '" POR: "'.$ambito . '";  CAMBIO PERIODO: "'.$valor_viejo['periodo'] . '" POR: "'.$periodo . '";');
+			$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 				
 
 		 }elseif ($valor_viejo['nombre_actividad'] <> $nombre_act) {
 		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO NOMBRE: "'.$valor_viejo['nombre_actividad'] . '" POR: "'.$nombre_act . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_inicio,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 
 			
 			}elseif($valor_viejo['staff_alumnos'] <> $ente) {
 		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO ENTE ORGANIZADOR: "'.$valor_viejo['staff_alumnos'] . '" POR: "'.$ente . '');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_final,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 			
 			}elseif($valor_viejo['id_ambito'] <> $ambito) {
 		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO EL AMBITO: "'.$valor_viejo['nombre_ambito'] . '" POR: "'.$valor_viejo2['nombre_ambito'] . '"');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_final,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 			
 			}elseif($valor_viejo['periodo'] <> $periodo) {
 		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO EL PERIODO: "'.$valor_viejo['periodo'] . '" POR: "'.$periodo . '"');
-		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$ubicacion,$fecha_final,$fecha_final,$descripcion,$ente,$usuario,$ambito,$periodo);
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
+				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
+			
+			}elseif($valor_viejo['fch_inicial_actividad'] <> $fecha_inicio) {
+		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO LA FECHA INICIAL: "'.$valor_viejo['fch_inicial_actividad'] . '" POR: "'.$fecha_inicio . '"');
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
+				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
+			
+			}elseif($valor_viejo['fch_final_actividad'] <> $fecha_final) {
+		 		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'MODIFICO', ' LA ACTIVIDAD EXTERNA CON EL ID ' . $id_actividad_voae . ': CAMBIO LA FECHA FINAL: "'.$valor_viejo['fch_final_actividad'] . '" POR: "'.$fecha_final . '"');
+		 		$rspta=$externa->editar($id_actividad_voae,$nombre_act,$fecha_inicio,$fecha_final,$ente,$usuario,$ambito,$periodo);
 				echo $rspta ? "Actividad Actualizada" : "No se pudo actualizar";
 			
 			}
@@ -138,11 +148,17 @@ switch ($_GET["op"]){
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
  				
- 				"0"=>'<button title="Modificar Registro" '.$_SESSION['btnmodificar'].' class="btn btn-warning" onclick="mostrar('.$reg->id_actividad_voae.')" ><i class="far fa-edit"></i></button>'.
+ 				"0"=>'<form action="../vistas/listado_asistencia_act_ext_vista.php" method="POST"   style="display:inline;">
+					<input type="hidden" name="id_actividad_cve" value="'.$reg->id_actividad_voae.'" onclick="listar('.$reg->id_actividad_voae.')">
+					<button class="btn btn-info" title="Lista de Asistencia" type="submit"><i class="fas fa-list-ol"></i></button>
+				</form>'. 
+ 				' <button title="Modificar Registro" '.$_SESSION['btnmodificar'].' class="btn btn-warning" onclick="mostrar('.$reg->id_actividad_voae.')" ><i class="far fa-edit"></i></button>'.
  					' <button title="Eliminar Registro" '.$_SESSION['btneliminar'].' class="btn btn-danger"  onclick="eliminar('.$reg->id_actividad_voae.')"><i class="fas fa-trash-alt"></i></button>', 
  				"1"=>$reg->id_actividad_voae,
  				"2"=>$reg->nombre_actividad,
- 				"3"=>$reg->staff_alumnos
+ 				"3"=>$reg->staff_alumnos,
+ 				"4"=>$reg->fch_final_actividad,
+ 				"5"=>$reg->periodo
  				);
  		}
  		

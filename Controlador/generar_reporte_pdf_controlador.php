@@ -1,6 +1,6 @@
 <?php 
 require_once('../clases/conexion_mantenimientos.php');
-require_once ('../clases/Conexionvoae.php');
+require_once ('../clases/Conexion.php');
 require_once ('../Reporte/pdf/fpdf.php');
 
 

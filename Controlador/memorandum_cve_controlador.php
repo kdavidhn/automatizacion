@@ -4,7 +4,7 @@ session_start();
 
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once "../Modelos/memorandum_cve_modelo.php";
 require_once ('../clases/funcion_bitacora.php');
@@ -29,14 +29,14 @@ else
   }
 // id_memo	no_memo	id_tipo_memo	remitente	destinatario	fecha	 asunto  contenido
 
-$id_memo=isset($_POST["id_memo"])? limpiarCadena($_POST["id_memo"]):"";
-$no_memo=isset($_POST["no_memo"])? limpiarCadena($_POST["no_memo"]):"";
-$id_tipo_memo=isset($_POST["id_tipo_memo"])? limpiarCadena($_POST["id_tipo_memo"]):"";
-$remitente=isset($_POST["remitente"])? limpiarCadena($_POST["remitente"]):"";
-$destinatario=isset($_POST["destinatario"])? limpiarCadena($_POST["destinatario"]):"";
-//$fecha=isset($_POST["fecha"])? limpiarCadena($_POST["fecha"]):"";
-$asunto=isset($_POST["asunto"])? limpiarCadena($_POST["asunto"]):"";
-$contenido=isset($_POST["contenido"])? limpiarCadena($_POST["contenido"]):"";
+$id_memo=isset($_POST["id_memo"])? $instancia_conexion->limpiarCadena($_POST["id_memo"]):"";
+$no_memo=isset($_POST["no_memo"])? $instancia_conexion->limpiarCadena($_POST["no_memo"]):"";
+$id_tipo_memo=isset($_POST["id_tipo_memo"])? $instancia_conexion->limpiarCadena($_POST["id_tipo_memo"]):"";
+$remitente=isset($_POST["remitente"])? $instancia_conexion->limpiarCadena($_POST["remitente"]):"";
+$destinatario=isset($_POST["destinatario"])? $instancia_conexion->limpiarCadena($_POST["destinatario"]):"";
+//$fecha=isset($_POST["fecha"])? $instancia_conexion->limpiarCadena($_POST["fecha"]):"";
+$asunto=isset($_POST["asunto"])? $instancia_conexion->limpiarCadena($_POST["asunto"]):"";
+$contenido=isset($_POST["contenido"])? $instancia_conexion->limpiarCadena($_POST["contenido"]):"";
 
 
 switch ($_GET["op"]){

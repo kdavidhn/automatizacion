@@ -20,10 +20,8 @@ function limpiar()
 {
 	$("#id_actividad_voae").val("");
 	$("#nombre_actividad").val("");
-	$("#ubicacion").val("");
 	$("#fch_inicial_actividad").val("");
 	$("#fch_final_actividad").val("");
-	$("#descripcion").val("");
 	$("#staff_alumnos").val("");
 	$("#id_ambito").val("");
 	$("#periodo").val("");
@@ -228,10 +226,8 @@ function mostrar(id_actividad_voae)
 
 		$("#id_actividad_voae").val(data.id_actividad_voae);
  		$("#nombre_actividad").val(data.nombre_actividad);
-		$("#ubicacion").val(data.ubicacion);
 		$("#fch_inicial_actividad").val(data.fch_inicial_actividad);
 		$("#fch_final_actividad").val(data.fch_final_actividad);
-		$("#descripcion").val(data.descripcion);
 		$("#staff_alumnos").val(data.staff_alumnos);
 		$("#id_ambito").val(data.id_ambito);
 		$("#periodo").val(data.periodo);
@@ -244,7 +240,7 @@ function eliminar(id_actividad_voae)
 	swal({
 		title: "Alerta",
 		text:
-			"¿Está seguro de eliminar la actividad?",
+			"¿Está seguro de eliminar la actividad?, Esto también eliminará el listado de asistencia",
 		icon: "warning",
 		buttons: true,
 		dangerMode: false,

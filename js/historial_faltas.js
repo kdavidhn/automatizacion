@@ -137,7 +137,7 @@ function listar()
         orientation: "poltrait",
     pageSize: "letter",
         exportOptions: {
-            columns: [1, 2, 3, 4, 5, 6],     
+            columns: [1, 2, 3, 4],     
              },
      title: 'Registro de Faltas Alumnos ',
     messageTop: "FECHA: " + fecha + " HORA: " + hora,
@@ -181,7 +181,7 @@ function listar()
             ],
     "ajax":
         {
-          url: '../Controlador/registro_faltas_controlador.php?op=listar',
+          url: '../Controlador/historial_alumno_faltas_cve_controlador.php?op=listar_his',
           type : "get",
           dataType : "json",            
           error: function(e){
@@ -194,7 +194,6 @@ function listar()
       "order": [[ 0, "desc" ]]//Ordenar (columna,orden)
   }).DataTable();
   }
-
 
 //Función para guardar o editar
 
@@ -235,9 +234,15 @@ function guardaryeditar(e)
 
 
 
-function mostrar(id_falta)
+function mostrar(id_falta, tipo=0)
 {
-  $.post("../Controlador/registro_faltas_controlador.php?op=mostrar",{id_falta : id_falta}, function(data, status)
+  $('.form-control').prop( "disabled", false );
+  $('#btnGuardar').show();
+  if (tipo==1) {
+    $('.form-control').prop( "disabled", false );
+    $('#btnGuardar').show();
+  }
+  $.post("../Controlador/historial_alumno_faltas_cve_controlador.php?op=mostrar",{id_falta : id_falta}, function(data, status)
   {
     data = JSON.parse(data);    
     mostrarform(true);

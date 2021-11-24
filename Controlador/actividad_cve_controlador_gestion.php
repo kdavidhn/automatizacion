@@ -5,7 +5,7 @@ session_start();
 require_once "../Modelos/actividad_cve_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
@@ -13,24 +13,24 @@ $actividad=new Actividad();
 $Id_objeto=229;
 $usuario= $_SESSION['id_usuario'];
 
-$id_actividad_voae=isset($_POST["id_actividad_voae"])? limpiarCadena($_POST["id_actividad_voae"]):"";
-$id_actividad=isset($_POST["id_actividad"])? limpiarCadena($_POST["id_actividad"]):"";
-$just_act=isset($_POST["just_act"])? limpiarCadena($_POST["just_act"]):"";
-$no_solicitud=isset($_POST["no_solicitud"])? limpiarCadena($_POST["no_solicitud"]):"";
-//$fch_solicitud=isset($_POST["fch_solicitud"])? limpiarCadena($_POST["fch_solicitud"]):"";
-$nombre_actividad=isset($_POST["nombre_actividad"])? limpiarCadena($_POST["nombre_actividad"]):"";
-$ubicacion=isset($_POST["ubicacion"])? limpiarCadena($_POST["ubicacion"]):"";
-$fch_inicial_actividad=isset($_POST["fch_inicial_actividad"])? limpiarCadena($_POST["fch_inicial_actividad"]):"";
-$fch_final_actividad=isset($_POST["fch_final_actividad"])? limpiarCadena($_POST["fch_final_actividad"]):"";
-$descripcion=isset($_POST["descripcion"])? limpiarCadena($_POST["descripcion"]):"";
-$poblacion_objetivo=isset($_POST["poblacion_objetivo"])? limpiarCadena($_POST["poblacion_objetivo"]):"";
-$presupuesto=isset($_POST["presupuesto"])? limpiarCadena($_POST["presupuesto"]):"";
-$staff_alumnos=isset($_POST["staff_alumnos"])? limpiarCadena($_POST["staff_alumnos"]):"";
-$observaciones=isset($_POST["observaciones"])? limpiarCadena($_POST["observaciones"]):"";
-//$id_estado=isset($_POST["id_estado"])? limpiarCadena($_POST["id_estado"]):"";
-//$id_usuario_registro=isset($_POST["id_usuario_registro"])? limpiarCadena($_POST["id_usuario_registro"]):"";
-$id_ambito=isset($_POST["id_ambito"])? limpiarCadena($_POST["id_ambito"]):"";
-$periodo=isset($_POST["periodo"])? limpiarCadena($_POST["periodo"]):"";
+$id_actividad_voae=isset($_POST["id_actividad_voae"])? $instancia_conexion->limpiarCadena($_POST["id_actividad_voae"]):"";
+$id_actividad=isset($_POST["id_actividad"])? $instancia_conexion->limpiarCadena($_POST["id_actividad"]):"";
+$just_act=isset($_POST["just_act"])? $instancia_conexion->limpiarCadena($_POST["just_act"]):"";
+$no_solicitud=isset($_POST["no_solicitud"])? $instancia_conexion->limpiarCadena($_POST["no_solicitud"]):"";
+//$fch_solicitud=isset($_POST["fch_solicitud"])? $instancia_conexion->limpiarCadena($_POST["fch_solicitud"]):"";
+$nombre_actividad=isset($_POST["nombre_actividad"])? $instancia_conexion->limpiarCadena($_POST["nombre_actividad"]):"";
+$ubicacion=isset($_POST["ubicacion"])? $instancia_conexion->limpiarCadena($_POST["ubicacion"]):"";
+$fch_inicial_actividad=isset($_POST["fch_inicial_actividad"])? $instancia_conexion->limpiarCadena($_POST["fch_inicial_actividad"]):"";
+$fch_final_actividad=isset($_POST["fch_final_actividad"])? $instancia_conexion->limpiarCadena($_POST["fch_final_actividad"]):"";
+$descripcion=isset($_POST["descripcion"])? $instancia_conexion->limpiarCadena($_POST["descripcion"]):"";
+$poblacion_objetivo=isset($_POST["poblacion_objetivo"])? $instancia_conexion->limpiarCadena($_POST["poblacion_objetivo"]):"";
+$presupuesto=isset($_POST["presupuesto"])? $instancia_conexion->limpiarCadena($_POST["presupuesto"]):"";
+$staff_alumnos=isset($_POST["staff_alumnos"])? $instancia_conexion->limpiarCadena($_POST["staff_alumnos"]):"";
+$observaciones=isset($_POST["observaciones"])? $instancia_conexion->limpiarCadena($_POST["observaciones"]):"";
+//$id_estado=isset($_POST["id_estado"])? $instancia_conexion->limpiarCadena($_POST["id_estado"]):"";
+//$id_usuario_registro=isset($_POST["id_usuario_registro"])? $instancia_conexion->limpiarCadena($_POST["id_usuario_registro"]):"";
+$id_ambito=isset($_POST["id_ambito"])? $instancia_conexion->limpiarCadena($_POST["id_ambito"]):"";
+$periodo=isset($_POST["periodo"])? $instancia_conexion->limpiarCadena($_POST["periodo"]):"";
 
 
 if (permisos::permiso_modificar($Id_objeto)=='0')    {

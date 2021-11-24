@@ -5,7 +5,7 @@ session_start();
 require_once "../Modelos/horas_voae_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
@@ -13,22 +13,22 @@ require_once ('../clases/funcion_bitacora.php');
 $horas=new Horas();
 $Id_objeto=228; 
 
-$id_actividad_voae=isset($_POST["id_actividad_voae"])? limpiarCadena($_POST["id_actividad_voae"]):"";
-$id_asistencia=isset($_POST["id_asistencia"])? limpiarCadena($_POST["id_asistencia"]):"";
-$nombre_act=isset($_POST["nombre_act"])? limpiarCadena($_POST["nombre_act"]):"";
-$ubicacion=isset($_POST["ubicacion"])? limpiarCadena($_POST["ubicacion"]):"";
-$fecha_inicio=isset($_POST["fecha_inicio"])? limpiarCadena($_POST["fecha_inicio"]):"";
-$fecha_final=isset($_POST["fecha_final"])? limpiarCadena($_POST["fecha_final"]):"";
-$descripcion=isset($_POST["descripcion"])? limpiarCadena($_POST["descripcion"]):"";
+$id_actividad_voae=isset($_POST["id_actividad_voae"])? $instancia_conexion->limpiarCadena($_POST["id_actividad_voae"]):"";
+$id_asistencia=isset($_POST["id_asistencia"])? $instancia_conexion->limpiarCadena($_POST["id_asistencia"]):"";
+$nombre_act=isset($_POST["nombre_act"])? $instancia_conexion->limpiarCadena($_POST["nombre_act"]):"";
+$ubicacion=isset($_POST["ubicacion"])? $instancia_conexion->limpiarCadena($_POST["ubicacion"]):"";
+$fecha_inicio=isset($_POST["fecha_inicio"])? $instancia_conexion->limpiarCadena($_POST["fecha_inicio"]):"";
+$fecha_final=isset($_POST["fecha_final"])? $instancia_conexion->limpiarCadena($_POST["fecha_final"]):"";
+$descripcion=isset($_POST["descripcion"])? $instancia_conexion->limpiarCadena($_POST["descripcion"]):"";
 $observaciones="Actividad Externa";
-$horas_voae=isset($_POST["horas_voae"])? limpiarCadena($_POST["horas_voae"]):"";
-$ambito=isset($_POST["ambito"])? limpiarCadena($_POST["ambito"]):"";
-$periodo=isset($_POST["periodo"])? limpiarCadena($_POST["periodo"]):"";
+$horas_voae=isset($_POST["horas_voae"])? $instancia_conexion->limpiarCadena($_POST["horas_voae"]):"";
+$ambito=isset($_POST["ambito"])? $instancia_conexion->limpiarCadena($_POST["ambito"]):"";
+$periodo=isset($_POST["periodo"])? $instancia_conexion->limpiarCadena($_POST["periodo"]):"";
  
 //FORMULARIO 2
-$id_persona_alumno=isset($_POST["id_persona_alumno"])? limpiarCadena($_POST["id_persona_alumno"]):"";
-$id_actividad=isset($_POST["id_actividad"])? limpiarCadena($_POST["id_actividad"]):"";
-$horas_alumno=isset($_POST["horas_alumno"])? limpiarCadena($_POST["horas_alumno"]):"";
+$id_persona_alumno=isset($_POST["id_persona_alumno"])? $instancia_conexion->limpiarCadena($_POST["id_persona_alumno"]):"";
+$id_actividad=isset($_POST["id_actividad"])? $instancia_conexion->limpiarCadena($_POST["id_actividad"]):"";
+$horas_alumno=isset($_POST["horas_alumno"])? $instancia_conexion->limpiarCadena($_POST["horas_alumno"]):"";
 
 $usuario=$_SESSION['id_usuario'];
 

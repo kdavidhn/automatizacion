@@ -3,8 +3,8 @@
 
 
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
-require "../clases/Conexionvoae.php";
+
+
 require "../clases/funcion_permisos.php";
 
 

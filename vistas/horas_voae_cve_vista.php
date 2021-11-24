@@ -4,7 +4,7 @@ ob_start();
 session_start();
 require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_bitacora.php');
 require_once ('../clases/funcion_visualizar.php');
@@ -148,7 +148,7 @@ ob_end_flush();
                  <div class="form-group col-lg-6 col-md-6 col-sm-6 col-xs-12">
                   <label>Actividad Externa:</label>
                   <select class="form-control-lg select2" id= "id_actividad" style="width: 100%;" name="id_actividad" required="">
-                                <option  value="0" disabled="disabled">ID --- NOMBRE</option>
+                                <option value="0" disabled="disabled">ID <---> NOMBRE</option>
                                   <?php
                                     $query = $mysqli -> query ("select id_actividad_voae, concat(id_actividad_voae,' -- ',nombre_actividad) as actividad from tbl_voae_actividades where tipo_actividad = 'Actividad Externa';");
                                     while ($resultado = mysqli_fetch_array($query)) {

@@ -5,7 +5,7 @@ require_once ('../vistas/pagina_inicio_vista.php');
 require_once ('../clases/Conexion.php');
 require_once ('../clases/conexion_mantenimientos.php');
 require_once ('../clases/funcion_visualizar.php');
-require_once ('../clases/Conexionvoae.php');
+
 
 
 if (permiso_ver('220')=='1') {

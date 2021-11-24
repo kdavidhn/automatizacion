@@ -5,7 +5,7 @@ session_start();
 require_once "../Modelos/registro_faltas_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
@@ -31,11 +31,11 @@ else
 
 $usuario_x= $_SESSION['id_usuario'];
 
-$id_falta=isset($_POST["id_falta"])? limpiarCadena($_POST["id_falta"]):"";
-$id_tipo_falta=isset($_POST["id_tipo_falta"])? limpiarCadena($_POST["id_tipo_falta"]):"";
-$fch_falta=isset($_POST["fch_falta"])? limpiarCadena($_POST["fch_falta"]):"";
-$id_persona_alumno=isset($_POST["id_persona_alumno"])? limpiarCadena($_POST["id_persona_alumno"]):"";
-$descripcion=isset($_POST["descripcion"])? limpiarCadena($_POST["descripcion"]):"";
+$id_falta=isset($_POST["id_falta"])?  $instancia_conexion->limpiarCadena($_POST["id_falta"]):"";
+$id_tipo_falta=isset($_POST["id_tipo_falta"])? $instancia_conexion->limpiarCadena($_POST["id_tipo_falta"]):"";
+$fch_falta=isset($_POST["fch_falta"])? $instancia_conexion->limpiarCadena($_POST["fch_falta"]):"";
+$id_persona_alumno=isset($_POST["id_persona_alumno"])? $instancia_conexion->limpiarCadena($_POST["id_persona_alumno"]):"";
+$descripcion=isset($_POST["descripcion"])? $instancia_conexion->limpiarCadena($_POST["descripcion"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':
@@ -53,7 +53,7 @@ switch ($_GET["op"]){
 		} else {
 			
 				//EXTRAEMOS LOS VALORES VIEJOS DE LA BASE DE DATOS QUE SE VAN A MODIFICAR		
-				$valor = "select * from view_faltas_conducta WHERE id_falta= '$id_falta'";
+				$valor = "select * from view_faltas_conducta2 WHERE id_falta= '$id_falta'";
 				$result_valor = $mysqli->query($valor);
 				$valor_viejo = $result_valor->fetch_array(MYSQLI_ASSOC);
 
@@ -119,15 +119,16 @@ switch ($_GET["op"]){
 	break;
 
 	case 'eliminar':
-		$sql2 = "SELECT nombres FROM view_faltas_conducta WHERE id_falta= '$id_falta'";
-				$resulta_n = $mysqli->query($sql2);
-				$valor_n = $resulta_n->fetch_array(MYSQLI_ASSOC);
+    $sql2 = "select concat(`tbl_personas`.`nombres`,' ',`tbl_personas`.`apellidos`) AS `nombres` from (((`tbl_voae_faltas_conductas` join `tbl_personas` on(`tbl_voae_faltas_conductas`.`id_persona_alumno` = `tbl_personas`.`id_persona`)) join `tbl_voae_tipos_faltas` on(`tbl_voae_faltas_conductas`.`id_tipo_falta` = `tbl_voae_tipos_faltas`.`id_falta`)) join `tbl_personas_extendidas` on(`tbl_voae_faltas_conductas`.`id_persona_alumno` = `tbl_personas_extendidas`.`id_persona`)) WHERE `tbl_voae_faltas_conductas`.`id_falta` = '$id_falta'";
+        $resulta_n = $mysqli->query($sql2);
+        $valor_n = $resulta_n->fetch_array(MYSQLI_ASSOC);
 
-		bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', ' LA FALTA CON EL ID ' . $id_falta . ': DEL ALUMNO: '. $valor_n['nombres']. '');
-		$rspta=$falta->eliminar($id_falta);
- 		echo $rspta ? "Registro Eliminado" : "Error";
+    bitacora::evento_bitacora($Id_objeto, $_SESSION['id_usuario'], 'ELIMINO', ' LA FALTA CON EL ID ' . $id_falta . ': DEL ALUMNO: '. $valor_n['nombres']. '');
+    $rspta=$falta->eliminar($id_falta);
+    echo $rspta ? "Registro Eliminado" : "Error";
 
-	break;
+  break;
+
 
 
 	case 'listar':
@@ -139,14 +140,16 @@ switch ($_GET["op"]){
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
  				
- 				"0"=>'<button title="Modificar Registro" '.$_SESSION['btnmodificar'].' class="btn btn-warning" onclick=mostrar('.$reg->id_falta.') ><i class="far fa-edit"></i></button>'.
- 					' <button title="Eliminar Registro" '.$_SESSION['btneliminar'].' class="btn btn-danger"  onclick=eliminar('.$reg->id_falta.')><i class="fas fa-trash-alt"></i></button>', 
- 				"1"=>$reg->id_falta,
- 				"2"=>$reg->fch_falta,
- 				"3"=>$reg->nombre_falta,
- 				"4"=>$reg->nombres,
- 				"5"=>$reg->valor,
- 				"6"=>$reg->descripcion
+ 				"0"=>'<form action="../vistas/historial_faltas_cve_vista.php" method="POST">
+
+                        <input type="hidden" name="cuenta" value="'.$reg->valor.'">
+                        <input type="hidden" name="nombre" value="'.$reg->nombre_alumno.'">
+                        <button title="Ver Historial" class="btn btn-primary" type="submit" ><i class="fas fa-chalkboard-teacher"></i></button>
+                       </form>', 
+ 				
+ 				"1"=>$reg->nombre_alumno,
+ 				"2"=>$reg->valor,
+ 				"3"=>$reg->total_faltas
  				);
  		}
  		
@@ -160,6 +163,7 @@ switch ($_GET["op"]){
 	
  				
 break;
+
 }
 ob_end_flush();
 ?>

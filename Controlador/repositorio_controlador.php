@@ -5,16 +5,16 @@ session_start();
 require_once "../Modelos/repositorio_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
-require_once ('../clases/Conexionvoae.php');
+
 require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 $repositorio=new Repositorio();
 $Id_objeto=222; 
 
-$id_repositorio=isset($_POST["id_repositorio"])? limpiarCadena($_POST["id_repositorio"]):"";
-$nombre_repositorio=isset($_POST["nombre_repositorio"])? limpiarCadena($_POST["nombre_repositorio"]):"";
-$descripcion_repositorio=isset($_POST["descripcion_repositorio"])? limpiarCadena($_POST["descripcion_repositorio"]):"";
+$id_repositorio=isset($_POST["id_repositorio"])? $instancia_conexion->limpiarCadena($_POST["id_repositorio"]):"";
+$nombre_repositorio=isset($_POST["nombre_repositorio"])? $instancia_conexion->limpiarCadena($_POST["nombre_repositorio"]):"";
+$descripcion_repositorio=isset($_POST["descripcion_repositorio"])? $instancia_conexion->limpiarCadena($_POST["descripcion_repositorio"]):"";
 
 switch ($_GET["op"]){
 	case 'guardaryeditar':

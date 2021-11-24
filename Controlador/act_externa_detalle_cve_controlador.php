@@ -2,7 +2,7 @@
 ob_start();
 session_start();
 
-require_once "../Modelos/horas_voae_modelo.php";
+require_once "../Modelos/registro_actividad_externa_cve_modelo.php";
 require_once ('../clases/funcion_permisos.php');
 require_once ('../clases/Conexion.php');
 
@@ -10,10 +10,10 @@ require_once ('../clases/funcion_visualizar.php');
 require_once ('../clases/funcion_bitacora.php');
 
 
-$horas=new Horas();
-$Id_objeto = 230;
+$externa=new Externa();
+$Id_objeto = 237;
 
-$cuenta=$_SESSION['cuenta'];
+$actividad=$_SESSION['id_actividad_cve'];
 
 if (permisos::permiso_eliminar($Id_objeto)==0)
   {
@@ -29,19 +29,17 @@ switch ($_GET["op"]){
 	
 	case 'listar2':
 		
- 			$rspta=$horas->listar2($cuenta);
+ 			$rspta=$externa->listar2($actividad);
  		//Vamos a declarar un array
  		$data= Array();
 
 
  		while ($reg=$rspta->fetch_object()){
  			$data[]=array(
- 				"0"=>'<button title="Eliminar Actividad" '.$_SESSION['btneliminar'].' class="btn btn-danger" onclick="eliminar('.$reg->id_asistencia.')"><i class="fas fa-trash-alt"></i></button>',
- 				"1"=>$reg->nombre_actividad,
- 				"2"=>$reg->fch_inicial_actividad,
- 				"3"=>$reg->ambito,
- 				"4"=>$reg->cant_horas,
- 				"5"=>$reg->tipo_actividad
+ 				"0"=>$reg->cuenta,
+ 				"1"=>$reg->nombre_alumno,
+ 				"2"=>$reg->cant_horas
+ 				
  			);
  		}
  		$results = array(
